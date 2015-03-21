@@ -1,0 +1,119 @@
+._reset() {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  vertical-align: baseline
+}
+
+body {
+  line-height: 1
+}
+
+ol, ul {
+  list-style: none
+}
+
+[class*=" icon-"] span, [class^=icon-] span {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px
+}
+
+body, h1, html, li, ul, a {
+  ._reset;
+  transition: all .3s ease-in-out
+}
+
+* {
+  box-sizing: border-box
+}
+
+.hide {
+  display: none
+}
+
+html {
+  font-family: "Trebuchet MS", Helvetica, sans-serif
+}
+
+body, html, ul {
+  width: 100%;
+  margin: 0
+}
+
+body {
+  display: flex;
+  height: 100%;
+  flex-wrap: wrap
+}
+
+h1 {
+  font-size: 6vh;
+  padding: .5vh;
+  flex-grow: 1;
+  position: relative;
+
+  small {
+    white-space: nowrap;
+  }
+}
+
+.chosen h1 {
+  left: -100%
+}
+
+ul {
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  flex-grow: 3
+}
+
+li {
+  list-style: none;
+  flex-grow: 1;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  outline: .7em solid transparent
+}
+
+li:hover {
+  flex-grow: 5;
+  outline-color: rgba(255, 255, 255, .8);
+  z-index: 50
+}
+
+a {
+  text-decoration: none;
+  color: #FFF;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch
+}
+
+a:hover:before {
+  content: attr(title);
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-indent: 0;
+  font-size: 6vh;
+  padding: .5vh;
+  color: #FFF
+}
+
+a svg {
+  flex-grow: 1;
+  fill: #FFF
+}
+
+[class*=" icon-"], [class^=icon-] {
+  width: 100%;
+  height: 100%
+}
