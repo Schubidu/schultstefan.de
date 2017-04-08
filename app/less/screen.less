@@ -1,30 +1,67 @@
-._reset() {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  vertical-align: baseline
+@import "system-font";
+
+html, body {
+  background-color: #f7f7f7;
 }
 
 body {
-  line-height: 1
+  font-family: system;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.4;
 }
 
-ol, ul {
-  list-style: none
+[class*=" icon-"], [class^=icon-] {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  vertical-align: bottom;
+  border: 1px solid;
+  border-radius: .2em;
+  font-size: .8em;
+  align-items: center;
+  padding-right: .2em;
+  text-decoration: none;
+  font-weight: 500;
+  background-color: white;
+  transition: color .3s;
+
+  &:hover, &:focus {
+    color: #0000EE;
+  }
 }
 
-[class*=" icon-"] span, [class^=icon-] span {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px
+.i {
+  height: 1.2em;
+  display: inline-block;
+  padding: .2em;
+  margin-right: .2em;
+  background-color: currentColor;
+  fill: white;
 }
 
+.icon-github {
+  color: rgb(59, 59, 59);
+}
+
+.icon-xing {
+  color: rgb(0, 96, 94);
+}
+
+.icon-twitter {
+  color: rgb(50, 222, 244);
+}
+
+.hide {
+  display: none
+}
+
+.singleLine {
+  display: inline-block;
+}
+
+/*
 body, h1, html, li, ul, a {
   ._reset;
   transition: all .3s ease-in-out
@@ -34,9 +71,7 @@ body, h1, html, li, ul, a {
   box-sizing: border-box
 }
 
-.hide {
-  display: none
-}
+
 
 html {
   font-family: "Trebuchet MS", Helvetica, sans-serif
@@ -136,3 +171,4 @@ a svg {
 
 [class*=" icon-"], [class^=icon-] {
 }
+*/

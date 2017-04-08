@@ -1,25 +1,3 @@
-!function (e, t) {
-    function o(e, o) {
-        var n, r = e;
-        return r.currentStyle ? n = r.currentStyle[o] : window.getComputedStyle && (n = t.defaultView.getComputedStyle(r, null).getPropertyValue(o)), n
-    }
-
-    var n = [], r = null;
-    window.addEventListener && document.querySelectorAll && Array.prototype.forEach && window.addEventListener("load", function () {
-        n = Array.prototype.slice.call(document.querySelectorAll("li")), r = new Array(n.length);
-        var e = t.documentElement;
-        e.className = e.className.replace(/\bno-js\b/, "js"), n.forEach(function (t, n) {
-            var l = t.querySelector("a");
-            r[n] = o(l, "background-color"), l.addEventListener("mouseover", function () {
-                var t = r[n];
-                t && (e.style.backgroundColor = t, e.className += " chosen")
-            }), l.addEventListener("mouseout", function () {
-                e.style.backgroundColor = "", e.className = "js"
-            })
-        })
-    }, !1)
-}(window, document);
-
 //google analytics
 (function (i, s, o, g, r, a, m) {
     i['GoogleAnalyticsObject'] = r;
