@@ -6,7 +6,7 @@
   "private": "yes",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "deploy": "gulp build && gh-pages -d dist -b master"
+    "deploy": "gulp build && rm -rf dist/assets && rm -rf dist/css && rm -rf dist/js && gh-pages -d dist -b master"
   },
   "repository": {
     "type": "git",
