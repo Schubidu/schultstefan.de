@@ -13,3 +13,10 @@
 
 ga('create', 'UA-52159320-1', 'auto');
 ga('send', 'pageview');
+
+var trackOutboundLink = function(url) {
+   ga('send', 'event', 'outbound', 'click', url, {
+     'transport': 'beacon',
+     'hitCallback': function(){document.location = url;}
+   });
+}
