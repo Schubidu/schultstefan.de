@@ -6,14 +6,14 @@ var vinylPaths = require('vinyl-paths');
 gulp.task('css', function () {
     gulp.src('./app/less/screen.less')
         .pipe($.less())
-        .pipe($.autoprefixer())
         .pipe(gulp.dest('./app/css'));
 
 });
 
-gulp.task('css:build', ['css'], function () {
+gulp.task('css:build', [], function () {
     gulp.src('./app/css/screen.css')
         .pipe($.csso())
+        .pipe($.autoprefixer())
         .pipe(gulp.dest('./dist/css'));
 });
 
@@ -43,6 +43,6 @@ gulp.task('minify', ['css:build', 'js:build'], function () {
 gulp.task('build', ['minify', 'copy'], function (cb) {
 });
 
-gulp.task('watch', ['css'], function () {
+/*gulp.task('watch', ['css'], function () {
     gulp.watch('./app/less/*.less', ['css']);
-});
+});*/
