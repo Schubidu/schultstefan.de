@@ -65,3 +65,54 @@ body {
 .singleLine {
   display: inline-block;
 }
+
+:target {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 6vmin;
+}
+
+:target body {
+  display: block;
+  text-align: left;
+  position: relative;
+  height: 70vh;
+}
+
+:target h1 {
+  white-space: nowrap;
+}
+
+:target p {
+  text-indent: -100em;
+}
+
+:target a[data-profile] {
+  display: flex;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-indent: 0;
+  border-width: .2em;
+  justify-content: space-between;
+  padding: .4em;
+}
+
+:target a[data-profile]:before {
+  content: " " attr(data-profile) " ";
+  font-size: 1em;
+  font-weight: 700;
+  padding-left: .32em;
+}
+
+:target .singleLine a[data-profile] {
+  margin-top: -1.25em;
+}
+
+:target .singleLine a[data-profile] ~ a[data-profile] {
+  margin-top: 0;
+}
+
+
