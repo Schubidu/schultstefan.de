@@ -15,7 +15,7 @@ const filePath = path.normalize(`${__dirname}/../dist/index.html`);
 async function main() {
   try {
     const fileBuffer = await readFileAsync(filePath);
-    const currentUrl = process.env.URL || './';
+    const currentUrl = process.env.URL + '/' || './';
     const fileContent = fileBuffer
       .toString()
       .replaceAll('/socialsharing.', `${currentUrl}socialsharing.`)
