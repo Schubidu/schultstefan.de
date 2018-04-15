@@ -7,9 +7,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel serve app/index.html",
-    "screenshot": "node script/screenshot.js",
-    "screenshot:dev": "NODE_ENV=development node script/screenshot.js",
-    "build": "rimraf dist && parcel build app/index.html ./dist",
+    "screenshot": "npm run build && node script/screenshot.js",
+    "build": "rimraf dist && parcel build --public-url=./ app/index.html ./dist",
     "postbuild": "node script/postbuild.js",
     "serve": "npm run build && serve ./dist",
     "deploy": "npm run build && gh-pages -d dist -b gh-pages"

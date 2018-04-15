@@ -10,8 +10,9 @@ if(process.env.NODE_ENV === 'development') {
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  await page.setViewport({width: 200, height: 150, deviceScaleFactor: 2.5});
+  await page.setViewport({width: 300, height: 175, deviceScaleFactor: 2.5});
   await page.goto(pathFile);
   await page.screenshot({path: 'app/assets/socialsharing.png'});
   await browser.close();
+  console.log('updated screenshot for socialsharing');
 })();

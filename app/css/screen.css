@@ -21,7 +21,6 @@ body {
   border-radius: .2em;
   font-size: .8em;
   align-items: center;
-  padding-left: .2em;
   padding-right: .2em;
   text-decoration: none;
   font-weight: 500;
@@ -40,7 +39,6 @@ body {
   height: 1.2em;
   display: inline-block;
   padding: .2em;
-  margin-left: .2em;
   margin-right: .2em;
   background-color: currentColor;
   fill: white;
@@ -72,6 +70,19 @@ body {
   align-items: center;
   height: 100vh;
   font-size: 6vmin;
+  background-size: cover;
+  background-position: center;
+  background-image: url(https://images.unsplash.com/photo-1506765515384-028b60a970df?ixlib=rb-0.3.5&s=e7b550d5676a924ad3f6fb03ea31120d&auto=format&fit=crop&w=2098&q=80);
+}
+
+:target:after {
+  content: 'https://unsplash.com/photos/CAMwIxYk5Xg';
+  position: absolute;
+  right: .5em;
+  bottom: .5em;
+  font-size: .5em;
+  color: white;
+  opacity: .5;
 }
 
 :target body {
@@ -79,6 +90,7 @@ body {
   text-align: left;
   position: relative;
   height: 70vh;
+  background: none;
 }
 
 :target h1 {
@@ -100,11 +112,17 @@ body {
   padding: .4em;
 }
 
+:target a[data-profile] .i {
+  transform: scale(1.675);
+  margin-right: .9em;
+}
+
 :target a[data-profile]:before {
   content: " " attr(data-profile) " ";
   font-size: 1em;
   font-weight: 700;
   padding-left: .32em;
+  margin-left: auto;
 }
 
 :target .singleLine a[data-profile] {

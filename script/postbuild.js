@@ -20,7 +20,9 @@ async function main() {
     const fileContent = fileBuffer
       .toString()
       .replaceAll('/socialsharing.', `${deployUrl}socialsharing.`)
-      .replaceAll('###URL###', `${url}`);
+      .replaceAll('###URL###', `${url}`)
+      .replaceAll('class="hide"', `class="hide" viewBox="0 0 300 100"`)
+      .replaceAll('class="i"', `class="i" viewBox="0 0 100 100"`)
     await writeFileAsync(filePath, fileContent)
   } catch (err) {
     console.error('ERROR:', err);
