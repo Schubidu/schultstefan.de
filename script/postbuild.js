@@ -15,11 +15,12 @@ const filePath = path.normalize(`${__dirname}/../dist/index.html`);
 async function main() {
   try {
     const fileBuffer = await readFileAsync(filePath);
-    const currentUrl = process.env.URL + '/' || './';
+    const url = process.env.URL + '/' || './';
+    const deployUrl = process.env.DEPLOY_URL + '/' || './';
     const fileContent = fileBuffer
       .toString()
-      .replaceAll('/socialsharing.', `${currentUrl}socialsharing.`)
-      .replaceAll('###URL###', `${currentUrl}`);
+      .replaceAll('/socialsharing.', `${deployUrl}socialsharing.`)
+      .replaceAll('###URL###', `${url}`);
     await writeFileAsync(filePath, fileContent)
   } catch (err) {
     console.error('ERROR:', err);
