@@ -1,10 +1,38 @@
 html,
 body {
-  background-color: #f7f7f7;
+  background: var(--unsplash-color) var(--unsplash-small) center;
+  background-size: cover;
+  padding: 0;
+  margin: 0;
+}
+
+@media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  body {
+    background-image: var(--unsplash-regular);
+  }
+}
+
+@media screen and (min-width: 700px) {
+  body {
+    background-image: var(--unsplash-regular);
+  }
+}
+
+@media (min-width: 700px), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
+  body {
+    background-image: var(--unsplash-full);
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  body {
+    background-image: var(--unsplash-full);
+  }
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
   display: flex;
   text-align: center;
   flex-direction: column;
@@ -12,34 +40,59 @@ body {
   line-height: 1.4;
 }
 
+div {
+  align-self: center;
+  padding: 0 1.325em;
+  background-color: rgba(255,255,255,.7);
+  border-radius: .125em;
+}
+
+aside {
+  position: absolute;
+  font-size: .8em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .5em;
+  background-color: rgba(255,255,255,.7);
+  text-shadow: none;
+}
+
+@supports (-webkit-backdrop-filter: blur(10px)) {
+  div, aside {
+    background-color: rgba(255,255,255,.4);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
 [class*=" icon-"],
-[class^=icon-] {
+[class^="icon-"] {
   display: inline-flex;
   flex-direction: row-reverse;
   vertical-align: bottom;
   border: 1px solid;
-  border-radius: .2em;
-  font-size: .8em;
+  border-radius: 0.2em;
+  font-size: 0.8em;
   align-items: center;
-  padding-right: .2em;
+  padding-right: 0.2em;
   text-decoration: none;
   font-weight: 500;
   background-color: white;
-  transition: color .3s;
+  transition: color 0.3s;
 }
 
 [class*=" icon-"]:hover,
-[class^=icon-]:hover,
+[class^="icon-"]:hover,
 [class*=" icon-"]:focus,
-[class^=icon-]:focus {
-  color: #0000EE;
+[class^="icon-"]:focus {
+  color: #0000ee;
 }
 
 .i {
   height: 1.2em;
   display: inline-block;
-  padding: .2em;
-  margin-right: .2em;
+  padding: 0.2em;
+  margin-right: 0.2em;
   background-color: currentColor;
   fill: white;
 }
@@ -70,27 +123,14 @@ body {
   align-items: center;
   height: 100vh;
   font-size: 6vmin;
-  background-size: cover;
-  background-position: center;
-  background-image: url(https://images.unsplash.com/photo-1506765515384-028b60a970df?ixlib=rb-0.3.5&s=e7b550d5676a924ad3f6fb03ea31120d&auto=format&fit=crop&w=2098&q=80);
 }
 
-:target:after {
-  content: 'https://unsplash.com/photos/CAMwIxYk5Xg';
-  position: absolute;
-  right: .5em;
-  bottom: .5em;
+:target aside {
   font-size: .5em;
-  color: white;
-  opacity: .5;
 }
 
-:target body {
-  display: block;
-  text-align: left;
+:target div {
   position: relative;
-  height: 70vh;
-  background: none;
 }
 
 :target h1 {
@@ -107,21 +147,21 @@ body {
   left: 0;
   right: 0;
   text-indent: 0;
-  border-width: .2em;
+  border-width: 0.2em;
   justify-content: space-between;
-  padding: .4em;
+  padding: 0.4em;
 }
 
 :target a[data-profile] .i {
   transform: scale(1.675);
-  margin-right: .9em;
+  margin-right: 0.9em;
 }
 
 :target a[data-profile]:before {
   content: " " attr(data-profile) " ";
   font-size: 1em;
   font-weight: 700;
-  padding-left: .32em;
+  padding-left: 0.32em;
   margin-left: auto;
 }
 
@@ -132,5 +172,3 @@ body {
 :target .singleLine a[data-profile] ~ a[data-profile] {
   margin-top: 0;
 }
-
-

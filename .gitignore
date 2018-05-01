@@ -3,3 +3,5 @@
 
 dist
 node_modules
+app/unsplash-data.json
+.env
