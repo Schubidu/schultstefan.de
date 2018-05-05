@@ -14,10 +14,6 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 const distPath = path.normalize(`${__dirname}/../dist/`);
 
-async function getUnsplashImage() {
-  return Promise.resolve(require("../app/unsplash-data"));
-}
-
 async function readHtml() {
   const filePath = path.normalize(`${distPath}index.html`);
   try {

@@ -18,18 +18,6 @@ body {
   }
 }
 
-@media (min-width: 700px), (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
-  body {
-    background-image: var(--unsplash-full);
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  body {
-    background-image: var(--unsplash-full);
-  }
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
@@ -43,25 +31,31 @@ body {
 div {
   align-self: center;
   padding: 0 1.325em;
-  background-color: rgba(255,255,255,.7);
-  border-radius: .125em;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 0.125em;
 }
 
 aside {
   position: absolute;
-  font-size: .8em;
+  font-size: 0.8em;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: .5em;
-  background-color: rgba(255,255,255,.7);
+  padding: 0.5em;
+  background-color: rgba(255, 255, 255, 0.7);
   text-shadow: none;
 }
 
 @supports (-webkit-backdrop-filter: blur(10px)) {
-  div, aside {
-    background-color: rgba(255,255,255,.4);
+  div,
+  aside,
+  :target h1 {
+    background-color: rgba(255, 255, 255, 0.4);
     -webkit-backdrop-filter: blur(10px);
+  }
+
+  :target div {
+    -webkit-backdrop-filter: none;
   }
 }
 
@@ -123,18 +117,28 @@ aside {
   align-items: center;
   height: 100vh;
   font-size: 6vmin;
+  background-image: none;
+}
+
+:target body {
+  background: none;
 }
 
 :target aside {
-  font-size: .5em;
+  display: none;
 }
 
 :target div {
   position: relative;
+  background: none;
+  border-radius: 0;
 }
 
 :target h1 {
   white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 0.125em;
+  padding: 0 0.75em;
 }
 
 :target p {
@@ -144,8 +148,8 @@ aside {
 :target a[data-profile] {
   display: flex;
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 1.75em;
+  right: 1.75em;
   text-indent: 0;
   border-width: 0.2em;
   justify-content: space-between;
@@ -153,8 +157,8 @@ aside {
 }
 
 :target a[data-profile] .i {
-  transform: scale(1.675);
-  margin-right: 0.9em;
+  display: none;
+
 }
 
 :target a[data-profile]:before {
