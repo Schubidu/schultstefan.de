@@ -1,0 +1,25 @@
+{
+  "extends": ["recommended/esnext", "recommended/esnext/style-guide", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "browser": true
+  },
+  "overrides": [
+    {
+      "files": "script/*",
+      "env": {
+        "node": true
+      },
+      "rules": {
+        "import/no-commonjs": [2, { "allowRequire": true }],
+        "import/no-nodejs-modules": 0
+      }
+    }
+  ]
+}

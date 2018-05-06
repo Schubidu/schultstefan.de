@@ -1,5 +1,4 @@
 @media print {
-
   html,
   body {
     background-color: #fff;
@@ -15,13 +14,13 @@
   }
 
   [class*=" icon-"],
-  [class^=icon-] {
+  [class^="icon-"] {
     display: inline;
     color: inherit;
     flex-direction: row-reverse;
     vertical-align: bottom;
     border: none;
-    border-radius: .2em;
+    border-radius: 0.2em;
     font-size: 1em;
     padding-right: 0;
     text-decoration: none;
@@ -31,9 +30,9 @@
   }
 
   [class*=" icon-"]:hover,
-  [class^=icon-]:hover,
+  [class^="icon-"]:hover,
   [class*=" icon-"]:focus,
-  [class^=icon-]:focus {
+  [class^="icon-"]:focus {
     color: inherit;
   }
 

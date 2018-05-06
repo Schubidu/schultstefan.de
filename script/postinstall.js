@@ -1,10 +1,10 @@
 /* eslint-disable no-console */
-const { promisify } = require("util");
+const { promisify } = require('util');
 
-const dotenv = require("dotenv");
-const fetch = require("node-fetch");
-const fs = require("fs");
-const path = require("path");
+const dotenv = require('dotenv');
+const fetch = require('node-fetch');
+const fs = require('fs');
+const path = require('path');
 
 const writeFileAsync = promisify(fs.writeFile);
 
@@ -32,13 +32,13 @@ export const getRandomImageData = async () => {
 const result = dotenv.config();
 
 if (result.error) {
-  console.log("no file .env found");
+  console.log('no file .env found');
 }
 
 async function getUnsplashImage() {
   const collections = [
-    827751 //https://unsplash.com/collections/827751/architectural
-  ].join(",");
+    827751, // https://unsplash.com/collections/827751/architectural
+  ].join(',');
   return await fetch(
     `https://api.unsplash.com/photos/random?collections=${collections}&orientation=landscape&client_id=${
       process.env.UNSPLASH_APP_SECRET
@@ -47,27 +47,22 @@ async function getUnsplashImage() {
 }
 
 async function getUnsplashCollection() {
-  const collections = [
-    827751 //https://unsplash.com/collections/827751/architectural
-  ].join(",");
-  const { total_photos } = await fetch(
-    `https://api.unsplash.com/collections/${827751}?client_id=${
-      process.env.UNSPLASH_APP_SECRET
-    }`
+  // 827751, // https://unsplash.com/collections/827751/architectural
+  const collection = '827751';
+  const { total_photos: totalPhotos } = await fetch(
+    `https://api.unsplash.com/collections/${collection}?client_id=${process.env.UNSPLASH_APP_SECRET}`
   ).then(res => res.json());
   const data = await Promise.all(
-    [...Array(Math.ceil(total_photos / 25))]
+    [...Array(Math.ceil(totalPhotos / 25))]
       .map(
         (x, idx) =>
-          `https://api.unsplash.com/collections/${827751}/photos?page=${idx +
-            1}&per_page=${25}&client_id=${process.env.UNSPLASH_APP_SECRET}`
+          `https://api.unsplash.com/collections/${collection}/photos?page=${idx + 1}&per_page=${25}&client_id=${
+            process.env.UNSPLASH_APP_SECRET
+          }`
       )
-      .map(url => fetch(url).then(res => console.log({ res }) || res.json()))
+      .map(url => fetch(url).then(res => res.json()))
   );
-  return data.reduce(
-    (acc, pageData) => console.log({ pageData }) || [...acc, ...pageData],
-    []
-  );
+  return data.reduce((acc, pageData) => [...acc, ...pageData], []);
 }
 
 function reduceData(data) {
@@ -76,9 +71,9 @@ function reduceData(data) {
     color,
     user: {
       name,
-      links: { html }
+      links: { html },
     },
-    urls
+    urls,
   } = data;
   return { id, color, urls, user: { name, links: { html } } };
 }
@@ -92,23 +87,19 @@ const asyncProcessor = [
         color,
         user: {
           name,
-          links: { html }
+          links: { html },
         },
-        urls
+        urls,
       } = await getUnsplashImage();
-      const fileContent = JSON.stringify(
-        { id, color, urls, user: { name, links: { html } } },
-        null,
-        2
-      );
+      const fileContent = JSON.stringify({ id, color, urls, user: { name, links: { html } } }, null, 2);
       await writeFileAsync(filePath, fileContent);
       return Promise.resolve({});
     } catch (err) {
-      console.error("ERROR:", err);
+      console.error('ERROR:', err);
     }
   },
   async function loadUnsplashCollectionData() {
-    const dirPath = "app/js/unsplash-images/";
+    const dirPath = 'app/js/unsplash-images/';
     try {
       const data = await getUnsplashCollection();
       const reducedData = data.map(reduceData);
@@ -116,50 +107,25 @@ const asyncProcessor = [
       // writing images data
       await Promise.all(
         reducedData.map(fileData =>
-          writeFileAsync(
-            `${dirPath}${fileData.id}.js`,
-            `export const data = ${JSON.stringify(fileData, null, 2)}`
-          )
+          writeFileAsync(`${dirPath}${fileData.id}.js`, `export const data = ${JSON.stringify(fileData, null, 2)}`)
         )
       );
 
       // writing index-file
-      const fileContent = fileTemplate(
-        reducedData
-          .map(({ id }) => `\n  "${id}": () => import("./${id}")`)
-          .join(",")
-      );
+      const fileContent = fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}")`).join(','));
       await writeFileAsync(`${dirPath}index.js`, fileContent);
       return Promise.resolve({});
     } catch (err) {
-      console.error("ERROR:", err);
+      console.error('ERROR:', err);
     }
-  }
+  },
 ];
 
 async function main() {
-  const cleanupArrays = ["toDelete"];
   try {
-    const filesToCleanup = await Promise.all(asyncProcessor.map(fn => fn()));
-    const { toDelete = [] } = filesToCleanup.reduce((acc, method) => {
-      let curAcc = {};
-      cleanupArrays.forEach(cleanup => {
-        if (method) {
-          if (method[cleanup]) {
-            curAcc[cleanup] = [
-              ...(acc[cleanup] || []),
-              ...method[cleanup]
-            ].filter((v, i, a) => a.indexOf(v) === i);
-          }
-        }
-      });
-      return curAcc;
-    }, {});
-
-    // delete unnecessary  files
-    // await Promise.all(toDelete.map(filePath => unlinkAsync(filePath)));
+    await Promise.all(asyncProcessor.map(fn => fn()));
   } catch (err) {
-    console.error("ERROR:", err);
+    console.error('ERROR:', err);
   }
 }
 
