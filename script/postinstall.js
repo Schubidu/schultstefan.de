@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
+const prettier = require('prettier');
 
 const writeFileAsync = promisify(fs.writeFile);
 
@@ -15,7 +16,7 @@ const fileTemplate = images => `const asyncImages = {${images}
 
 export const fetchImageData = async id => {
   if (!asyncImages[id]) return Promise.resolve({});
-  const { data } = await asyncImages[id]();
+  const { default: data } = await asyncImages[id]();
   return data;
 }
 
@@ -78,6 +79,12 @@ function reduceData(data) {
   return { id, color, urls, user: { name, links: { html } } };
 }
 
+const formatContent = async content => {
+  const options = await prettier.resolveConfig(process.cwd());
+  const formatted = prettier.format(content, options);
+  return formatted;
+};
+
 const asyncProcessor = [
   async function loadUnsplashData() {
     const filePath = `${distPath}unsplash-data.json`;
@@ -106,13 +113,16 @@ const asyncProcessor = [
       console.log(reducedData.length);
       // writing images data
       await Promise.all(
-        reducedData.map(fileData =>
-          writeFileAsync(`${dirPath}${fileData.id}.js`, `export const data = ${JSON.stringify(fileData, null, 2)}`)
-        )
+        reducedData.map(async fileData => {
+          const fileContent = await formatContent(`export default ${JSON.stringify(fileData, null, 2)}`);
+          writeFileAsync(`${dirPath}${fileData.id}.js`, fileContent);
+        })
       );
 
       // writing index-file
-      const fileContent = fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}")`).join(','));
+      const fileContent = await formatContent(
+        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}")`).join(','))
+      );
       await writeFileAsync(`${dirPath}index.js`, fileContent);
       return Promise.resolve({});
     } catch (err) {
