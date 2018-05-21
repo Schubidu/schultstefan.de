@@ -1,4 +1,5 @@
-import { getRandomImageData } from './unsplash-images';
+// eslint-disable-next-line import/extensions
+import { getRandomImageData } from './unsplash-images/index.js';
 
 const aside = document.createElement('aside');
 document.body.append(aside);

@@ -1,6 +1,10 @@
 {
-  "plugins": ["transform-runtime"],
   "presets": [
-    "env"
+    [
+      "env",
+      {
+        "browsers": ["edge >= 16", "firefox >= 60", "chrome >= 64", "safari >= 11"]
+      }
+    ]
   ]
 }

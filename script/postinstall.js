@@ -121,7 +121,7 @@ const asyncProcessor = [
 
       // writing index-file
       const fileContent = await formatContent(
-        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}")`).join(','))
+        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}.js")`).join(','))
       );
       await writeFileAsync(`${dirPath}index.js`, fileContent);
       return Promise.resolve({});

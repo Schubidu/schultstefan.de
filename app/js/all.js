@@ -1,2 +1,2 @@
-import './unsplash';
-// import './googleAnalytics';
+import './unsplash.js';
+// import './googleAnalytics.js';
