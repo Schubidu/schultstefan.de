@@ -81,30 +81,10 @@ function reduceData(data) {
 
 const formatContent = async content => {
   const options = await prettier.resolveConfig(process.cwd());
-  const formatted = prettier.format(content, options);
-  return formatted;
+  return prettier.format(content, { ...options, parser: 'babylon' });
 };
 
 const asyncProcessor = [
-  async function loadUnsplashData() {
-    const filePath = `${distPath}unsplash-data.json`;
-    try {
-      const {
-        id,
-        color,
-        user: {
-          name,
-          links: { html },
-        },
-        urls,
-      } = await getUnsplashImage();
-      const fileContent = JSON.stringify({ id, color, urls, user: { name, links: { html } } }, null, 2);
-      await writeFileAsync(filePath, fileContent);
-      return Promise.resolve({});
-    } catch (err) {
-      console.error('ERROR:', err);
-    }
-  },
   async function loadUnsplashCollectionData() {
     const dirPath = 'app/js/unsplash-images/';
     try {

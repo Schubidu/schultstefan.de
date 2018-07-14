@@ -1,4 +1,5 @@
 import { getRandomImageData } from './unsplash-images';
+import favicon from './favicon';
 
 const aside = document.createElement('aside');
 document.body.append(aside);
@@ -14,6 +15,7 @@ document.body.append(aside);
     urls: { full: unsplashFull, regular: unsplashRegular },
   } = await getRandomImageData();
 
+  favicon({color});
   documentElement.style.setProperty('--unsplash-color', color);
   documentElement.style.setProperty('--unsplash-full', `url(${unsplashFull})`);
   documentElement.style.setProperty('--unsplash-regular', `url(${unsplashRegular})`);
