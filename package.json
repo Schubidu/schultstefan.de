@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Homepage",
   "main": "index.js",
-  "private": "yes",
+  "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel serve app/index.html",
@@ -11,6 +11,7 @@
     "build": "rimraf dist && parcel build --public-url=./ app/index.html",
     "postbuild": "node script/postbuild.js",
     "postinstall": "node script/postinstall.js",
+    "lint": "eslint .",
     "serve": "npm run build && serve ./dist",
     "deploy": "npm run postinstall && npm run build"
   },
@@ -29,6 +30,8 @@
     "babel-preset-env": "^1.7.0",
     "eslint": "^5.1.0",
     "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-prettier": "^2.6.1",
     "parcel-bundler": "^1.9.4",
     "prettier": "^1.13.7",
