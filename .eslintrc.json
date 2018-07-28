@@ -1,5 +1,5 @@
 {
-  "extends": ["recommended/esnext", "recommended/esnext/style-guide", "plugin:prettier/recommended"],
+  "extends": ["recommended/packages/esnext", "recommended/packages/esnext/style-guide", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",

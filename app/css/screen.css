@@ -2,8 +2,10 @@ html,
 body {
   background: var(--unsplash-color) var(--unsplash-small) center;
   background-size: cover;
+  background-position: center;
   padding: 0;
   margin: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
@@ -25,6 +27,7 @@ body {
   flex-direction: column;
   justify-content: center;
   line-height: 1.4;
+  font-size: 1.25em;
 }
 
 div {

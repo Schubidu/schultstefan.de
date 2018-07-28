@@ -4,12 +4,9 @@ const { promisify } = require('util');
 const dotenv = require('dotenv');
 const fetch = require('node-fetch');
 const fs = require('fs');
-const path = require('path');
 const prettier = require('prettier');
 
 const writeFileAsync = promisify(fs.writeFile);
-
-const distPath = path.normalize(`${__dirname}/../app/`);
 
 const fileTemplate = images => `const asyncImages = {${images}
 };
@@ -19,6 +16,15 @@ export const fetchImageData = async id => {
   const { default: data } = await asyncImages[id]();
   return data;
 }
+
+export const hasImage = async id => Object.keys(asyncImages).includes(id);
+
+export const getRandomImage = async () => {
+  const keys = Object.keys(asyncImages);
+
+  return keys[Math.floor(Math.random() * keys.length)];
+};
+
 
 export const getRandomImageData = async () => {
   const keys = Object.keys(asyncImages);
@@ -34,17 +40,6 @@ const result = dotenv.config();
 
 if (result.error) {
   console.log('no file .env found');
-}
-
-async function getUnsplashImage() {
-  const collections = [
-    827751, // https://unsplash.com/collections/827751/architectural
-  ].join(',');
-  return await fetch(
-    `https://api.unsplash.com/photos/random?collections=${collections}&orientation=landscape&client_id=${
-      process.env.UNSPLASH_APP_SECRET
-    }`
-  ).then(res => res.json());
 }
 
 async function getUnsplashCollection() {

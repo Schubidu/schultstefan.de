@@ -1,6 +1,6 @@
 let favicon;
 
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
   favicon = document.querySelector('[rel="shortcut icon"]');
 });
 
