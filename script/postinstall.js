@@ -17,6 +17,15 @@ export const fetchImageData = async id => {
   return data;
 }
 
+export const hasImage = async id => Object.keys(asyncImages).includes(id);
+
+export const getRandomImage = async () => {
+  const keys = Object.keys(asyncImages);
+
+  return keys[Math.floor(Math.random() * keys.length)];
+};
+
+
 export const getRandomImageData = async () => {
   const keys = Object.keys(asyncImages);
 

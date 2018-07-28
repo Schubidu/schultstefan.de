@@ -1,5 +1,5 @@
 import favicon from './favicon';
-import { getRandomImageData } from './unsplash-images';
+import photo from './unplashPhoto';
 
 const aside = document.createElement('aside');
 document.body.append(aside);
@@ -13,7 +13,7 @@ document.body.append(aside);
       links: { html: unsplashProfil },
     },
     urls: { full: unsplashFull, regular: unsplashRegular },
-  } = await getRandomImageData();
+  } = await photo();
 
   favicon({ color });
   documentElement.style.setProperty('--unsplash-color', color);
