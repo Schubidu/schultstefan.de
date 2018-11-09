@@ -26,24 +26,24 @@
   },
   "homepage": "https://schultstefan.de",
   "devDependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.7.0",
-    "eslint": "^5.1.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-babel": "^5.1.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-prettier": "^2.6.1",
-    "parcel-bundler": "^1.9.4",
-    "prettier": "^1.13.7",
-    "puppeteer": "^1.5.0",
-    "rimraf": "^2.6.2",
-    "serve": "^9.2.0"
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
+    "babel-plugin-transform-runtime": "6.23.0",
+    "babel-preset-env": "1.7.0",
+    "eslint": "5.1.0",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-plugin-babel": "5.1.0",
+    "eslint-plugin-import": "2.13.0",
+    "eslint-plugin-prettier": "2.6.2",
+    "parcel-bundler": "1.9.6",
+    "prettier": "1.13.7",
+    "puppeteer": "1.6.0",
+    "rimraf": "2.6.2",
+    "serve": "9.2.0"
   },
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "dotenv": "^6.0.0",
-    "eslint-config-recommended": "^3.0.0",
-    "node-fetch": "^2.1.2"
+    "babel-runtime": "6.26.0",
+    "dotenv": "6.0.0",
+    "eslint-config-recommended": "3.0.0",
+    "node-fetch": "2.1.2"
   }
 }
