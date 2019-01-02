@@ -37,7 +37,7 @@
     "parcel-bundler": "1.10.3",
     "prettier": "1.13.7",
     "puppeteer": "1.6.0",
-    "rimraf": "2.6.2",
+    "rimraf": "2.6.3",
     "serve": "9.2.0"
   },
   "dependencies": {
