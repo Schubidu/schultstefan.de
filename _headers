@@ -3,4 +3,4 @@
 
 /js/*
   cache-control: max-age=0,no-cache,no-store,must-revalidate
-  content-type:application/javascript; charset=UTF-8
+  Content-Type: application/javascript; charset=UTF-8
