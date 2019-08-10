@@ -1,6 +1,0 @@
-/
-  Link: </css/screen.css>; rel=preload; as=style
-
-/js/*
-  cache-control: max-age=0,no-cache,no-store,must-revalidate
-  Content-Type: application/javascript; charset=UTF-8
