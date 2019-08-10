@@ -1,11 +1,6 @@
 /
   Link: </css/screen.css>; rel=preload; as=style
 
-/js/*.mjs
+/js/*
   cache-control: max-age=0,no-cache,no-store,must-revalidate
   content-type:application/javascript; charset=UTF-8
-
-/js/unsplash-images/*.mjs
-  cache-control: max-age=0,no-cache,no-store,must-revalidate
-  content-type:application/javascript; charset=UTF-8
-
