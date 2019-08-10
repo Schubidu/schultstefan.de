@@ -1,5 +1,5 @@
-import queryParser from './queryParser';
-import { fetchImageData, getRandomImage, hasImage } from './unsplash-images';
+import queryParser from './queryParser.mjs';
+import { fetchImageData, getRandomImage, hasImage } from './unsplash-images/index.mjs';
 
 export default async () => {
   const query = await queryParser();

@@ -29,7 +29,7 @@ async function readHtml() {
 }
 
 const asyncProcessor = [
-  async function stringReplacesInHtml() {
+  /* async function stringReplacesInHtml() {
     try {
       const { content: fileContent, filePath } = await readHtml();
       const url = process.env.URL + '/' || './';
@@ -45,23 +45,23 @@ const asyncProcessor = [
     } catch (err) {
       console.error('ERROR:', err);
     }
-  },
+  }, */
 
   async function headers() {
-    const manifestPath = `${distPath}parcel-manifest.json`;
+    //const manifestPath = `${distPath}parcel-manifest.json`;
     const filePath = `${distPath}_headers`;
     const jsKey = 'all.js';
     const cssKey = 'screen.css';
     try {
-      const manifest = require(manifestPath);
-      const jsValue = manifest[jsKey];
-      const cssValue = manifest[cssKey];
+      // const manifest = require(manifestPath);
+      const jsValue = '';
+      const cssValue = `/css/screen.css`;
       const fileContent = `/
-  Link: ${jsValue}; rel=preload; as=script
-  Link: ${cssValue}; rel=preload; as=style`;
+${`Link: ${jsValue}; rel=preload; as=script`}
+Link: ${cssValue}; rel=preload; as=style`;
 
       await writeFileAsync(filePath, fileContent);
-      return Promise.resolve({ toDelete: [manifestPath, manifestPath] });
+      // return Promise.resolve({ toDelete: [manifestPath, manifestPath] });
     } catch (err) {
       // console.error("ERROR:", err);
     }

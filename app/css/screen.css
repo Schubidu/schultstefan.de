@@ -1,10 +1,27 @@
+:root {
+  --background-color: rgba(255, 255, 255, 0.7);
+  --background-backdrop-color: rgba(255, 255, 255, 0.4);
+  --font-color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: rgba(0, 0, 0, 0.7);
+    --background-backdrop-color: rgba(0, 0, 0, 0.4);
+    --font-color: #eee;
+  }
+}
+
 html,
 body {
-  background: var(--unsplash-color) var(--unsplash-small) center;
+  background-color: var(--unsplash-color);
+  background-image: var(--unsplash-small);
+  background-position: center;
   background-size: cover;
   background-position: center;
   padding: 0;
   margin: 0;
+  color: var(--font-color);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -33,7 +50,7 @@ body {
 div {
   align-self: center;
   padding: 0 1.325em;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--background-color);
   border-radius: 0.125em;
 }
 
@@ -44,20 +61,34 @@ aside {
   left: 0;
   right: 0;
   padding: 0.5em;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: var(--background-color);
   text-shadow: none;
 }
 
-@supports (-webkit-backdrop-filter: blur(10px)) {
+@supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
   div,
   aside,
   :target h1 {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: var(--background-backdrop-color);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   :target div {
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+@supports (backdrop-filter: blur(10px)) {
+  div,
+  aside,
+  :target h1 {
+    background-color: var(--background-backdrop-color);
+    backdrop-filter: blur(10px);
+  }
+
+  :target div {
+    backdrop-filter: none;
   }
 }
 

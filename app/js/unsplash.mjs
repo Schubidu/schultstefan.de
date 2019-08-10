@@ -1,5 +1,5 @@
-import favicon from './favicon';
-import photo from './unplashPhoto';
+import favicon from './favicon.mjs';
+import photo from './unplashPhoto.mjs';
 
 const aside = document.createElement('aside');
 document.body.append(aside);
