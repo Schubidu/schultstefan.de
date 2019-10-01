@@ -14,9 +14,9 @@
 [build.processing.images]
   compress = true
 
-[[headers]]
-  for = "/js/**/*.mjs"
-  [headers.values]
-    cache-control = "max-age=0,no-cache,no-store,must-revalidate"
-    Content-Type = "application/javascript; charset=UTF-8"
 
+[[headers]]
+for = "/**/*.mjs"
+[headers.values]
+Access-Control-Allow-Origin = "*"
+Content-Type = "text/javascript"
