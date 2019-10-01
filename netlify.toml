@@ -14,9 +14,3 @@
 [build.processing.images]
   compress = true
 
-
-[[headers]]
-for = "/**/*.mjs"
-[headers.values]
-Access-Control-Allow-Origin = "*"
-Content-Type = "text/javascript"
