@@ -6,13 +6,12 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "parcel serve app/index.html",
     "screenshot": "npm run build && node script/screenshot.js",
-    "_build": "rimraf app/js/unsplash-images",
-    "_postbuild": "node script/postbuild.js",
-    "build": "node script/postinstall.js",
+    "build": "rimraf app/js/unsplash-images",
+    "postbuild": "node script/postinstall.js",
     "lint": "eslint .",
-    "serve": "npm run build && serve ./dist",
+    "prestart": "npm run build",
+    "start": "serve ./app",
     "deploy": "npm run postinstall && npm run build"
   },
   "repository": {
