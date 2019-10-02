@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 const { promisify } = require('util');
 
+const path = require('path');
 const dotenv = require('dotenv');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const prettier = require('prettier');
 
 const writeFileAsync = promisify(fs.writeFile);
+const mkdirAsync = promisify(fs.mkdir);
 
 const fileTemplate = images => `const asyncImages = {${images}
 };
@@ -48,17 +50,16 @@ async function getUnsplashCollection() {
   const { total_photos: totalPhotos } = await fetch(
     `https://api.unsplash.com/collections/${collection}?client_id=${process.env.UNSPLASH_APP_SECRET}`
   ).then(res => res.json());
-  const data = await Promise.all(
-    [...Array(Math.ceil(totalPhotos / 25))]
-      .map(
-        (x, idx) =>
-          `https://api.unsplash.com/collections/${collection}/photos?page=${idx + 1}&per_page=${25}&client_id=${
-            process.env.UNSPLASH_APP_SECRET
-          }`
-      )
-      .map(url => fetch(url).then(res => res.json()))
-  );
-  return data.reduce((acc, pageData) => [...acc, ...pageData], []);
+  const totalPages = Math.ceil(totalPhotos / 25);
+  console.log({ totalPhotos, totalPages, randomPage: Math.ceil(Math.random(totalPages) * totalPages) });
+  // load only the first 25 images
+  const data = await fetch(
+    `https://api.unsplash.com/collections/${collection}/photos?page=${1}&per_page=${25}&client_id=${
+      process.env.UNSPLASH_APP_SECRET
+    }`
+  ).then(res => res.json());
+  // console.log(data);
+  return data;
 }
 
 function reduceData(data) {
@@ -82,23 +83,24 @@ const formatContent = async content => {
 const asyncProcessor = [
   async function loadUnsplashCollectionData() {
     const dirPath = 'app/js/unsplash-images/';
+    mkdirAsync(path.join(__dirname, '../', dirPath), { recursive: true });
     try {
       const data = await getUnsplashCollection();
       const reducedData = data.map(reduceData);
-      console.log(reducedData.length);
+      await writeFileAsync(path.join(__dirname, '../data.json'), JSON.stringify(data, null, 2));
       // writing images data
       await Promise.all(
         reducedData.map(async fileData => {
           const fileContent = await formatContent(`export default ${JSON.stringify(fileData, null, 2)}`);
-          writeFileAsync(`${dirPath}${fileData.id}.js`, fileContent);
+          writeFileAsync(`${dirPath}${fileData.id}.mjs`, fileContent);
         })
       );
 
       // writing index-file
       const fileContent = await formatContent(
-        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}")`).join(','))
+        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}.mjs")`).join(','))
       );
-      await writeFileAsync(`${dirPath}index.js`, fileContent);
+      await writeFileAsync(`${dirPath}index.mjs`, fileContent);
       return Promise.resolve({});
     } catch (err) {
       console.error('ERROR:', err);
