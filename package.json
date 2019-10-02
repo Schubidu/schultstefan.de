@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "screenshot": "npm run build && node script/screenshot.js",
     "build": "rimraf app/js/unsplash-images",
-    "postbuild": "node script/postinstall.js",
+    "postbuild": "node script/postinstall.js && cp -r app public",
     "lint": "eslint .",
     "prestart": "npm run build",
     "start": "serve ./app",

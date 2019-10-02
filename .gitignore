@@ -2,7 +2,9 @@
 .idea
 
 dist
+public
 node_modules
 app/unsplash-data.json
 .env
 app/js/unsplash-images
+data.json
