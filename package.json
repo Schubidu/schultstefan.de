@@ -31,7 +31,7 @@
     "prettier": "1.13.7",
     "puppeteer": "1.6.0",
     "rimraf": "3.0.0",
-    "serve": "11.1.0"
+    "serve": "11.2.0"
   },
   "dependencies": {}
 }
