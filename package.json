@@ -30,7 +30,7 @@
     "node-fetch": "2.2.1",
     "prettier": "1.13.7",
     "puppeteer": "1.6.0",
-    "rimraf": "2.6.2",
+    "rimraf": "3.0.0",
     "serve": "11.1.0"
   },
   "dependencies": {}
