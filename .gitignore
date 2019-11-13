@@ -8,3 +8,5 @@ app/unsplash-data.json
 .env
 app/js/unsplash-images
 data.json
+
+yarn.lock

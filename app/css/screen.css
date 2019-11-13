@@ -8,13 +8,13 @@
   :root {
     --background-color: rgba(0, 0, 0, 0.7);
     --background-backdrop-color: rgba(0, 0, 0, 0.4);
-    --font-color: #eee;
+    --font-color: #fefefe;
   }
 }
 
 html,
 body {
-  background-color: var(--unsplash-color);
+  background-color: var(--unsplash-color, var(--background-color));
   background-image: var(--unsplash-small);
   background-position: center;
   background-size: cover;

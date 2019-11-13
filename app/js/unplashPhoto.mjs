@@ -1,4 +1,5 @@
 import queryParser from './queryParser.mjs';
+// eslint-disable-next-line import/no-unresolved
 import { fetchImageData, getRandomImage, hasImage } from './unsplash-images/index.mjs';
 
 export default async () => {
