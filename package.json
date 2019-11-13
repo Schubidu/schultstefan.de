@@ -6,13 +6,13 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "screenshot": "npm run build && node script/screenshot.js",
     "build": "rimraf app/js/unsplash-images",
-    "postbuild": "node script/postinstall.js && cp -r app public",
+    "postbuild": "node script/postinstall.js",
     "lint": "eslint .",
     "prestart": "npm run build",
     "start": "serve ./app",
-    "deploy": "npm run postinstall && npm run build"
+    "deploy": "npm run postinstall && npm run build",
+    "upgrade-interactive": "npx npm-check --update"
   },
   "repository": {
     "type": "git",
@@ -25,13 +25,21 @@
   },
   "homepage": "https://schultstefan.de",
   "devDependencies": {
-    "dotenv": "6.1.0",
-    "netlify-cli": "^2.12.0",
-    "node-fetch": "2.2.1",
-    "prettier": "1.13.7",
-    "puppeteer": "1.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.7.0",
+    "@typescript-eslint/eslint-plugin-tslint": "^2.7.0",
+    "@typescript-eslint/parser": "^2.7.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-esnext": "^4.0.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prefer-arrow": "^1.1.6",
+    "eslint-plugin-prettier": "^3.1.1",
+    "lint": "^0.7.0",
+    "node-fetch": "^2.6.0",
+    "prettier": "^1.19.1",
     "rimraf": "3.0.0",
-    "serve": "11.1.0"
+    "serve": "^11.2.0"
   },
   "dependencies": {}
 }

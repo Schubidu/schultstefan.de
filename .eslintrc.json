@@ -1,5 +1,21 @@
 {
-  "extends": ["recommended/packages/esnext", "recommended/packages/esnext/style-guide", "plugin:prettier/recommended"],
+  "extends": ["esnext", "plugin:prettier/recommended"],
+  "settings": {
+    "import/extensions": [".mjs", ".js"],
+    "import/resolver": {
+      "node": { "extensions": [".js", ".mjs"] }
+    }
+  },
+  "rules": {
+    "import/extensions": [
+      "error",
+      "never",
+      {
+        "js": "never",
+        "mjs": "ignorePackages"
+      }
+    ]
+  },
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module",
