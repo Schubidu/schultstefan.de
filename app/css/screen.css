@@ -115,6 +115,12 @@ aside {
   color: #0000ee;
 }
 
+[class*=" icon-"] svg,
+[class^="icon-"] svg {
+  height: 1em;
+  width: 1em;
+}
+
 .i {
   height: 1.2em;
   display: inline-block;
