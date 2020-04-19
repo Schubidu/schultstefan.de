@@ -23,6 +23,7 @@ body {
   margin: 0;
   color: var(--font-color);
   -webkit-overflow-scrolling: touch;
+  min-height: 100vh;
 }
 
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
