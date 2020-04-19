@@ -6,8 +6,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf app/js/unsplash-images",
-    "postbuild": "node script/postinstall.js && cp -r app public",
+    "prebuild": "rimraf app/js/unsplash-images",
+    "build": "node script/postinstall.js",
     "lint": "eslint .",
     "prestart": "npm run build",
     "start": "serve ./app",

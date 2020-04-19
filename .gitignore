@@ -6,6 +6,7 @@ public
 node_modules
 app/unsplash-data.json
 .env
+.env.build
 app/js/unsplash-images
 data.json
 

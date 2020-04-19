@@ -77,7 +77,7 @@ function reduceData(data) {
 
 const formatContent = async content => {
   const options = await prettier.resolveConfig(process.cwd());
-  return prettier.format(content, { ...options, parser: 'babylon' });
+  return prettier.format(content, { ...options, parser: 'babel' });
 };
 
 const asyncProcessor = [
