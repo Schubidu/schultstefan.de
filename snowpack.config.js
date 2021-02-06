@@ -1,8 +1,8 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   mount: {
-    public: { url: '/', static: true },
-    src: { url: '/dist' },
+    public: '/',
+    src: '/_dist_',
   },
   plugins: ['@snowpack/plugin-typescript'],
   routes: [
