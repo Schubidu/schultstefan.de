@@ -23,8 +23,36 @@ body {
   margin: 0;
   color: var(--font-color);
   -webkit-overflow-scrolling: touch;
-  min-height: 100vh;
+  height: 100vh;
+  max-height: -webkit-fill-available;
 }
+html {
+  background-image: var(--unsplash-blurry)
+}
+
+.blurry {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: opacity 1200ms ease-out;
+  opacity: 0;
+}
+
+.hasConfetti .blurry {
+  opacity: 1;
+}
+
+.hasConfetti body {
+  background-image: var(--unsplash-blurry)
+}
+.hasConfetti aside {
+  display: none;
+}
+
 
 @media (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 120dpi) {
   body {
@@ -64,6 +92,10 @@ aside {
   padding: 0.5em;
   background-color: var(--background-color);
   text-shadow: none;
+}
+
+a {
+  color: currentColor;
 }
 
 @supports (-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px)) {
@@ -147,6 +179,17 @@ aside {
   color: #0077B5  ;
 }
 
+.icon-refresh {
+  position: absolute;
+  top: .5em;
+  right: .5em;
+  background-color: var(--background-backdrop-color);
+  border: none;
+}
+.icon-refresh path {
+  fill: currentColor;
+}
+
 .hide {
   display: none;
 }
@@ -161,14 +204,10 @@ aside {
   align-items: center;
   height: 100vh;
   font-size: 6vmin;
-  background-image: none;
+  background-image: var(--unsplash-regular);
 }
 
-:target body {
-  background: none;
-}
-
-:target aside {
+:target aside, :target canvas {
   display: none;
 }
 
@@ -180,7 +219,6 @@ aside {
 
 :target h1 {
   white-space: nowrap;
-  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 0.125em;
   padding: 0 0.75em;
 }

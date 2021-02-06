@@ -43,13 +43,14 @@ function reduceData(data) {
   const {
     id,
     color,
+    blur_hash: blurHash,
     user: {
       name,
       links: { html },
     },
     urls,
   } = data;
-  return { id, color, urls, user: { name, links: { html } } };
+  return { id, color, blurHash, urls, user: { name, links: { html } } };
 }
 
 const formatContent = async (content) => {

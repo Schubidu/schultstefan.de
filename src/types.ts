@@ -2,6 +2,7 @@ export interface ImageType {
   default: {
     id: string;
     color: string;
+    blurHash: string;
     urls: {
       raw: string;
       full: string;

@@ -4,9 +4,14 @@
  **/
 
 import confetti from 'canvas-confetti';
-import './unsplash';
+import unsplash from './unsplash';
 
-confetti.create(document.getElementById('canvas') as HTMLCanvasElement, {
-  resize: true,
-  useWorker: true,
-})({ particleCount: 200, spread: 200 });
+(async () => {
+  await unsplash();
+  document.documentElement.classList.add('hasConfetti');
+  await confetti.create(document.getElementById('canvas') as HTMLCanvasElement, {
+    resize: true,
+    useWorker: true,
+  })({ particleCount: 200, spread: 200 });
+  document.documentElement.classList.remove('hasConfetti');
+})();

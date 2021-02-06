@@ -44,7 +44,7 @@ export default async function unsplashPhoto(): Promise<ImageType['default'] | nu
     const newUrl = `${window.location.protocol}//${window.location.host}${
       window.location.pathname
     }?${query.toString()}`;
-    window.history.pushState({ path: newUrl }, '', newUrl);
+    !availePhoto && window.history.pushState({ path: newUrl }, '', newUrl);
   }
 
   if (photo) {
