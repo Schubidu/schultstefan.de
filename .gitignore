@@ -2,12 +2,14 @@
 .idea
 
 dist
-public
 node_modules
-app/unsplash-data.json
 .env
 .env.build
-app/js/unsplash-images
+.snowpack
+src/unsplash-images
+build
 data.json
 
 yarn.lock
+
+.vercel

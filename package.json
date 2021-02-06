@@ -4,39 +4,40 @@
   "description": "Homepage",
   "main": "index.js",
   "private": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf app/js/unsplash-images",
-    "postbuild": "node script/postinstall.js && cp -r app public",
-    "lint": "eslint .",
-    "prestart": "npm run build",
-    "start": "serve ./app",
-    "deploy": "npm run postinstall && npm run build",
-    "upgrade-interactive": "npx npm-check --update"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Schubidu/schultstefan.de.git"
   },
-  "author": "",
+  "author": "Stefan Schult",
   "license": " ",
   "bugs": {
     "url": "https://github.com/Schubidu/schultstefan.de/issues"
   },
   "homepage": "https://schultstefan.de",
-  "devDependencies": {
-    "dotenv": "^8.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-esnext": "^4.1.0",
-    "eslint-config-prettier": "^6.15.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-prefer-arrow": "^1.2.3",
-    "eslint-plugin-prettier": "^3.3.1",
-    "lint": "^0.7.0",
-    "node-fetch": "^2.6.1",
-    "prettier": "^2.2.1",
-    "rimraf": "3.0.2",
-    "serve": "^11.3.2"
+  "scripts": {
+    "prestart": "node script/postinstall.js",
+    "start": "snowpack dev",
+    "dev": "snowpack dev --port $PORT",
+    "prebuild": "node script/postinstall.js",
+    "build": "snowpack build",
+    "test": "echo \"This template does not include a test runner by default.\" && exit 1",
+    "format": "prettier --write \"src/**/*.{ts,js}\"",
+    "lint": "prettier --check \"src/**/*.{ts,js}\""
   },
-  "dependencies": {}
+  "dependencies": {
+    "blurhash": "^1.1.3",
+    "canvas-confetti": "^1.2.0"
+  },
+  "devDependencies": {
+    "@snowpack/plugin-typescript": "^1.2.0",
+    "@types/canvas-confetti": "^1.0.0",
+    "@types/snowpack-env": "^2.3.2",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1",
+    "prettier": "^2.0.5",
+    "rimraf": "3.0.2",
+    "snowpack": "^3.0.1",
+    "typescript": "^4.0.0",
+    "vercel": "^21.2.3"
+  }
 }

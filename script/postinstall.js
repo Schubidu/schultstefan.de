@@ -10,31 +10,8 @@ const prettier = require('prettier');
 const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
-const fileTemplate = images => `const asyncImages = {${images}
-};
-
-export const fetchImageData = async id => {
-  if (!asyncImages[id]) return Promise.resolve({});
-  const { default: data } = await asyncImages[id]();
-  return data;
-}
-
-export const hasImage = async id => Object.keys(asyncImages).includes(id);
-
-export const getRandomImage = async () => {
-  const keys = Object.keys(asyncImages);
-
-  return keys[Math.floor(Math.random() * keys.length)];
-};
-
-
-export const getRandomImageData = async () => {
-  const keys = Object.keys(asyncImages);
-
-  const randomKey = keys[Math.floor(Math.random() * keys.length)];
-
-  return fetchImageData(randomKey);
-};
+const fileTemplate = (images) => `
+export default {${images}} as const
 `;
 
 // loading .env
@@ -49,7 +26,7 @@ async function getUnsplashCollection() {
   const collection = '827751';
   const { total_photos: totalPhotos } = await fetch(
     `https://api.unsplash.com/collections/${collection}?client_id=${process.env.UNSPLASH_APP_SECRET}`
-  ).then(res => res.json());
+  ).then((res) => res.json());
   const totalPages = Math.ceil(totalPhotos / 25);
   console.log({ totalPhotos, totalPages, randomPage: Math.ceil(Math.random(totalPages) * totalPages) });
   // load only the first 25 images
@@ -57,7 +34,7 @@ async function getUnsplashCollection() {
     `https://api.unsplash.com/collections/${collection}/photos?page=${1}&per_page=${25}&client_id=${
       process.env.UNSPLASH_APP_SECRET
     }`
-  ).then(res => res.json());
+  ).then((res) => res.json());
   // console.log(data);
   return data;
 }
@@ -66,23 +43,24 @@ function reduceData(data) {
   const {
     id,
     color,
+    blur_hash: blurHash,
     user: {
       name,
       links: { html },
     },
     urls,
   } = data;
-  return { id, color, urls, user: { name, links: { html } } };
+  return { id, color, blurHash, urls, user: { name, links: { html } } };
 }
 
-const formatContent = async content => {
+const formatContent = async (content) => {
   const options = await prettier.resolveConfig(process.cwd());
-  return prettier.format(content, { ...options, parser: 'babel' });
+  return prettier.format(content, { ...options, parser: 'typescript' });
 };
 
 const asyncProcessor = [
   async function loadUnsplashCollectionData() {
-    const dirPath = 'app/js/unsplash-images/';
+    const dirPath = 'src/unsplash-images/';
     mkdirAsync(path.join(__dirname, '../', dirPath), { recursive: true });
     try {
       const data = await getUnsplashCollection();
@@ -90,17 +68,17 @@ const asyncProcessor = [
       await writeFileAsync(path.join(__dirname, '../data.json'), JSON.stringify(data, null, 2));
       // writing images data
       await Promise.all(
-        reducedData.map(async fileData => {
-          const fileContent = await formatContent(`export default ${JSON.stringify(fileData, null, 2)}`);
-          writeFileAsync(`${dirPath}${fileData.id}.mjs`, fileContent);
+        reducedData.map(async (fileData) => {
+          const fileContent = await formatContent(`export default ${JSON.stringify(fileData, null, 2)};`);
+          writeFileAsync(`${dirPath}${fileData.id}.ts`, fileContent);
         })
       );
 
       // writing index-file
       const fileContent = await formatContent(
-        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}.mjs")`).join(','))
+        fileTemplate(reducedData.map(({ id }) => `\n  "${id}": () => import("./${id}")`).join(','))
       );
-      await writeFileAsync(`${dirPath}index.mjs`, fileContent);
+      await writeFileAsync(`${dirPath}index.ts`, fileContent);
       return Promise.resolve({});
     } catch (err) {
       console.error('ERROR:', err);
@@ -110,7 +88,7 @@ const asyncProcessor = [
 
 async function main() {
   try {
-    await Promise.all(asyncProcessor.map(fn => fn()));
+    await Promise.all(asyncProcessor.map((fn) => fn()));
   } catch (err) {
     console.error('ERROR:', err);
   }

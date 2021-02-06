@@ -1,5 +1,7 @@
 {
-  "routes": [{ "src": "/.*", "dest": "/app" }],
+  "routes": [
+    { "src": "/", "dest": "/dist" }
+  ],
   "build": {
     "env": {
       "UNSPLASH_APP_SECRET": "@unsplash_app_secret"
