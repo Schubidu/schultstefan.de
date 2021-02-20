@@ -29,7 +29,7 @@ export const getRandomImageData = async () => {
 
 export default async function unsplashPhoto(): Promise<ImageType['default'] | null> {
   const query = queryParser();
-  const availePhoto = await hasImage(query.get('photos') as ImageId);
+  const availePhoto = !query.has('random') && (await hasImage(query.get('photos') as ImageId));
   let photo: ImageId | null = null;
 
   if (!availePhoto) {

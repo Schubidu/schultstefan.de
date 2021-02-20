@@ -10,6 +10,8 @@ const prettier = require('prettier');
 const writeFileAsync = promisify(fs.writeFile);
 const mkdirAsync = promisify(fs.mkdir);
 
+const excluded = require('./excluded');
+
 const fileTemplate = (images) => `
 export default {${images}} as const
 `;
@@ -64,7 +66,7 @@ const asyncProcessor = [
     mkdirAsync(path.join(__dirname, '../', dirPath), { recursive: true });
     try {
       const data = await getUnsplashCollection();
-      const reducedData = data.map(reduceData);
+      const reducedData = data.filter(({ id }) => !excluded.includes(id)).map(reduceData);
       await writeFileAsync(path.join(__dirname, '../data.json'), JSON.stringify(data, null, 2));
       // writing images data
       await Promise.all(
