@@ -1,4 +1,4 @@
-import { NowRequest, NowResponse } from '@vercel/node';
+import type { NowRequest, NowResponse } from '@vercel/node';
 import { decode } from 'blurhash';
 import { createCanvas } from 'canvas';
 import { getRandomImageData } from '../src/unplashPhoto';
