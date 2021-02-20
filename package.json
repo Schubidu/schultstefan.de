@@ -19,7 +19,7 @@
     "start": "snowpack dev",
     "dev": "snowpack dev --port $PORT",
     "prebuild": "node script/postinstall.js",
-    "build": "snowpack build",
+    "build": "SNOWPACK_PUBLIC_URL=$VERCEL_URL snowpack build",
     "test": "echo \"This template does not include a test runner by default.\" && exit 1",
     "format": "prettier --write \"src/**/*.{ts,js}\"",
     "lint": "prettier --check \"src/**/*.{ts,js}\"",
