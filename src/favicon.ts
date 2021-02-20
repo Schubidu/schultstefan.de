@@ -13,7 +13,6 @@ export default async function createFavicon({
 }: Pick<ImageType['default'], 'color' | 'blurHash'>): Promise<string> {
   favicon = document.querySelector('[rel="shortcut icon"]');
   const pixels = decode(blurHash, 32, 32);
-  console.log({ pixels });
 
   const faviconSize = 32;
 
@@ -26,7 +25,6 @@ export default async function createFavicon({
   const img = document.createElement('img');
   if (favicon?.href) img.src = favicon.href;
   document.body.appendChild(canvas);
-  console.log(document.body.firstChild);
   document.body.insertBefore(canvas, document.body.firstChild);
   return new Promise((resolve) => {
     img.onload = () => {
@@ -34,12 +32,6 @@ export default async function createFavicon({
         const imageData = context.createImageData(faviconSize, faviconSize);
         imageData.data.set(pixels);
         context.putImageData(imageData, 0, 0);
-
-        /*         context.beginPath();
-        context.arc(canvas.width - faviconSize, canvas.height, faviconSize / 3, 0, 2 * Math.PI);
-        context.fillStyle = color;
-        context.fill();
- */
         // Replace favicon
         favicon.type = 'image/png';
         favicon.href = canvas.toDataURL('image/png');

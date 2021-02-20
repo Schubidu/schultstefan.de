@@ -57,3 +57,7 @@ declare module '*.png' {
 }
 
 /* CUSTOM: ADD YOUR OWN HERE */
+declare module 'color-contrast' {
+  const ref: (foreground: string, background: string) => number;
+  export default ref;
+}
