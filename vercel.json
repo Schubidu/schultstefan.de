@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/open-graph-image.ts": {
+      "includeFiles": "data.json"
+    }
+  },
   "build": {
     "env": {
       "UNSPLASH_APP_SECRET": "@unsplash_app_secret"

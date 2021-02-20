@@ -1,7 +1,8 @@
 import type { NowRequest, NowResponse } from '@vercel/node';
 import { decode } from 'blurhash';
 import { createCanvas } from 'canvas';
-import data from '../data.json';
+
+const data = require('../data.json');
 
 const viewportWidth = 1200;
 const viewPortHeight = 630;
@@ -12,7 +13,7 @@ function getRandomData() {
 
 module.exports = async (req: NowRequest, res: NowResponse) => {
   try {
-    const currentPhoto = await getRandomData();
+    const currentPhoto = getRandomData();
     if (currentPhoto) {
       const pixels = decode(currentPhoto.blur_hash, 1200, 630);
 
