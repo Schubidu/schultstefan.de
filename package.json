@@ -32,7 +32,7 @@
     "@snowpack/plugin-typescript": "^1.2.0",
     "@types/canvas-confetti": "^1.4.0",
     "@types/snowpack-env": "^2.3.2",
-    "dotenv": "^8.2.0",
+    "dotenv": "^8.4.0",
     "node-fetch": "^2.6.1",
     "prettier": "^2.0.5",
     "rimraf": "3.0.2",
