@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { config } from 'dotenv';
+import dotenv from 'dotenv';
 import { mkdir, writeFile } from 'fs';
 import fetch from 'node-fetch';
 import path, { join } from 'path';
@@ -16,7 +16,7 @@ export default {${images}} as const
 `;
 
 // loading .env
-const result = config();
+const result = dotenv.config();
 
 if (result.error) {
   console.log('no file .env found');
