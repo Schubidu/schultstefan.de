@@ -1,21 +1,22 @@
 /* eslint-disable no-console */
-const { promisify } = require('util');
+import { config } from 'dotenv';
+import { mkdir, writeFile } from 'fs';
+import fetch from 'node-fetch';
+import path, { join } from 'path';
+import pkg from 'prettier';
+import { promisify } from 'util';
 
-const path = require('path');
-const dotenv = require('dotenv');
-const fetch = require('node-fetch');
-const fs = require('fs');
-const prettier = require('prettier');
-
-const writeFileAsync = promisify(fs.writeFile);
-const mkdirAsync = promisify(fs.mkdir);
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const { format, resolveConfig } = pkg;
+const writeFileAsync = promisify(writeFile);
+const mkdirAsync = promisify(mkdir);
 
 const fileTemplate = (images) => `
 export default {${images}} as const
 `;
 
 // loading .env
-const result = dotenv.config();
+const result = config();
 
 if (result.error) {
   console.log('no file .env found');
@@ -54,18 +55,18 @@ function reduceData(data) {
 }
 
 const formatContent = async (content) => {
-  const options = await prettier.resolveConfig(process.cwd());
-  return prettier.format(content, { ...options, parser: 'typescript' });
+  const options = await resolveConfig(process.cwd());
+  return format(content, { ...options, parser: 'typescript' });
 };
 
 const asyncProcessor = [
   async function loadUnsplashCollectionData() {
     const dirPath = 'src/unsplash-images/';
-    mkdirAsync(path.join(__dirname, '../', dirPath), { recursive: true });
+    mkdirAsync(join(__dirname, '../', dirPath), { recursive: true });
     try {
       const data = await getUnsplashCollection();
       const reducedData = data.map(reduceData);
-      await writeFileAsync(path.join(__dirname, '../data.json'), JSON.stringify(data, null, 2));
+      await writeFileAsync(join(__dirname, '../data.json'), JSON.stringify(data, null, 2));
       // writing images data
       await Promise.all(
         reducedData.map(async (fileData) => {
