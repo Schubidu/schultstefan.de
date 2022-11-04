@@ -26,7 +26,7 @@
     "lint": "prettier --check \"src/**/*.{ts,js}\""
   },
   "dependencies": {
-    "blurhash": "^2.0.3",
+    "blurhash": "^2.0.4",
     "canvas-confetti": "^1.6.0"
   },
   "devDependencies": {
