@@ -34,7 +34,7 @@
     "@types/canvas-confetti": "^1.4.3",
     "@types/snowpack-env": "^2.3.4",
     "dotenv": "^16.0.3",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "^3.3.0",
     "prettier": "^2.7.1",
     "rimraf": "3.0.2",
     "snowpack": "^3.8.8",
