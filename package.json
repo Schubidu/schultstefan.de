@@ -39,6 +39,6 @@
     "rimraf": "4.4.1",
     "snowpack": "^3.8.8",
     "typescript": "^5.0.2",
-    "vercel": "^28.16.15"
+    "vercel": "^28.18.1"
   }
 }
