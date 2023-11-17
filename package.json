@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "blurhash": "^2.0.5",
-    "canvas-confetti": "^1.9.0"
+    "canvas-confetti": "^1.9.1"
   },
   "devDependencies": {
     "@snowpack/plugin-typescript": "^1.2.0",
