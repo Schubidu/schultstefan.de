@@ -35,7 +35,7 @@
     "@types/snowpack-env": "^2.3.7",
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2",
-    "prettier": "^3.2.5",
+    "prettier": "^3.3.1",
     "rimraf": "5.0.7",
     "snowpack": "^3.8.8",
     "typescript": "^5.4.5",
