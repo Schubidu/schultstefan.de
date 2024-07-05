@@ -38,7 +38,7 @@
     "prettier": "^3.3.2",
     "rimraf": "5.0.7",
     "snowpack": "^3.8.8",
-    "typescript": "^5.5.2",
+    "typescript": "^5.5.3",
     "vercel": "^34.2.8"
   }
 }
