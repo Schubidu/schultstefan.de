@@ -36,7 +36,7 @@
     "dotenv": "^16.4.5",
     "node-fetch": "^3.3.2",
     "prettier": "^3.3.2",
-    "rimraf": "5.0.7",
+    "rimraf": "6.0.1",
     "snowpack": "^3.8.8",
     "typescript": "^5.5.3",
     "vercel": "^34.2.8"
