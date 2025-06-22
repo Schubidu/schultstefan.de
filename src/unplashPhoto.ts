@@ -22,17 +22,17 @@ export function getRandomImage(): ImageId {
 export const getRandomImageData = async () => {
   const keys = Object.keys(asyncImages);
 
-  const randomKey = (keys[Math.floor(Math.random() * keys.length)] as unknown) as ImageId;
+  const randomKey = keys[Math.floor(Math.random() * keys.length)] as unknown as ImageId;
 
   return fetchImageData(randomKey);
 };
 
 export default async function unsplashPhoto(): Promise<ImageType['default'] | null> {
   const query = queryParser();
-  const availePhoto = await hasImage(query.get('photos') as ImageId);
+  const availablePhoto = await hasImage(query.get('photos') as ImageId);
   let photo: ImageId | null = null;
 
-  if (!availePhoto) {
+  if (!availablePhoto) {
     photo = getRandomImage();
   } else {
     photo = query.get('photos') as ImageId;
@@ -44,7 +44,7 @@ export default async function unsplashPhoto(): Promise<ImageType['default'] | nu
     const newUrl = `${window.location.protocol}//${window.location.host}${
       window.location.pathname
     }?${query.toString()}`;
-    !availePhoto && window.history.pushState({ path: newUrl }, '', newUrl);
+    !availablePhoto && window.history.pushState({ path: newUrl }, '', newUrl);
   }
 
   if (photo) {
