@@ -1,5 +1,5 @@
 import favicon from './favicon';
-import photo from './unplashPhoto';
+import photo from './unsplashPhoto';
 
 const aside = document.createElement('aside');
 document.body.append(aside);
