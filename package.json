@@ -40,6 +40,6 @@
     "snowpack": "^3.8.8",
     "typescript": "^5.9.2",
     "vercel": "^45.0.9",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.16"
   }
 }
