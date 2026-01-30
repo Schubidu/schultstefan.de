@@ -39,7 +39,7 @@
     "rimraf": "6.1.2",
     "snowpack": "^3.8.8",
     "typescript": "^5.9.2",
-    "vercel": "^50.4.10",
+    "vercel": "^50.9.5",
     "vitest": "^4.0.18"
   }
 }
