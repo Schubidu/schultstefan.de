@@ -4,12 +4,17 @@ import type { ImageType } from './types';
 import { getInitialPhoto, getNextPhoto } from './unsplashPhoto';
 
 type Photo = ImageType['default'];
+
 type TransitionPhase = 'soften' | 'swap' | 'reveal';
 
 const background = document.querySelector<HTMLElement>('#photo-background');
+
 const credit = document.querySelector<HTMLElement>('#photo-credit');
+
 const shuffleButton = document.querySelector<HTMLButtonElement>('#shuffle-photo');
+
 const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 let currentPhoto: Photo | null = null;
@@ -33,8 +38,11 @@ function updateCredit(photo: Photo): void {
   }
 
   const sourceSuffix = '?utm_source=schultstefan.de&utm_medium=referral';
+
   const photoLink = document.createElement('a');
+
   const photographerLink = document.createElement('a');
+
   const unsplashLink = document.createElement('a');
 
   photoLink.href = `https://unsplash.com/photos/${photo.id}${sourceSuffix}`;
@@ -55,6 +63,7 @@ function updateCredit(photo: Photo): void {
 
 function applyPhotoMetadata(photo: Photo, blurDataUrl: string): void {
   themeColor?.setAttribute('content', photo.color);
+
   updateFavicon(blurDataUrl);
   updateCredit(photo);
 }
@@ -66,6 +75,7 @@ async function preloadImage(url: string): Promise<boolean> {
 
   try {
     await image.decode();
+
     return true;
   } catch {
     return false;
@@ -75,6 +85,7 @@ async function preloadImage(url: string): Promise<boolean> {
 async function transitionBackground(phase: TransitionPhase, update: () => void): Promise<void> {
   if (reducedMotion.matches || !document.startViewTransition) {
     update();
+
     return;
   }
 
@@ -120,7 +131,9 @@ async function shufflePhoto(): Promise<void> {
     }
 
     const currentBlur = createBlurDataUrl(currentPhoto.blurHash);
+
     const nextBlur = createBlurDataUrl(nextPhoto.blurHash);
+
     const imageReady = preloadImage(nextPhoto.urls.regular);
 
     await transitionBackground('soften', () => applyBackground(currentBlur, currentPhoto?.color ?? nextPhoto.color));
@@ -134,6 +147,7 @@ async function shufflePhoto(): Promise<void> {
     }
 
     currentPhoto = nextPhoto;
+
     await surpriseConfetti();
   } finally {
     shuffleButton.disabled = false;
@@ -148,6 +162,7 @@ export default async function initializeBackground(): Promise<void> {
     if (shuffleButton) {
       shuffleButton.disabled = true;
     }
+
     return;
   }
 
