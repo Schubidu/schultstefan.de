@@ -9,10 +9,6 @@
       "options": { "singleQuote": false }
     },
     {
-      "files": ".eslintrc.json",
-      "options": { "parser": "json" }
-    },
-    {
       "files": ".prettierrc",
       "options": { "parser": "json" }
     }
