@@ -21,6 +21,14 @@ npm run check
 
 It runs formatting checks, Oxlint with the vendored anti-slop rules, TypeScript checks, Vitest and the production build.
 
+## Background photos
+
+The website only reads the committed registry under `src/unsplash-images`. Normal development, CI and production builds do not fetch from Unsplash.
+
+The manual `Update photos` GitHub Actions workflow refreshes the first 25 photos from the configured Unsplash collection using `UNSPLASH_APP_SECRET`, runs the quality gate and commits registry changes when necessary.
+
+In the browser, seen photo IDs are remembered locally so shuffle cycles through unseen photos before starting a new round. IDs that disappear from a later registry refresh are simply ignored.
+
 ## Dependency policy
 
 The repository keeps automated Dependabot updates, but normal dependency resolution uses a seven-day minimum release age. Urgent security fixes may use an explicit, reviewed exception rather than silently weakening the default policy.
