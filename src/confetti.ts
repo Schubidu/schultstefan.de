@@ -2,6 +2,11 @@ import confetti from 'canvas-confetti';
 
 export type ConfettiLevel = 'none' | 'small' | 'large' | 'absurd';
 
+interface ConfettiOrigin {
+  x: number;
+  y: number;
+}
+
 export function chooseConfettiLevel(random: () => number = Math.random): ConfettiLevel {
   const value = random();
 
@@ -20,7 +25,7 @@ export function chooseConfettiLevel(random: () => number = Math.random): Confett
   return 'absurd';
 }
 
-function randomOrigin(random: () => number): { x: number; y: number } {
+function randomOrigin(random: () => number): ConfettiOrigin {
   return {
     x: 0.18 + random() * 0.64,
     y: 0.08 + random() * 0.32,
@@ -40,11 +45,13 @@ export async function surpriseConfetti(random: () => number = Math.random): Prom
 
   if (level === 'small') {
     await confetti({ particleCount: 28 + Math.floor(random() * 24), spread: 52, origin: randomOrigin(random) });
+
     return;
   }
 
   if (level === 'large') {
     await confetti({ particleCount: 120 + Math.floor(random() * 80), spread: 110, origin: randomOrigin(random) });
+
     return;
   }
 
