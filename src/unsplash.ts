@@ -92,6 +92,10 @@ function applyPhotoIdentity(photo: Photo, blurDataUrl: string): void {
   updateCredit(photo);
 }
 
+function triggerSurpriseConfetti(): void {
+  void surpriseConfetti().catch(() => undefined);
+}
+
 async function preloadImage(url: string): Promise<boolean> {
   const image = new Image();
 
@@ -211,8 +215,7 @@ async function shufflePhoto(): Promise<void> {
 
     applyThemeColor(nextPhoto.color);
     currentPhoto = nextPhoto;
-
-    await surpriseConfetti();
+    triggerSurpriseConfetti();
   } finally {
     shuffleButton.disabled = false;
     shuffleButton.removeAttribute('aria-busy');
@@ -231,9 +234,10 @@ export default async function initializeBackground(): Promise<void> {
   }
 
   await revealPhoto(photo);
-  await surpriseConfetti();
 
   shuffleButton?.addEventListener('click', async () => {
     await shufflePhoto();
   });
+
+  triggerSurpriseConfetti();
 }
