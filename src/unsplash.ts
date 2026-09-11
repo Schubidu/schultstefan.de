@@ -61,8 +61,15 @@ function updateCredit(photo: Photo): void {
   credit.hidden = false;
 }
 
+function applyThemeColor(color: string): void {
+  themeColor?.setAttribute('content', color);
+
+  document.documentElement.style.backgroundColor = color;
+  document.body.style.backgroundColor = color;
+}
+
 function applyPhotoMetadata(photo: Photo, blurDataUrl: string): void {
-  themeColor?.setAttribute('content', photo.color);
+  applyThemeColor(photo.color);
 
   updateFavicon(blurDataUrl);
   updateCredit(photo);
