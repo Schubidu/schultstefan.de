@@ -18,7 +18,3 @@ export interface ImageType {
     };
   };
 }
-
-export interface AsyncImages {
-  [key: string]: () => Promise<ImageType>;
-}
