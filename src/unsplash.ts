@@ -63,9 +63,7 @@ function updateCredit(photo: Photo): void {
 
 function applyThemeColor(color: string): void {
   themeColor?.setAttribute('content', color);
-
-  document.documentElement.style.backgroundColor = color;
-  document.body.style.backgroundColor = color;
+  document.documentElement.style.setProperty('--photo-color', color);
 }
 
 function applyPhotoMetadata(photo: Photo, blurDataUrl: string): void {
