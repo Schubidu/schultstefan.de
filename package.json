@@ -15,10 +15,10 @@
   },
   "homepage": "https://schultstefan.de",
   "scripts": {
-    "prebuild": "node script/postinstall.js",
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
+    "photos:update": "node script/update-photos.js",
     "test": "vitest run src",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,js}\" \"script/**/*.js\" \"vite.config.ts\" \"oxlint.config.ts\"",
