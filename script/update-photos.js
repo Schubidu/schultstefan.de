@@ -23,7 +23,9 @@ async function fetchJson(url) {
 }
 
 async function getCollection(secret) {
-  return fetchJson(`https://api.unsplash.com/collections/${collectionId}/photos?page=1&per_page=25&client_id=${secret}`);
+  return fetchJson(
+    `https://api.unsplash.com/collections/${collectionId}/photos?page=1&per_page=25&client_id=${secret}`
+  );
 }
 
 function reducePhoto(data) {
@@ -52,7 +54,9 @@ async function clearRegistry() {
 
   const files = await readdir(photosDir);
 
-  await Promise.all(files.filter((file) => file.endsWith('.ts')).map((file) => unlink(path.join(photosDir, file))));
+  await Promise.all(
+    files.filter((file) => file.endsWith('.ts')).map((file) => unlink(path.join(photosDir, file)))
+  );
 }
 
 async function writeRegistry(photos) {
@@ -66,7 +70,9 @@ async function writeRegistry(photos) {
     })
   );
 
-  const entries = photos.map(({ id }) => `\n  ${JSON.stringify(id)}: () => import(${JSON.stringify(`./${id}`)})`).join(',');
+  const entries = photos
+    .map(({ id }) => `\n  ${JSON.stringify(id)}: () => import(${JSON.stringify(`./${id}`)})`)
+    .join(',');
   const index = await formatTypeScript(`export default {${entries}} as const;`);
 
   await writeFile(path.join(photosDir, 'index.ts'), index);
