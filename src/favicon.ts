@@ -26,12 +26,10 @@ export function updateFavicon(dataUrl: string): void {
     return;
   }
 
-  const favicon = document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
+  const favicons = document.querySelectorAll<HTMLLinkElement>('link[rel~="icon"]');
 
-  if (!favicon) {
-    return;
+  for (const favicon of favicons) {
+    favicon.type = 'image/png';
+    favicon.href = dataUrl;
   }
-
-  favicon.type = 'image/png';
-  favicon.href = dataUrl;
 }
