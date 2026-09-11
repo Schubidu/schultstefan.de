@@ -1,36 +1,34 @@
 :root {
   color-scheme: light dark;
   --page-foreground: #15171d;
-  --panel-background: rgba(248, 250, 253, 0.14);
-  --panel-border: rgba(255, 255, 255, 0.9);
-  --panel-highlight: rgba(255, 255, 255, 0.84);
+  --panel-background: rgba(248, 250, 253, 0.1);
+  --panel-border: rgba(255, 255, 255, 0.92);
   --panel-shadow: rgba(8, 11, 17, 0.34);
-  --facet-light: rgba(255, 255, 255, 0.26);
-  --facet-mid: rgba(255, 255, 255, 0.08);
-  --facet-dark: rgba(36, 43, 56, 0.1);
-  --prism-cyan: rgba(92, 218, 255, 0.22);
-  --prism-violet: rgba(207, 136, 255, 0.17);
-  --prism-amber: rgba(255, 221, 132, 0.11);
-  --link-background: rgba(255, 255, 255, 0.16);
-  --link-background-hover: rgba(255, 255, 255, 0.31);
+  --facet-light: rgba(255, 255, 255, 0.22);
+  --facet-mid: rgba(255, 255, 255, 0.07);
+  --facet-dark: rgba(37, 46, 60, 0.11);
+  --prism-cyan: rgba(88, 218, 255, 0.2);
+  --prism-violet: rgba(205, 137, 255, 0.15);
+  --prism-amber: rgba(255, 218, 124, 0.09);
+  --link-background: rgba(255, 255, 255, 0.12);
+  --link-background-hover: rgba(255, 255, 255, 0.25);
   --fallback-background: #cbd0d8;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --page-foreground: #f4f5f8;
-    --panel-background: rgba(8, 11, 17, 0.2);
-    --panel-border: rgba(255, 255, 255, 0.42);
-    --panel-highlight: rgba(255, 255, 255, 0.4);
+    --panel-background: rgba(7, 10, 16, 0.17);
+    --panel-border: rgba(255, 255, 255, 0.43);
     --panel-shadow: rgba(0, 0, 0, 0.62);
-    --facet-light: rgba(255, 255, 255, 0.16);
-    --facet-mid: rgba(255, 255, 255, 0.045);
-    --facet-dark: rgba(0, 0, 0, 0.16);
-    --prism-cyan: rgba(74, 204, 255, 0.2);
-    --prism-violet: rgba(203, 126, 255, 0.16);
-    --prism-amber: rgba(255, 218, 122, 0.09);
-    --link-background: rgba(255, 255, 255, 0.055);
-    --link-background-hover: rgba(255, 255, 255, 0.13);
+    --facet-light: rgba(255, 255, 255, 0.13);
+    --facet-mid: rgba(255, 255, 255, 0.035);
+    --facet-dark: rgba(0, 0, 0, 0.18);
+    --prism-cyan: rgba(72, 202, 255, 0.18);
+    --prism-violet: rgba(198, 123, 255, 0.14);
+    --prism-amber: rgba(255, 214, 113, 0.075);
+    --link-background: rgba(255, 255, 255, 0.045);
+    --link-background-hover: rgba(255, 255, 255, 0.11);
     --fallback-background: #111318;
   }
 }
@@ -86,29 +84,31 @@ body {
   position: relative;
   isolation: isolate;
   width: min(36rem, 100%);
-  padding: clamp(1.75rem, 6vw, 3.25rem);
+  padding: clamp(1.8rem, 6vw, 3.3rem);
   overflow: hidden;
   text-align: center;
-  background:
-    linear-gradient(142deg, rgba(255, 255, 255, 0.12), transparent 24% 76%, rgba(255, 255, 255, 0.035)),
-    var(--panel-background);
+  background: var(--panel-background);
   border: 1px solid var(--panel-border);
   box-shadow:
     0 2rem 5.5rem var(--panel-shadow),
-    inset 2px 2px rgba(255, 255, 255, 0.33),
-    inset -2px -2px rgba(0, 0, 0, 0.12),
+    inset 2px 2px rgba(255, 255, 255, 0.44),
+    inset -2px -2px rgba(0, 0, 0, 0.14),
     inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(6px) saturate(1.34) contrast(1.06);
-  -webkit-backdrop-filter: blur(6px) saturate(1.34) contrast(1.06);
+  backdrop-filter: blur(2px) saturate(1.2) contrast(1.04);
+  -webkit-backdrop-filter: blur(2px) saturate(1.2) contrast(1.04);
   clip-path: polygon(
-    0 1.55rem,
-    1.55rem 0,
-    calc(100% - 2.35rem) 0,
-    100% 2.35rem,
-    100% calc(100% - 1.3rem),
-    calc(100% - 1.3rem) 100%,
-    2.05rem 100%,
-    0 calc(100% - 2.05rem)
+    0 15%,
+    7% 0,
+    62% 0,
+    68% 3%,
+    94% 0,
+    100% 18%,
+    100% 78%,
+    94% 100%,
+    57% 97%,
+    49% 100%,
+    9% 100%,
+    0 84%
   );
 }
 
@@ -121,37 +121,38 @@ body {
 .profile-card::after {
   content: "";
   position: absolute;
-  inset: 0;
   pointer-events: none;
 }
 
 .profile-card::before {
+  inset: 0;
   z-index: 2;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.68) 0, rgba(255, 255, 255, 0.18) 1.2px, transparent 2.4px),
-    linear-gradient(315deg, rgba(0, 0, 0, 0.18) 0, rgba(0, 0, 0, 0.07) 1.2px, transparent 2.5px),
-    radial-gradient(circle at 3% 7%, rgba(255, 255, 255, 0.45), transparent 17%),
-    radial-gradient(circle at 97% 93%, rgba(0, 0, 0, 0.14), transparent 19%);
-  opacity: 0.88;
+    radial-gradient(ellipse at 3% 8%, rgba(255, 255, 255, 0.52), transparent 17%),
+    radial-gradient(ellipse at 96% 90%, rgba(0, 0, 0, 0.16), transparent 21%);
 }
 
 .profile-card::after {
-  z-index: 3;
   inset: 1px;
+  z-index: 3;
   background:
-    linear-gradient(104deg, transparent 6%, rgba(255, 255, 255, 0.28) 6.35%, transparent 6.75% 91%, rgba(255, 255, 255, 0.14) 91.3%, transparent 91.7%),
-    linear-gradient(178deg, rgba(255, 255, 255, 0.28), transparent 1.4rem calc(100% - 1rem), rgba(0, 0, 0, 0.13));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 0.32rem calc(100% - 0.32rem), rgba(0, 0, 0, 0.16)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.2), transparent 0.28rem calc(100% - 0.28rem), rgba(0, 0, 0, 0.12));
   clip-path: polygon(
-    0 1.5rem,
-    1.5rem 0,
-    calc(100% - 2.3rem) 0,
-    100% 2.3rem,
-    100% calc(100% - 1.25rem),
-    calc(100% - 1.25rem) 100%,
-    2rem 100%,
-    0 calc(100% - 2rem)
+    0 15%,
+    7% 0,
+    62% 0,
+    68% 3%,
+    94% 0,
+    100% 18%,
+    100% 78%,
+    94% 100%,
+    57% 97%,
+    49% 100%,
+    9% 100%,
+    0 84%
   );
-  opacity: 0.78;
+  opacity: 0.82;
 }
 
 .crystal-surface {
@@ -171,59 +172,81 @@ body {
 }
 
 .crystal-surface::before {
-  z-index: 7;
+  z-index: 6;
   background:
-    linear-gradient(111deg, transparent 0 27.5%, rgba(255, 255, 255, 0.38) 27.75% 28.05%, transparent 28.3% 100%),
-    linear-gradient(48deg, transparent 0 55.5%, rgba(255, 255, 255, 0.2) 55.75% 56.05%, transparent 56.3% 100%),
-    linear-gradient(136deg, transparent 0 68.5%, rgba(255, 255, 255, 0.15) 68.75% 69.05%, transparent 69.3% 100%);
-  opacity: 0.8;
+    radial-gradient(ellipse at 5% 17%, rgba(255, 255, 255, 0.26), transparent 18%),
+    radial-gradient(ellipse at 94% 84%, var(--prism-violet), transparent 19%),
+    radial-gradient(ellipse at 22% 92%, var(--prism-cyan), transparent 16%),
+    radial-gradient(ellipse at 75% 5%, var(--prism-amber), transparent 14%);
+  opacity: 0.62;
 }
 
 .crystal-surface::after {
-  z-index: 8;
+  z-index: 7;
+  inset: 0.32rem;
   background:
-    radial-gradient(ellipse at 9% 18%, rgba(255, 255, 255, 0.28), transparent 21%),
-    radial-gradient(ellipse at 89% 83%, var(--prism-violet), transparent 25%),
-    linear-gradient(117deg, transparent 13%, var(--prism-cyan) 21%, transparent 29%),
-    linear-gradient(301deg, transparent 76%, var(--prism-amber) 83%, transparent 90%);
-  opacity: 0.55;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 12% 88%, rgba(0, 0, 0, 0.08));
+  clip-path: polygon(
+    0 14%,
+    6.4% 0,
+    62% 0,
+    68% 2.5%,
+    94% 0,
+    100% 17%,
+    100% 78%,
+    94% 100%,
+    57% 97%,
+    49% 100%,
+    9% 100%,
+    0 84%
+  );
+  opacity: 0.46;
 }
 
 .crystal-facet {
   position: absolute;
   inset: -1px;
   transform: translateZ(0);
-  filter: drop-shadow(1px 0 0 rgba(255, 255, 255, 0.18)) drop-shadow(-1px 0 0 rgba(0, 0, 0, 0.06));
 }
 
 .crystal-facet-a {
   z-index: 1;
-  background: linear-gradient(122deg, var(--facet-light), rgba(255, 255, 255, 0.03) 54%, var(--prism-cyan));
-  clip-path: polygon(0 0, 36% 0, 24% 100%, 0 100%);
+  background: linear-gradient(135deg, var(--facet-light), rgba(255, 255, 255, 0.025) 70%);
+  backdrop-filter: blur(0.4px) brightness(1.07) saturate(1.05);
+  -webkit-backdrop-filter: blur(0.4px) brightness(1.07) saturate(1.05);
+  clip-path: polygon(0 0, 38% 0, 30% 46%, 0 70%);
 }
 
 .crystal-facet-b {
   z-index: 2;
-  background: linear-gradient(154deg, rgba(255, 255, 255, 0.13), var(--facet-mid) 45%, var(--facet-dark) 100%);
-  clip-path: polygon(36% 0, 70% 0, 57% 57%, 24% 100%);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.07), var(--facet-dark));
+  backdrop-filter: blur(4px) brightness(0.97) contrast(1.08);
+  -webkit-backdrop-filter: blur(4px) brightness(0.97) contrast(1.08);
+  clip-path: polygon(38% 0, 71% 0, 64% 56%, 30% 46%);
 }
 
 .crystal-facet-c {
   z-index: 3;
-  background: linear-gradient(218deg, var(--facet-light), rgba(255, 255, 255, 0.025) 50%, var(--facet-dark));
-  clip-path: polygon(70% 0, 100% 0, 100% 65%, 57% 57%);
+  background: linear-gradient(220deg, var(--facet-light), rgba(255, 255, 255, 0.018) 54%, var(--facet-dark));
+  backdrop-filter: blur(1px) brightness(1.02) saturate(0.94);
+  -webkit-backdrop-filter: blur(1px) brightness(1.02) saturate(0.94);
+  clip-path: polygon(71% 0, 100% 0, 100% 77%, 64% 56%);
 }
 
 .crystal-facet-d {
   z-index: 4;
-  background: linear-gradient(32deg, rgba(255, 255, 255, 0.16), var(--facet-mid) 52%, var(--prism-violet));
-  clip-path: polygon(0 100%, 24% 100%, 57% 57%, 48% 100%);
+  background: linear-gradient(30deg, rgba(255, 255, 255, 0.16), transparent 58%, var(--prism-cyan));
+  backdrop-filter: blur(2.2px) brightness(1.04) saturate(1.16);
+  -webkit-backdrop-filter: blur(2.2px) brightness(1.04) saturate(1.16);
+  clip-path: polygon(0 70%, 30% 46%, 51% 100%, 0 100%);
 }
 
 .crystal-facet-e {
   z-index: 5;
-  background: linear-gradient(326deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.025) 48%, var(--facet-dark));
-  clip-path: polygon(57% 57%, 100% 65%, 100% 100%, 48% 100%);
+  background: linear-gradient(326deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.018) 48%, var(--facet-dark));
+  backdrop-filter: blur(0.8px) brightness(0.99) contrast(1.1);
+  -webkit-backdrop-filter: blur(0.8px) brightness(0.99) contrast(1.1);
+  clip-path: polygon(30% 46%, 64% 56%, 100% 77%, 100% 100%, 51% 100%);
 }
 
 .kicker {
@@ -232,7 +255,7 @@ body {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  opacity: 0.76;
+  opacity: 0.78;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
 }
 
@@ -244,7 +267,7 @@ h1 {
   line-height: 0.98;
   text-shadow:
     0 1px 0 rgba(255, 255, 255, 0.18),
-    0 0.08em 0.3em rgba(0, 0, 0, 0.14);
+    0 0.08em 0.3em rgba(0, 0, 0, 0.16);
 }
 
 .role {
@@ -253,51 +276,56 @@ h1 {
   font-size: clamp(0.98rem, 3vw, 1.14rem);
   font-weight: 480;
   text-wrap: balance;
-  text-shadow: 0 0.08em 0.28em rgba(0, 0, 0, 0.18);
+  text-shadow: 0 0.08em 0.28em rgba(0, 0, 0, 0.19);
 }
 
 .profiles {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 1.65rem;
+  gap: 0.55rem;
+  margin-top: 1.7rem;
 }
 
 .profile-link {
+  position: relative;
+  isolation: isolate;
   min-width: 6.2rem;
-  padding: 0.62rem 0.85rem;
+  padding: 0.65rem 0.9rem;
   overflow: hidden;
   color: inherit;
   font-size: 0.86rem;
   font-weight: 650;
   text-decoration: none;
-  background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.24) 0 31%, transparent 31.5% 100%),
-    linear-gradient(43deg, transparent 0 61%, rgba(255, 255, 255, 0.095) 61.5% 100%),
-    linear-gradient(315deg, var(--facet-dark), transparent 48%),
-    var(--link-background);
-  border: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+  background: var(--link-background);
+  border: 1px solid color-mix(in srgb, currentColor 19%, transparent);
   box-shadow:
-    inset 1px 1px rgba(255, 255, 255, 0.26),
-    inset -1px -1px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(4px) saturate(1.28);
-  -webkit-backdrop-filter: blur(4px) saturate(1.28);
-  clip-path: polygon(0 0.56rem, 0.56rem 0, calc(100% - 0.72rem) 0, 100% 0.72rem, 100% 100%, 0 100%);
+    inset 1px 1px rgba(255, 255, 255, 0.25),
+    inset -1px -1px rgba(0, 0, 0, 0.11);
+  backdrop-filter: blur(2px) saturate(1.14);
+  -webkit-backdrop-filter: blur(2px) saturate(1.14);
+  clip-path: polygon(0 0.48rem, 0.48rem 0, 72% 0, 100% 0.68rem, 100% 100%, 0 100%);
   transition:
     transform 140ms ease,
     background-color 140ms ease,
     filter 140ms ease;
 }
 
+.profile-link::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(132deg, rgba(255, 255, 255, 0.22) 0 34%, transparent 34.5%),
+    linear-gradient(310deg, transparent 0 69%, rgba(255, 255, 255, 0.07) 69.5%);
+  pointer-events: none;
+}
+
 .profile-link:hover,
 .profile-link:focus-visible {
-  background:
-    linear-gradient(128deg, rgba(255, 255, 255, 0.34) 0 31%, transparent 31.5% 100%),
-    linear-gradient(43deg, transparent 0 61%, rgba(255, 255, 255, 0.15) 61.5% 100%),
-    linear-gradient(315deg, var(--facet-dark), transparent 48%),
-    var(--link-background-hover);
-  filter: brightness(1.05);
+  background: var(--link-background-hover);
+  filter: brightness(1.06);
   transform: translateY(-2px);
 }
 
@@ -320,18 +348,17 @@ h1 {
   color: var(--page-foreground);
   cursor: pointer;
   background:
-    linear-gradient(132deg, rgba(255, 255, 255, 0.32) 0 36%, transparent 36.5%),
-    linear-gradient(42deg, transparent 0 61%, var(--prism-cyan) 61.5% 100%),
-    linear-gradient(315deg, var(--facet-dark), transparent 52%),
+    linear-gradient(132deg, rgba(255, 255, 255, 0.24) 0 36%, transparent 36.5%),
+    linear-gradient(315deg, var(--facet-dark), transparent 54%),
     var(--panel-background);
   border: 1px solid var(--panel-border);
   box-shadow:
     0 0.8rem 2.2rem var(--panel-shadow),
     inset 1px 1px rgba(255, 255, 255, 0.32),
     inset -1px -1px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(5px) saturate(1.3);
-  -webkit-backdrop-filter: blur(5px) saturate(1.3);
-  clip-path: polygon(0 0.72rem, 0.72rem 0, 100% 0, 100% calc(100% - 0.58rem), calc(100% - 0.58rem) 100%, 0 100%);
+  backdrop-filter: blur(2px) saturate(1.18);
+  -webkit-backdrop-filter: blur(2px) saturate(1.18);
+  clip-path: polygon(0 0.72rem, 0.72rem 0, 78% 0, 100% 0.58rem, 100% 78%, 78% 100%, 0 100%);
   transition:
     transform 140ms ease,
     opacity 140ms ease,
@@ -372,16 +399,15 @@ h1 {
   text-overflow: ellipsis;
   white-space: nowrap;
   background:
-    linear-gradient(126deg, rgba(255, 255, 255, 0.2) 0 38%, transparent 38.5%),
-    linear-gradient(318deg, var(--facet-dark), transparent 48%),
+    linear-gradient(126deg, rgba(255, 255, 255, 0.16) 0 37%, transparent 37.5%),
     var(--panel-background);
   border: 1px solid var(--panel-border);
   box-shadow:
-    inset 1px 1px rgba(255, 255, 255, 0.22),
+    inset 1px 1px rgba(255, 255, 255, 0.2),
     inset -1px -1px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(5px) saturate(1.24);
-  -webkit-backdrop-filter: blur(5px) saturate(1.24);
-  clip-path: polygon(0 0.35rem, 0.35rem 0, calc(100% - 0.35rem) 0, 100% 0.35rem, 100% 100%, 0 100%);
+  backdrop-filter: blur(2px) saturate(1.14);
+  -webkit-backdrop-filter: blur(2px) saturate(1.14);
+  clip-path: polygon(0 0.35rem, 0.35rem 0, 82% 0, 100% 0.35rem, 100% 100%, 0 100%);
 }
 
 .photo-credit a {
@@ -409,7 +435,7 @@ html[data-transition-phase="reveal"]::view-transition-new(photo) {
 
 @media (max-width: 34rem) {
   .profile-card {
-    padding: 1.75rem 1.35rem 1.6rem;
+    padding: 1.75rem 1.35rem 1.65rem;
   }
 
   .profiles {
@@ -477,6 +503,10 @@ html[data-transition-phase="reveal"]::view-transition-new(photo) {
     box-shadow: none;
     backdrop-filter: none;
     clip-path: none;
+  }
+
+  .profile-link::before {
+    display: none;
   }
 
   .profile-link::after {
