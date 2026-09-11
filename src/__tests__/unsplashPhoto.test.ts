@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import fallbackImages from '../fallback-images';
 import type { ImageType } from '../types';
 import {
   fetchImageDataFrom,
@@ -37,6 +38,24 @@ const images: ImageRegistry = {
 };
 
 describe('image registry helpers', () => {
+  it('ships fallback photos for builds without an Unsplash secret', async () => {
+    const ids = Object.keys(fallbackImages);
+
+    expect(ids.length).toBeGreaterThanOrEqual(2);
+
+    const firstId = ids[0];
+
+    expect(firstId).toBeDefined();
+
+    if (!firstId) {
+      return;
+    }
+
+    const fallbackPhoto = await fetchImageDataFrom(fallbackImages, firstId);
+
+    expect(fallbackPhoto?.id).toBe(firstId);
+  });
+
   it('returns null when an image is missing', async () => {
     const result = await fetchImageDataFrom(images, 'missing');
 
