@@ -1,3 +1,4 @@
+import fallbackImages from './fallback-images';
 import queryParser from './queryParser';
 import type { ImageType } from './types';
 import asyncImages from './unsplash-images';
@@ -6,7 +7,10 @@ export type ImageLoader = () => Promise<ImageType>;
 
 export type ImageRegistry = Readonly<Record<string, ImageLoader>>;
 
-const imageRegistry: ImageRegistry = asyncImages;
+const imageRegistry: ImageRegistry = {
+  ...fallbackImages,
+  ...asyncImages,
+};
 
 export async function fetchImageDataFrom(registry: ImageRegistry, id: string): Promise<ImageType['default'] | null> {
   const loader = registry[id];
