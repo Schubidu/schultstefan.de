@@ -8,7 +8,7 @@ import pkg from 'prettier';
 const { format, resolveConfig } = pkg;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const photosDir = path.join(root, 'src/unsplash-images');
-const collectionId = '827751';
+const defaultCollectionId = '827751';
 
 dotenv.config();
 
@@ -22,7 +22,7 @@ async function fetchJson(url) {
   return response.json();
 }
 
-async function getCollection(secret) {
+async function getCollection(secret, collectionId) {
   return fetchJson(
     `https://api.unsplash.com/collections/${collectionId}/photos?page=1&per_page=25&client_id=${secret}`
   );
@@ -78,15 +78,16 @@ async function writeRegistry(photos) {
 
 async function main() {
   const secret = process.env.UNSPLASH_APP_SECRET;
+  const collectionId = process.env.UNSPLASH_COLLECTION_ID || defaultCollectionId;
 
   if (!secret) {
     throw new Error('UNSPLASH_APP_SECRET is required to refresh the photo registry.');
   }
 
-  const photos = (await getCollection(secret)).map(reducePhoto);
+  const photos = (await getCollection(secret, collectionId)).map(reducePhoto);
 
   await writeRegistry(photos);
-  console.log(`Updated photo registry with ${photos.length} photos.`);
+  console.log(`Updated photo registry with ${photos.length} photos from collection ${collectionId}.`);
 }
 
 main().catch((error) => {
