@@ -100,8 +100,16 @@
     clip-path: none;
   }
 
-  .profiles::before,
-  .profile-link:not(:first-child)::after {
+  .profiles::before {
     display: none;
+  }
+
+  .profile-link:not(:first-child)::after {
+    content: " (" attr(href) ")";
+    position: static;
+    display: inline;
+    width: auto;
+    background: none;
+    font-weight: 400;
   }
 }
