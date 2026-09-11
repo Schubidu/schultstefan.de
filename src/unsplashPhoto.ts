@@ -1,13 +1,18 @@
-import fallbackImages from './fallback-images';
-import queryParser from './queryParser';
 import type { ImageType } from './types';
-import asyncImages from './unsplash-images';
+import images from './unsplash-images';
 
 export type ImageLoader = () => Promise<ImageType>;
 
 export type ImageRegistry = Readonly<Record<string, ImageLoader>>;
 
-const imageRegistry = Object.keys(asyncImages).length > 0 ? asyncImages : fallbackImages;
+export interface PhotoSelection {
+  readonly id: string;
+  readonly seenIds: readonly string[];
+}
+
+const SEEN_PHOTO_IDS_KEY = 'schultstefan.seen-photo-ids';
+
+const imageRegistry = images;
 
 export async function fetchImageDataFrom(registry: ImageRegistry, id: string): Promise<ImageType['default'] | null> {
   const loader = registry[id];
@@ -21,67 +26,77 @@ export async function fetchImageDataFrom(registry: ImageRegistry, id: string): P
   return data;
 }
 
-export function hasImageIn(registry: ImageRegistry, id: string | null): id is string {
-  return id !== null && Object.prototype.hasOwnProperty.call(registry, id);
-}
-
-export function getRandomImageFrom(
+export function selectPhotoId(
   registry: ImageRegistry,
+  seenIds: readonly string[],
   random: () => number = Math.random,
   excludedId: string | null = null
-): string | null {
-  const keys = Object.keys(registry);
-  const candidates = keys.length > 1 && excludedId ? keys.filter((key) => key !== excludedId) : keys;
+): PhotoSelection | null {
+  const ids = Object.keys(registry);
+
+  if (ids.length === 0) {
+    return null;
+  }
+
+  const currentIds = new Set(ids);
+  const validSeenIds = seenIds.filter((id) => currentIds.has(id));
+  let candidates = ids.filter((id) => !validSeenIds.includes(id) && id !== excludedId);
+  let nextSeenIds = validSeenIds;
 
   if (candidates.length === 0) {
-    return null;
+    candidates = ids.filter((id) => id !== excludedId);
+
+    if (candidates.length === 0) {
+      candidates = ids;
+    }
+
+    nextSeenIds = [];
   }
 
   const index = Math.floor(random() * candidates.length);
+  const id = candidates[index];
 
-  return candidates[index] ?? null;
-}
-
-export function readRequestedPhoto(query: URLSearchParams): string | null {
-  return query.get('photo') ?? query.get('photos');
-}
-
-function writeCanonicalPhotoUrl(id: string): void {
-  const url = new URL(window.location.href);
-
-  url.searchParams.delete('photos');
-  url.searchParams.set('photo', id);
-  window.history.replaceState({ path: url.toString() }, '', url);
-}
-
-async function loadPhoto(id: string): Promise<ImageType['default'] | null> {
-  const photo = await fetchImageDataFrom(imageRegistry, id);
-
-  if (photo) {
-    writeCanonicalPhotoUrl(id);
+  if (!id) {
+    return null;
   }
 
-  return photo;
+  return { id, seenIds: [...nextSeenIds, id] };
+}
+
+function readSeenPhotoIds(): string[] {
+  try {
+    const stored = window.localStorage.getItem(SEEN_PHOTO_IDS_KEY);
+
+    return stored ? stored.split(',').filter(Boolean) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeSeenPhotoIds(ids: readonly string[]): void {
+  try {
+    window.localStorage.setItem(SEEN_PHOTO_IDS_KEY, ids.join(','));
+  } catch {
+    // Storage can be unavailable in privacy-restricted browsing contexts.
+  }
+}
+
+async function selectPhoto(excludedId: string | null = null): Promise<ImageType['default'] | null> {
+  const selection = selectPhotoId(imageRegistry, readSeenPhotoIds(), Math.random, excludedId);
+
+  if (!selection) {
+    return null;
+  }
+
+  writeSeenPhotoIds(selection.seenIds);
+
+  return fetchImageDataFrom(imageRegistry, selection.id);
 }
 
 export async function getInitialPhoto(): Promise<ImageType['default'] | null> {
-  const query = queryParser();
-  const requestedPhoto = readRequestedPhoto(query);
-  const id = hasImageIn(imageRegistry, requestedPhoto) ? requestedPhoto : getRandomImageFrom(imageRegistry);
-
-  if (!id) {
-    return null;
-  }
-
-  return loadPhoto(id);
+  return selectPhoto();
 }
 
 export async function getNextPhoto(currentId: string): Promise<ImageType['default'] | null> {
-  const id = getRandomImageFrom(imageRegistry, Math.random, currentId);
-
-  if (!id) {
-    return null;
-  }
-
-  return loadPhoto(id);
+  return selectPhoto(currentId);
 }
