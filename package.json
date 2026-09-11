@@ -19,7 +19,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "test": "vitest run",
+    "test": "vitest run src",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.{ts,js}\" \"script/**/*.js\" \"vite.config.ts\" \"oxlint.config.ts\"",
     "format:check": "prettier --check \"src/**/*.{ts,js}\" \"script/**/*.js\" \"vite.config.ts\" \"oxlint.config.ts\"",
