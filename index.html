@@ -23,6 +23,7 @@
     <link rel="apple-touch-icon" sizes="114x114" href="/assets/apple-touch-icon-114.png" />
     <link rel="apple-touch-icon" sizes="144x144" href="/assets/apple-touch-icon-144.png" />
     <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/photo-transition.css" />
     <link rel="stylesheet" href="/profile-links.css" />
     <link rel="stylesheet" href="/utility.css" />
 
@@ -60,7 +61,10 @@
     </script>
   </head>
   <body>
-    <div id="photo-background" class="photo-background" aria-hidden="true"></div>
+    <div id="photo-background" class="photo-background" aria-hidden="true">
+      <div id="photo-layer-base" class="photo-layer photo-layer-base"></div>
+      <div id="photo-layer-overlay" class="photo-layer photo-layer-overlay"></div>
+    </div>
 
     <main class="profile-card">
       <div class="crystal-surface" aria-hidden="true">
