@@ -1,0 +1,29 @@
+.photo-background {
+  isolation: isolate;
+  background-image: none;
+  view-transition-name: none;
+}
+
+.photo-layer {
+  position: absolute;
+  inset: 0;
+  background-color: var(--photo-color, var(--fallback-background));
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
+  transform: translateZ(0);
+}
+
+.photo-layer-base {
+  z-index: 0;
+}
+
+.photo-layer-overlay {
+  z-index: 1;
+  opacity: 0;
+  will-change: opacity;
+}
+
+.photo-background::after {
+  z-index: 2;
+}
