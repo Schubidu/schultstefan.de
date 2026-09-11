@@ -8,10 +8,7 @@ export type ImageRegistry = Readonly<Record<string, ImageLoader>>;
 
 const imageRegistry: ImageRegistry = asyncImages;
 
-export async function fetchImageDataFrom(
-  registry: ImageRegistry,
-  id: string
-): Promise<ImageType['default'] | null> {
+export async function fetchImageDataFrom(registry: ImageRegistry, id: string): Promise<ImageType['default'] | null> {
   const loader = registry[id];
 
   if (!loader) {
