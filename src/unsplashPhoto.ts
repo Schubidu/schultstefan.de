@@ -7,10 +7,7 @@ export type ImageLoader = () => Promise<ImageType>;
 
 export type ImageRegistry = Readonly<Record<string, ImageLoader>>;
 
-const imageRegistry = {
-  ...fallbackImages,
-  ...asyncImages,
-} satisfies ImageRegistry;
+const imageRegistry = Object.keys(asyncImages).length > 0 ? asyncImages : fallbackImages;
 
 export async function fetchImageDataFrom(registry: ImageRegistry, id: string): Promise<ImageType['default'] | null> {
   const loader = registry[id];
