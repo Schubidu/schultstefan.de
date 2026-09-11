@@ -6,15 +6,23 @@ import { getInitialPhoto, getNextPhoto } from './unsplashPhoto';
 type Photo = ImageType['default'];
 
 const SOFTEN_DURATION_MS = 90;
+
 const SWAP_DURATION_MS = 110;
+
 const REVEAL_DURATION_MS = 240;
 
 const background = document.querySelector<HTMLElement>('#photo-background');
+
 const baseLayer = document.querySelector<HTMLElement>('#photo-layer-base');
+
 const overlayLayer = document.querySelector<HTMLElement>('#photo-layer-overlay');
+
 const credit = document.querySelector<HTMLElement>('#photo-credit');
+
 const shuffleButton = document.querySelector<HTMLButtonElement>('#shuffle-photo');
+
 const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 let currentPhoto: Photo | null = null;
@@ -35,6 +43,7 @@ function applyLayer(layer: HTMLElement | null, url: string, color: string): void
 function applyBasePhoto(url: string, color: string): void {
   if (baseLayer) {
     applyLayer(baseLayer, url, color);
+
     return;
   }
 
@@ -50,8 +59,11 @@ function updateCredit(photo: Photo): void {
   }
 
   const sourceSuffix = '?utm_source=schultstefan.de&utm_medium=referral';
+
   const photoLink = document.createElement('a');
+
   const photographerLink = document.createElement('a');
+
   const unsplashLink = document.createElement('a');
 
   photoLink.href = `https://unsplash.com/photos/${photo.id}${sourceSuffix}`;
@@ -87,6 +99,7 @@ async function preloadImage(url: string): Promise<boolean> {
 
   try {
     await image.decode();
+
     return true;
   } catch {
     return false;
@@ -102,10 +115,12 @@ async function fadeOverlay(opacity: 0 | 1, duration: number): Promise<void> {
 
   if (reducedMotion.matches) {
     overlayLayer.style.opacity = finalOpacity;
+
     return;
   }
 
   const currentOpacity = Number.parseFloat(getComputedStyle(overlayLayer).opacity);
+
   const animation = overlayLayer.animate([{ opacity: currentOpacity }, { opacity }], {
     duration,
     easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
@@ -133,6 +148,7 @@ function resetOverlay(): void {
 async function revealLoadedPhoto(url: string, color: string): Promise<void> {
   if (!overlayLayer) {
     applyBasePhoto(url, color);
+
     return;
   }
 
@@ -172,7 +188,9 @@ async function shufflePhoto(): Promise<void> {
     }
 
     const currentBlur = createBlurDataUrl(currentPhoto.blurHash);
+
     const nextBlur = createBlurDataUrl(nextPhoto.blurHash);
+
     const imageReady = preloadImage(nextPhoto.urls.regular);
 
     if (overlayLayer) {
