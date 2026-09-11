@@ -54,9 +54,7 @@ async function clearRegistry() {
 
   const files = await readdir(photosDir);
 
-  await Promise.all(
-    files.filter((file) => file.endsWith('.ts')).map((file) => unlink(path.join(photosDir, file)))
-  );
+  await Promise.all(files.filter((file) => file.endsWith('.ts')).map((file) => unlink(path.join(photosDir, file))));
 }
 
 async function writeRegistry(photos) {
