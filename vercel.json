@@ -1,7 +1,7 @@
 {
-  "routes": [
-    { "src": "/", "dest": "/dist" }
-  ],
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "build": {
     "env": {
       "UNSPLASH_APP_SECRET": "@unsplash_app_secret"

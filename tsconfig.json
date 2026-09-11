@@ -1,25 +1,14 @@
 {
-  "include": ["src", "types"],
+  "include": ["src", "types", "vite.config.ts"],
   "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "baseUrl": "./",
-    /* paths - import rewriting/resolving */
-    "paths": {
-      // If you configured any Snowpack aliases, add them here.
-      // Add this line to get types for streaming imports (packageOptions.source="remote"):
-      //     "*": [".snowpack/types/*"]
-      // More info: https://www.snowpack.dev/guides/streaming-imports
-    },
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
     "allowSyntheticDefaultImports": true,
-    "importsNotUsedAsValues": "error",
-    /* more strict checking for errors that per-file transpilers like `esbuild` would crash */
     "isolatedModules": true,
-    /* noEmit - We only use TypeScript for type checking. */
     "noEmit": true,
-    /* Additional Options */
     "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,

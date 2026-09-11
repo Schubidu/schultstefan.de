@@ -5,11 +5,11 @@ dist
 node_modules
 .env
 .env.build
-.snowpack
-src/unsplash-images
 build
 data.json
 
-yarn.lock
+src/unsplash-images/*
+!src/unsplash-images/index.ts
 
+yarn.lock
 .vercel
