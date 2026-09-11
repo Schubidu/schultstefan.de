@@ -1,7 +1,13 @@
 import { describe, expect, it } from 'vitest';
 
 import type { ImageType } from '../types';
-import { fetchImageDataFrom, getRandomImageFrom, hasImageIn, type ImageRegistry } from '../unsplashPhoto';
+import {
+  fetchImageDataFrom,
+  getRandomImageFrom,
+  hasImageIn,
+  readRequestedPhoto,
+  type ImageRegistry,
+} from '../unsplashPhoto';
 
 const image: ImageType['default'] = {
   id: 'img1',
@@ -55,9 +61,27 @@ describe('image registry helpers', () => {
     expect(getRandomImageFrom(images, () => 0.99)).toBe('img3');
   });
 
+  it('avoids immediately repeating the current image when alternatives exist', () => {
+    expect(getRandomImageFrom(images, () => 0, 'img1')).toBe('img2');
+  });
+
+  it('keeps the only image available even when it is excluded', () => {
+    const singleImage: ImageRegistry = { img1: imageLoader };
+
+    expect(getRandomImageFrom(singleImage, () => 0, 'img1')).toBe('img1');
+  });
+
   it('returns null when no image is available', () => {
     const emptyImages: ImageRegistry = {};
 
     expect(getRandomImageFrom(emptyImages, () => 0)).toBeNull();
+  });
+
+  it('prefers the canonical photo query parameter', () => {
+    expect(readRequestedPhoto(new URLSearchParams('photo=canonical&photos=legacy'))).toBe('canonical');
+  });
+
+  it('accepts the legacy photos query parameter', () => {
+    expect(readRequestedPhoto(new URLSearchParams('photos=legacy'))).toBe('legacy');
   });
 });

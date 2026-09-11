@@ -1,14 +1,11 @@
 import { decode } from 'blurhash';
-import type { ImageType } from './types';
 
-export default function createFavicon({ blurHash }: Pick<ImageType['default'], 'blurHash'>): string {
-  const faviconSize = 32;
-  const pixels = decode(blurHash, faviconSize, faviconSize);
+export function createBlurDataUrl(blurHash: string, size = 32): string {
+  const pixels = decode(blurHash, size, size);
   const canvas = document.createElement('canvas');
 
-  canvas.width = faviconSize;
-  canvas.height = faviconSize;
-  canvas.classList.add('blurry');
+  canvas.width = size;
+  canvas.height = size;
 
   const context = canvas.getContext('2d');
 
@@ -16,20 +13,25 @@ export default function createFavicon({ blurHash }: Pick<ImageType['default'], '
     return '';
   }
 
-  const imageData = context.createImageData(faviconSize, faviconSize);
+  const imageData = context.createImageData(size, size);
 
   imageData.data.set(pixels);
   context.putImageData(imageData, 0, 0);
 
-  const dataUrl = canvas.toDataURL('image/png');
-  const favicon = document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
+  return canvas.toDataURL('image/png');
+}
 
-  if (favicon) {
-    favicon.type = 'image/png';
-    favicon.href = dataUrl;
+export function updateFavicon(dataUrl: string): void {
+  if (!dataUrl) {
+    return;
   }
 
-  document.body.insertBefore(canvas, document.body.firstChild);
+  const favicon = document.querySelector<HTMLLinkElement>('link[rel="shortcut icon"]');
 
-  return dataUrl;
+  if (!favicon) {
+    return;
+  }
+
+  favicon.type = 'image/png';
+  favicon.href = dataUrl;
 }
