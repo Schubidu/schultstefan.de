@@ -14,8 +14,17 @@
   }
 }
 
+html {
+  background-color: var(--photo-color, var(--fallback-background));
+}
+
 body {
   padding: 0;
+  background: transparent;
+}
+
+.photo-background {
+  background-color: var(--photo-color, var(--fallback-background));
 }
 
 .profile-card {
