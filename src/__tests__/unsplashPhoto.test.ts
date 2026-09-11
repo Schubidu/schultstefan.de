@@ -1,14 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
-import fallbackImages from '../fallback-images';
 import type { ImageType } from '../types';
-import {
-  fetchImageDataFrom,
-  getRandomImageFrom,
-  hasImageIn,
-  readRequestedPhoto,
-  type ImageRegistry,
-} from '../unsplashPhoto';
+import { fetchImageDataFrom, selectPhotoId, type ImageRegistry } from '../unsplashPhoto';
 
 const image: ImageType['default'] = {
   id: 'img1',
@@ -38,24 +31,6 @@ const images: ImageRegistry = {
 };
 
 describe('image registry helpers', () => {
-  it('ships fallback photos for builds without an Unsplash secret', async () => {
-    const ids = Object.keys(fallbackImages);
-
-    expect(ids.length).toBeGreaterThanOrEqual(2);
-
-    const firstId = ids[0];
-
-    expect(firstId).toBeDefined();
-
-    if (!firstId) {
-      return;
-    }
-
-    const fallbackPhoto = await fetchImageDataFrom(fallbackImages, firstId);
-
-    expect(fallbackPhoto?.id).toBe(firstId);
-  });
-
   it('returns null when an image is missing', async () => {
     const result = await fetchImageDataFrom(images, 'missing');
 
@@ -68,39 +43,34 @@ describe('image registry helpers', () => {
     expect(result).toEqual(image);
   });
 
-  it('reports existing and missing image ids', () => {
-    expect(hasImageIn(images, 'img1')).toBe(true);
-    expect(hasImageIn(images, 'missing')).toBe(false);
-    expect(hasImageIn(images, null)).toBe(false);
+  it('selects an unseen image', () => {
+    expect(selectPhotoId(images, ['img1'], () => 0)).toEqual({ id: 'img2', seenIds: ['img1', 'img2'] });
   });
 
-  it('selects an image from the registry without module mocking', () => {
-    expect(getRandomImageFrom(images, () => 0)).toBe('img1');
-    expect(getRandomImageFrom(images, () => 0.5)).toBe('img2');
-    expect(getRandomImageFrom(images, () => 0.99)).toBe('img3');
+  it('ignores seen ids that are no longer in the registry', () => {
+    expect(selectPhotoId(images, ['removed'], () => 0)).toEqual({ id: 'img1', seenIds: ['img1'] });
   });
 
-  it('avoids immediately repeating the current image when alternatives exist', () => {
-    expect(getRandomImageFrom(images, () => 0, 'img1')).toBe('img2');
+  it('starts a new cycle after every image has been seen', () => {
+    expect(selectPhotoId(images, ['img1', 'img2', 'img3'], () => 0, 'img3')).toEqual({
+      id: 'img1',
+      seenIds: ['img1'],
+    });
   });
 
-  it('keeps the only image available even when it is excluded', () => {
+  it('does not immediately repeat the current image when a new cycle starts', () => {
+    expect(selectPhotoId(images, ['img1', 'img2', 'img3'], () => 0, 'img1')?.id).toBe('img2');
+  });
+
+  it('keeps the only image available when a new cycle starts', () => {
     const singleImage: ImageRegistry = { img1: imageLoader };
 
-    expect(getRandomImageFrom(singleImage, () => 0, 'img1')).toBe('img1');
+    expect(selectPhotoId(singleImage, ['img1'], () => 0, 'img1')).toEqual({ id: 'img1', seenIds: ['img1'] });
   });
 
   it('returns null when no image is available', () => {
     const emptyImages: ImageRegistry = {};
 
-    expect(getRandomImageFrom(emptyImages, () => 0)).toBeNull();
-  });
-
-  it('prefers the canonical photo query parameter', () => {
-    expect(readRequestedPhoto(new URLSearchParams('photo=canonical&photos=legacy'))).toBe('canonical');
-  });
-
-  it('accepts the legacy photos query parameter', () => {
-    expect(readRequestedPhoto(new URLSearchParams('photos=legacy'))).toBe('legacy');
+    expect(selectPhotoId(emptyImages, [], () => 0)).toBeNull();
   });
 });
