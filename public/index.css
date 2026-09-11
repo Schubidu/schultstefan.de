@@ -1,24 +1,28 @@
 :root {
   color-scheme: light dark;
   --page-foreground: #15171d;
-  --panel-background: rgba(245, 247, 250, 0.48);
-  --panel-border: rgba(255, 255, 255, 0.72);
-  --panel-highlight: rgba(255, 255, 255, 0.6);
-  --panel-shadow: rgba(8, 11, 17, 0.28);
-  --link-background: rgba(255, 255, 255, 0.34);
-  --link-background-hover: rgba(255, 255, 255, 0.55);
+  --panel-background: rgba(248, 250, 253, 0.22);
+  --panel-border: rgba(255, 255, 255, 0.88);
+  --panel-highlight: rgba(255, 255, 255, 0.76);
+  --panel-shadow: rgba(8, 11, 17, 0.3);
+  --panel-refraction-cyan: rgba(124, 220, 255, 0.22);
+  --panel-refraction-violet: rgba(218, 162, 255, 0.16);
+  --link-background: rgba(255, 255, 255, 0.2);
+  --link-background-hover: rgba(255, 255, 255, 0.4);
   --fallback-background: #cbd0d8;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --page-foreground: #f4f5f8;
-    --panel-background: rgba(17, 20, 27, 0.5);
-    --panel-border: rgba(255, 255, 255, 0.2);
-    --panel-highlight: rgba(255, 255, 255, 0.2);
-    --panel-shadow: rgba(0, 0, 0, 0.5);
-    --link-background: rgba(255, 255, 255, 0.08);
-    --link-background-hover: rgba(255, 255, 255, 0.16);
+    --panel-background: rgba(12, 15, 22, 0.27);
+    --panel-border: rgba(255, 255, 255, 0.34);
+    --panel-highlight: rgba(255, 255, 255, 0.3);
+    --panel-shadow: rgba(0, 0, 0, 0.55);
+    --panel-refraction-cyan: rgba(88, 206, 255, 0.18);
+    --panel-refraction-violet: rgba(208, 137, 255, 0.14);
+    --link-background: rgba(255, 255, 255, 0.07);
+    --link-background-hover: rgba(255, 255, 255, 0.15);
     --fallback-background: #111318;
   }
 }
@@ -72,41 +76,74 @@ body {
 
 .profile-card {
   position: relative;
+  isolation: isolate;
   width: min(36rem, 100%);
   padding: clamp(1.75rem, 6vw, 3.25rem);
   overflow: hidden;
   text-align: center;
   background:
-    linear-gradient(135deg, var(--panel-highlight), transparent 24%),
-    linear-gradient(315deg, rgba(255, 255, 255, 0.12), transparent 34%),
+    linear-gradient(132deg, rgba(255, 255, 255, 0.22), transparent 24%),
+    linear-gradient(318deg, rgba(255, 255, 255, 0.08), transparent 32%),
     var(--panel-background);
   border: 1px solid var(--panel-border);
   box-shadow:
-    0 1.5rem 4rem var(--panel-shadow),
-    inset 0 1px rgba(255, 255, 255, 0.24);
-  backdrop-filter: blur(18px) saturate(1.18);
-  -webkit-backdrop-filter: blur(18px) saturate(1.18);
+    0 1.8rem 4.8rem var(--panel-shadow),
+    inset 1px 1px rgba(255, 255, 255, 0.34),
+    inset -1px -1px rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(11px) saturate(1.32) contrast(1.04);
+  -webkit-backdrop-filter: blur(11px) saturate(1.32) contrast(1.04);
   clip-path: polygon(
-    0 1rem,
-    1rem 0,
-    calc(100% - 1.6rem) 0,
-    100% 1.6rem,
-    100% calc(100% - 1rem),
-    calc(100% - 1rem) 100%,
-    1.45rem 100%,
-    0 calc(100% - 1.45rem)
+    0 1.5rem,
+    1.5rem 0,
+    calc(100% - 2.3rem) 0,
+    100% 2.3rem,
+    100% calc(100% - 1.25rem),
+    calc(100% - 1.25rem) 100%,
+    2rem 100%,
+    0 calc(100% - 2rem)
   );
 }
 
-.profile-card::before {
+.profile-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.profile-card::before,
+.profile-card::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -1;
-  background:
-    linear-gradient(112deg, transparent 18%, rgba(255, 255, 255, 0.2) 37%, transparent 42%),
-    linear-gradient(292deg, transparent 70%, rgba(130, 205, 255, 0.12) 82%, rgba(255, 175, 242, 0.1) 88%, transparent 94%);
   pointer-events: none;
+}
+
+.profile-card::before {
+  z-index: 0;
+  background:
+    linear-gradient(118deg, transparent 0 20%, rgba(255, 255, 255, 0.38) 20.4% 21.1%, transparent 21.5% 100%),
+    linear-gradient(298deg, transparent 0 67%, var(--panel-refraction-cyan) 67.4% 72%, transparent 72.6% 100%),
+    linear-gradient(322deg, transparent 0 73%, var(--panel-refraction-violet) 77%, transparent 83%),
+    linear-gradient(42deg, transparent 0 78%, rgba(255, 255, 255, 0.18) 78.4% 79%, transparent 79.5% 100%);
+  opacity: 0.95;
+}
+
+.profile-card::after {
+  z-index: 1;
+  inset: 1px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.52), transparent 18% 78%, rgba(255, 255, 255, 0.18)),
+    linear-gradient(35deg, transparent 44%, rgba(255, 255, 255, 0.12) 44.5% 45%, transparent 45.5%);
+  clip-path: polygon(
+    0 1.45rem,
+    1.45rem 0,
+    calc(100% - 2.25rem) 0,
+    100% 2.25rem,
+    100% calc(100% - 1.2rem),
+    calc(100% - 1.2rem) 100%,
+    1.95rem 100%,
+    0 calc(100% - 1.95rem)
+  );
+  opacity: 0.72;
 }
 
 .kicker {
@@ -124,6 +161,7 @@ h1 {
   font-weight: 680;
   letter-spacing: -0.055em;
   line-height: 0.98;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .role {
@@ -143,23 +181,42 @@ h1 {
 }
 
 .profile-link {
+  position: relative;
+  isolation: isolate;
   min-width: 6.2rem;
   padding: 0.62rem 0.85rem;
+  overflow: hidden;
   color: inherit;
   font-size: 0.86rem;
   font-weight: 650;
   text-decoration: none;
-  background: var(--link-background);
-  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
-  clip-path: polygon(0 0.42rem, 0.42rem 0, 100% 0, 100% calc(100% - 0.42rem), calc(100% - 0.42rem) 100%, 0 100%);
+  background:
+    linear-gradient(132deg, rgba(255, 255, 255, 0.26), transparent 38%),
+    var(--link-background);
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  backdrop-filter: blur(8px) saturate(1.2);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  clip-path: polygon(0 0.52rem, 0.52rem 0, calc(100% - 0.7rem) 0, 100% 0.7rem, 100% 100%, 0 100%);
   transition:
     transform 140ms ease,
     background-color 140ms ease;
 }
 
+.profile-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(118deg, transparent 26%, rgba(255, 255, 255, 0.26) 27%, transparent 28%);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
 .profile-link:hover,
 .profile-link:focus-visible {
-  background: var(--link-background-hover);
+  background:
+    linear-gradient(132deg, rgba(255, 255, 255, 0.34), transparent 38%),
+    var(--link-background-hover);
   transform: translateY(-2px);
 }
 
@@ -172,24 +229,39 @@ h1 {
 
 .shuffle-photo {
   position: fixed;
+  isolation: isolate;
   top: max(1rem, env(safe-area-inset-top));
   right: max(1rem, env(safe-area-inset-right));
   width: 3rem;
   height: 3rem;
   padding: 0.72rem;
+  overflow: hidden;
   color: var(--page-foreground);
   cursor: pointer;
   background:
-    linear-gradient(135deg, var(--panel-highlight), transparent 42%),
+    linear-gradient(132deg, var(--panel-highlight), transparent 34%),
     var(--panel-background);
   border: 1px solid var(--panel-border);
-  box-shadow: 0 0.65rem 1.8rem var(--panel-shadow);
-  backdrop-filter: blur(16px) saturate(1.15);
-  -webkit-backdrop-filter: blur(16px) saturate(1.15);
-  clip-path: polygon(0 0.58rem, 0.58rem 0, 100% 0, 100% calc(100% - 0.58rem), calc(100% - 0.58rem) 100%, 0 100%);
+  box-shadow:
+    0 0.7rem 2rem var(--panel-shadow),
+    inset 1px 1px rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(10px) saturate(1.25);
+  -webkit-backdrop-filter: blur(10px) saturate(1.25);
+  clip-path: polygon(0 0.72rem, 0.72rem 0, 100% 0, 100% calc(100% - 0.58rem), calc(100% - 0.58rem) 100%, 0 100%);
   transition:
     transform 140ms ease,
     opacity 140ms ease;
+}
+
+.shuffle-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(118deg, transparent 24%, rgba(255, 255, 255, 0.4) 25%, transparent 27%),
+    linear-gradient(315deg, transparent 60%, var(--panel-refraction-cyan));
+  pointer-events: none;
 }
 
 .shuffle-photo:hover:not(:disabled) {
@@ -215,18 +287,20 @@ h1 {
   width: fit-content;
   max-width: calc(100% - 1.5rem);
   margin-inline: auto;
-  padding: 0.38rem 0.65rem;
+  padding: 0.38rem 0.7rem;
   overflow: hidden;
   color: var(--page-foreground);
   font-size: 0.72rem;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background: var(--panel-background);
+  background:
+    linear-gradient(126deg, rgba(255, 255, 255, 0.22), transparent 42%),
+    var(--panel-background);
   border: 1px solid var(--panel-border);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  clip-path: polygon(0 0.28rem, 0.28rem 0, 100% 0, 100% calc(100% - 0.28rem), calc(100% - 0.28rem) 100%, 0 100%);
+  backdrop-filter: blur(9px) saturate(1.2);
+  -webkit-backdrop-filter: blur(9px) saturate(1.2);
+  clip-path: polygon(0 0.35rem, 0.35rem 0, calc(100% - 0.35rem) 0, 100% 0.35rem, 100% 100%, 0 100%);
 }
 
 .photo-credit a {
@@ -309,7 +383,8 @@ html[data-transition-phase="reveal"]::view-transition-new(photo) {
     clip-path: none;
   }
 
-  .profile-card::before {
+  .profile-card::before,
+  .profile-card::after {
     display: none;
   }
 
@@ -317,11 +392,15 @@ html[data-transition-phase="reveal"]::view-transition-new(photo) {
     color: #000;
     background: transparent;
     border: 0;
+    backdrop-filter: none;
     clip-path: none;
   }
 
   .profile-link::after {
     content: " (" attr(href) ")";
+    position: static;
     font-weight: 400;
+    background: none;
+    opacity: 1;
   }
 }
