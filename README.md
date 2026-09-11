@@ -21,13 +21,11 @@ npm run check
 
 It runs formatting checks, Oxlint with the vendored anti-slop rules, TypeScript checks, Vitest and the production build.
 
-## Background photos
+## Photos
 
-The website only reads the committed registry under `src/unsplash-images`. Normal development, CI and production builds do not fetch from Unsplash.
+The current Unsplash photo registry is committed under `src/unsplash-images`, so normal development and production builds do not depend on the Unsplash API.
 
-The manual `Update photos` GitHub Actions workflow refreshes the first 25 photos from the configured Unsplash collection using `UNSPLASH_APP_SECRET`, runs the quality gate and commits registry changes when necessary.
-
-In the browser, seen photo IDs are remembered locally so shuffle cycles through unseen photos before starting a new round. IDs that disappear from a later registry refresh are simply ignored.
+Run the manual `Update photos` GitHub Actions workflow to refresh the registry. The workflow asks for an Unsplash collection ID and defaults to the current architectural collection (`827751`), so switching collections does not require a code change.
 
 ## Dependency policy
 
