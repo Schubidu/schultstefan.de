@@ -5,16 +5,16 @@ import { getInitialPhoto, getNextPhoto } from './unsplashPhoto';
 
 type Photo = ImageType['default'];
 
-type TransitionPhase = 'soften' | 'swap' | 'reveal';
+const SOFTEN_DURATION_MS = 90;
+const SWAP_DURATION_MS = 110;
+const REVEAL_DURATION_MS = 240;
 
 const background = document.querySelector<HTMLElement>('#photo-background');
-
+const baseLayer = document.querySelector<HTMLElement>('#photo-layer-base');
+const overlayLayer = document.querySelector<HTMLElement>('#photo-layer-overlay');
 const credit = document.querySelector<HTMLElement>('#photo-credit');
-
 const shuffleButton = document.querySelector<HTMLButtonElement>('#shuffle-photo');
-
 const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 let currentPhoto: Photo | null = null;
@@ -23,13 +23,25 @@ function cssUrl(url: string): string {
   return `url(${JSON.stringify(url)})`;
 }
 
-function applyBackground(url: string, color: string): void {
-  if (!background) {
+function applyLayer(layer: HTMLElement | null, url: string, color: string): void {
+  if (!layer) {
     return;
   }
 
-  background.style.backgroundColor = color;
-  background.style.backgroundImage = cssUrl(url);
+  layer.style.backgroundColor = color;
+  layer.style.backgroundImage = cssUrl(url);
+}
+
+function applyBasePhoto(url: string, color: string): void {
+  if (baseLayer) {
+    applyLayer(baseLayer, url, color);
+    return;
+  }
+
+  if (background) {
+    background.style.backgroundColor = color;
+    background.style.backgroundImage = cssUrl(url);
+  }
 }
 
 function updateCredit(photo: Photo): void {
@@ -38,11 +50,8 @@ function updateCredit(photo: Photo): void {
   }
 
   const sourceSuffix = '?utm_source=schultstefan.de&utm_medium=referral';
-
   const photoLink = document.createElement('a');
-
   const photographerLink = document.createElement('a');
-
   const unsplashLink = document.createElement('a');
 
   photoLink.href = `https://unsplash.com/photos/${photo.id}${sourceSuffix}`;
@@ -66,9 +75,7 @@ function applyThemeColor(color: string): void {
   document.documentElement.style.setProperty('--photo-color', color);
 }
 
-function applyPhotoMetadata(photo: Photo, blurDataUrl: string): void {
-  applyThemeColor(photo.color);
-
+function applyPhotoIdentity(photo: Photo, blurDataUrl: string): void {
   updateFavicon(blurDataUrl);
   updateCredit(photo);
 }
@@ -80,41 +87,70 @@ async function preloadImage(url: string): Promise<boolean> {
 
   try {
     await image.decode();
-
     return true;
   } catch {
     return false;
   }
 }
 
-async function transitionBackground(phase: TransitionPhase, update: () => void): Promise<void> {
-  if (reducedMotion.matches || !document.startViewTransition) {
-    update();
-
+async function fadeOverlay(opacity: 0 | 1, duration: number): Promise<void> {
+  if (!overlayLayer) {
     return;
   }
 
-  document.documentElement.dataset.transitionPhase = phase;
+  const finalOpacity = String(opacity);
 
-  try {
-    const transition = document.startViewTransition(update);
-
-    await transition.finished;
-  } finally {
-    delete document.documentElement.dataset.transitionPhase;
+  if (reducedMotion.matches) {
+    overlayLayer.style.opacity = finalOpacity;
+    return;
   }
+
+  const currentOpacity = Number.parseFloat(getComputedStyle(overlayLayer).opacity);
+  const animation = overlayLayer.animate([{ opacity: currentOpacity }, { opacity }], {
+    duration,
+    easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+    fill: 'forwards',
+  });
+
+  await animation.finished;
+  overlayLayer.style.opacity = finalOpacity;
+  animation.cancel();
+}
+
+function resetOverlay(): void {
+  if (!overlayLayer) {
+    return;
+  }
+
+  for (const animation of overlayLayer.getAnimations()) {
+    animation.cancel();
+  }
+
+  overlayLayer.style.opacity = '0';
+  overlayLayer.style.backgroundImage = 'none';
+}
+
+async function revealLoadedPhoto(url: string, color: string): Promise<void> {
+  if (!overlayLayer) {
+    applyBasePhoto(url, color);
+    return;
+  }
+
+  applyLayer(overlayLayer, url, color);
+  await fadeOverlay(1, REVEAL_DURATION_MS);
+  applyBasePhoto(url, color);
+  resetOverlay();
 }
 
 async function revealPhoto(photo: Photo): Promise<void> {
   const blurDataUrl = createBlurDataUrl(photo.blurHash);
 
-  applyPhotoMetadata(photo, blurDataUrl);
-  applyBackground(blurDataUrl, photo.color);
+  applyThemeColor(photo.color);
+  applyPhotoIdentity(photo, blurDataUrl);
+  applyBasePhoto(blurDataUrl, photo.color);
 
-  const loaded = await preloadImage(photo.urls.regular);
-
-  if (loaded) {
-    await transitionBackground('reveal', () => applyBackground(photo.urls.regular, photo.color));
+  if (await preloadImage(photo.urls.regular)) {
+    await revealLoadedPhoto(photo.urls.regular, photo.color);
   }
 
   currentPhoto = photo;
@@ -136,21 +172,26 @@ async function shufflePhoto(): Promise<void> {
     }
 
     const currentBlur = createBlurDataUrl(currentPhoto.blurHash);
-
     const nextBlur = createBlurDataUrl(nextPhoto.blurHash);
-
     const imageReady = preloadImage(nextPhoto.urls.regular);
 
-    await transitionBackground('soften', () => applyBackground(currentBlur, currentPhoto?.color ?? nextPhoto.color));
-    await transitionBackground('swap', () => {
-      applyPhotoMetadata(nextPhoto, nextBlur);
-      applyBackground(nextBlur, nextPhoto.color);
-    });
+    if (overlayLayer) {
+      applyLayer(overlayLayer, currentBlur, currentPhoto.color);
+      await fadeOverlay(1, SOFTEN_DURATION_MS);
 
-    if (await imageReady) {
-      await transitionBackground('reveal', () => applyBackground(nextPhoto.urls.regular, nextPhoto.color));
+      applyBasePhoto(nextBlur, nextPhoto.color);
+      await fadeOverlay(0, SWAP_DURATION_MS);
+    } else {
+      applyBasePhoto(nextBlur, nextPhoto.color);
     }
 
+    applyPhotoIdentity(nextPhoto, nextBlur);
+
+    if (await imageReady) {
+      await revealLoadedPhoto(nextPhoto.urls.regular, nextPhoto.color);
+    }
+
+    applyThemeColor(nextPhoto.color);
     currentPhoto = nextPhoto;
 
     await surpriseConfetti();
