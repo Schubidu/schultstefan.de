@@ -24,47 +24,63 @@ export function hasImageIn(registry: ImageRegistry, id: string | null): id is st
   return id !== null && Object.prototype.hasOwnProperty.call(registry, id);
 }
 
-export function getRandomImageFrom(registry: ImageRegistry, random: () => number = Math.random): string | null {
+export function getRandomImageFrom(
+  registry: ImageRegistry,
+  random: () => number = Math.random,
+  excludedId: string | null = null
+): string | null {
   const keys = Object.keys(registry);
+  const candidates = keys.length > 1 && excludedId ? keys.filter((key) => key !== excludedId) : keys;
 
-  if (keys.length === 0) {
+  if (candidates.length === 0) {
     return null;
   }
 
-  const index = Math.floor(random() * keys.length);
+  const index = Math.floor(random() * candidates.length);
 
-  return keys[index] ?? null;
+  return candidates[index] ?? null;
 }
 
-export function fetchImageData(id: string): Promise<ImageType['default'] | null> {
-  return fetchImageDataFrom(imageRegistry, id);
+export function readRequestedPhoto(query: URLSearchParams): string | null {
+  return query.get('photo') ?? query.get('photos');
 }
 
-export function hasImage(id: string | null): id is string {
-  return hasImageIn(imageRegistry, id);
+function writeCanonicalPhotoUrl(id: string): void {
+  const url = new URL(window.location.href);
+
+  url.searchParams.delete('photos');
+  url.searchParams.set('photo', id);
+  window.history.replaceState({ path: url.toString() }, '', url);
 }
 
-export function getRandomImage(): string | null {
-  return getRandomImageFrom(imageRegistry);
+async function loadPhoto(id: string): Promise<ImageType['default'] | null> {
+  const photo = await fetchImageDataFrom(imageRegistry, id);
+
+  if (photo) {
+    writeCanonicalPhotoUrl(id);
+  }
+
+  return photo;
 }
 
-export default async function unsplashPhoto(): Promise<ImageType['default'] | null> {
+export async function getInitialPhoto(): Promise<ImageType['default'] | null> {
   const query = queryParser();
-  const requestedPhoto = query.get('photos');
-  const availablePhoto = hasImage(requestedPhoto);
-  const photo = availablePhoto ? requestedPhoto : getRandomImage();
+  const requestedPhoto = readRequestedPhoto(query);
+  const id = hasImageIn(imageRegistry, requestedPhoto) ? requestedPhoto : getRandomImageFrom(imageRegistry);
 
-  if (!photo) {
+  if (!id) {
     return null;
   }
 
-  query.set('photos', photo);
+  return loadPhoto(id);
+}
 
-  if (!availablePhoto) {
-    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?${query.toString()}`;
+export async function getNextPhoto(currentId: string): Promise<ImageType['default'] | null> {
+  const id = getRandomImageFrom(imageRegistry, Math.random, currentId);
 
-    window.history.pushState({ path: newUrl }, '', newUrl);
+  if (!id) {
+    return null;
   }
 
-  return fetchImageData(photo);
+  return loadPhoto(id);
 }
