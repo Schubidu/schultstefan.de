@@ -82,7 +82,16 @@ body {
 }
 
 @media print {
+  html,
+  body {
+    background-color: #fff;
+  }
+
   body {
     padding: 2rem;
+  }
+
+  .contact-card .crystal-surface {
+    display: block !important;
   }
 }
