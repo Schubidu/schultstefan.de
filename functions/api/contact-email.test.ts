@@ -95,6 +95,7 @@ describe('contact email reveal function', () => {
       get: async () => '5',
       put: async () => undefined,
     };
+
     const fetchMock = mockTurnstile({
       action: 'contact_email_reveal',
       hostname: 'schultstefan.de',
