@@ -224,12 +224,12 @@
   .contact-card {
     display: grid;
     grid-template-rows: auto 1fr;
-    row-gap: 1.8mm;
+    row-gap: 2.2mm;
     box-sizing: border-box;
     width: 85mm;
     height: 55mm;
     margin: 0;
-    padding: 4.4mm 4.8mm 4.2mm;
+    padding: 6.2mm 4.8mm 4.2mm;
     overflow: hidden;
     color: #171a1f;
     text-align: center;
@@ -313,12 +313,24 @@
 
   .card-layout {
     display: grid;
+    position: relative;
     grid-template-columns: minmax(0, 1fr) 16mm;
-    grid-template-rows: auto auto 1fr;
+    grid-template-rows: auto auto 1fr 0.2mm auto;
     column-gap: 3.2mm;
-    row-gap: 0.8mm;
+    row-gap: 0;
     min-height: 0;
+    padding-top: 1.4mm;
     align-items: start;
+  }
+
+  .card-layout::before {
+    content: "";
+    grid-column: 1 / -1;
+    grid-row: 4;
+    align-self: stretch;
+    width: 100%;
+    height: 0.2mm;
+    background: #c3c8ce;
   }
 
   .card-details {
@@ -348,7 +360,7 @@
     grid-row: 2;
     justify-self: center;
     max-width: 59mm;
-    margin: 0.8mm 0 0;
+    margin: 1mm 0 0;
     color: #343a43;
     font-size: 6.3pt;
     font-weight: 500;
@@ -361,13 +373,13 @@
 
   .card-profiles {
     grid-column: 1;
-    grid-row: 3;
+    grid-row: 5;
     align-self: end;
     display: grid;
     gap: 0.75mm;
     margin: 0;
-    padding-top: 1.5mm;
-    border-top: 0.2mm solid #bfc4ca;
+    padding-top: 1.6mm;
+    border: 0;
   }
 
   .card-profile {
@@ -411,7 +423,7 @@
 
   .card-qr {
     grid-column: 2;
-    grid-row: 3;
+    grid-row: 5;
     align-self: end;
     justify-self: stretch;
     display: flex;
@@ -422,12 +434,11 @@
     justify-content: flex-end;
     gap: 0.55mm;
     margin: 0;
-    padding: 1.5mm 0 0;
+    padding: 1.6mm 0 0;
     color: #252a31;
     text-align: center;
     background: none;
     border: 0;
-    border-top: 0.2mm solid #c8cdd3;
     border-radius: 0;
     box-shadow: none;
     backdrop-filter: none;
