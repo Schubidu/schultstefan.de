@@ -162,9 +162,10 @@
 
   .contact-card {
     width: 85mm;
-    min-height: 55mm;
+    height: 55mm;
     margin: 0;
-    padding: 6mm;
+    padding: 4mm;
+    overflow: hidden;
     color: #000;
     background: #fff;
     border: 0.3mm solid #333;
@@ -177,47 +178,46 @@
 
   .contact-card::before,
   .contact-card::after,
-  .contact-card .crystal-surface {
+  .contact-card .crystal-surface,
+  .card-home {
     display: none;
   }
 
-  .card-home {
-    margin-bottom: 3mm;
-    font-size: 7pt;
-    opacity: 1;
-  }
-
   .card-layout {
-    grid-template-columns: minmax(0, 1fr) 25mm;
-    gap: 4mm;
+    grid-template-columns: minmax(0, 1fr) 22mm;
+    gap: 3mm;
     align-items: start;
   }
 
   .contact-card .kicker {
-    margin-bottom: 1mm;
-    font-size: 7pt;
+    margin-bottom: 0.6mm;
+    font-size: 5.5pt;
   }
 
   .contact-card h1 {
-    font-size: 20pt;
+    font-size: 17pt;
+    line-height: 1;
     text-shadow: none;
   }
 
   .contact-card .role {
-    margin-top: 2mm;
-    font-size: 8pt;
+    margin-top: 1.2mm;
+    font-size: 6.6pt;
+    line-height: 1.2;
     text-shadow: none;
   }
 
   .card-profiles {
     gap: 0.8mm;
-    margin-top: 3mm;
+    margin-top: 2mm;
   }
 
   .card-profile {
-    grid-template-columns: 17mm minmax(0, 1fr);
-    gap: 1.5mm;
+    display: flex;
+    gap: 1mm;
+    align-items: baseline;
     padding: 0;
+    white-space: nowrap;
     background: none;
     border: 0;
     border-radius: 0;
@@ -228,11 +228,16 @@
 
   .card-profile strong,
   .card-profile-address {
-    font-size: 6.7pt;
+    font-size: 5.5pt;
+    line-height: 1.15;
+  }
+
+  .card-profile-address {
+    overflow-wrap: normal;
   }
 
   .card-qr {
-    width: 25mm;
+    width: 22mm;
     padding: 0;
     background: #fff;
     border: 0;
@@ -245,7 +250,8 @@
   }
 
   .card-qr p {
-    margin-top: 1mm;
-    font-size: 5.8pt;
+    margin-top: 0.8mm;
+    font-size: 5.2pt;
+    line-height: 1.15;
   }
 }
