@@ -56,3 +56,5 @@ jobs:
           git add src/unsplash-images
           git commit -m "chore: refresh background photos from collection ${COLLECTION_ID}"
           git push
+
+# Temporary PR-only push trigger above is removed after the registry is seeded.
