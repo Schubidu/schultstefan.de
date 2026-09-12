@@ -226,18 +226,17 @@ export default async function initializeBackground(): Promise<void> {
   const photo = await getInitialPhoto();
 
   if (!photo) {
-    if (shuffleButton) {
-      shuffleButton.disabled = true;
-    }
-
     return;
   }
 
   await revealPhoto(photo);
 
-  shuffleButton?.addEventListener('click', async () => {
-    await shufflePhoto();
-  });
+  if (shuffleButton) {
+    shuffleButton.addEventListener('click', async () => {
+      await shufflePhoto();
+    });
+    shuffleButton.disabled = false;
+  }
 
   triggerSurpriseConfetti();
 }
