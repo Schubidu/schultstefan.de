@@ -184,8 +184,7 @@ body {
 .crystal-surface::after {
   z-index: 7;
   inset: 0.32rem;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 12% 88%, rgba(0, 0, 0, 0.08));
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 12% 88%, rgba(0, 0, 0, 0.08));
   clip-path: polygon(
     0 14%,
     6.4% 0,
@@ -349,8 +348,7 @@ h1 {
   cursor: pointer;
   background:
     linear-gradient(132deg, rgba(255, 255, 255, 0.24) 0 36%, transparent 36.5%),
-    linear-gradient(315deg, var(--facet-dark), transparent 54%),
-    var(--panel-background);
+    linear-gradient(315deg, var(--facet-dark), transparent 54%), var(--panel-background);
   border: 1px solid var(--panel-border);
   box-shadow:
     0 0.8rem 2.2rem var(--panel-shadow),
@@ -398,9 +396,7 @@ h1 {
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  background:
-    linear-gradient(126deg, rgba(255, 255, 255, 0.16) 0 37%, transparent 37.5%),
-    var(--panel-background);
+  background: linear-gradient(126deg, rgba(255, 255, 255, 0.16) 0 37%, transparent 37.5%), var(--panel-background);
   border: 1px solid var(--panel-border);
   box-shadow:
     inset 1px 1px rgba(255, 255, 255, 0.2),

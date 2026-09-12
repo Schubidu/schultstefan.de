@@ -61,7 +61,12 @@
   bottom: 22%;
   left: 0;
   width: 1px;
-  background: linear-gradient(180deg, transparent, color-mix(in srgb, currentColor 24%, transparent) 28% 72%, transparent);
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, currentColor 24%, transparent) 28% 72%,
+    transparent
+  );
   pointer-events: none;
 }
 
