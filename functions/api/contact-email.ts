@@ -2,27 +2,14 @@ const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/sit
 
 const TURNSTILE_ACTION = 'contact_email_reveal';
 
-const RATE_LIMIT_MAX_REQUESTS = 5;
-
-const RATE_LIMIT_WINDOW_MS = 60_000;
-
-const RATE_LIMIT_TTL_SECONDS = 120;
-
-interface RateLimitStore {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string, options: { expirationTtl: number }): Promise<void>;
-}
-
 interface Environment {
   CONTACT_EMAIL?: string;
-  CONTACT_REVEAL_RATE_LIMIT?: RateLimitStore;
   TURNSTILE_SECRET_KEY?: string;
   TURNSTILE_SITE_KEY?: string;
 }
 
 interface RuntimeEnvironment extends Environment {
   CONTACT_EMAIL: string;
-  CONTACT_REVEAL_RATE_LIMIT: RateLimitStore;
   TURNSTILE_SECRET_KEY: string;
   TURNSTILE_SITE_KEY: string;
 }
@@ -46,48 +33,19 @@ type JsonResponseBody = { email: string } | { error: string } | { siteKey: strin
 
 type VerificationResult = 'failed' | 'unavailable' | 'verified';
 
-function json(body: JsonResponseBody, status = 200, retryAfter?: string): Response {
-  const headers = new Headers({
-    'Cache-Control': 'no-store, private',
-    'Content-Type': 'application/json; charset=utf-8',
-    'X-Content-Type-Options': 'nosniff',
+function json(body: JsonResponseBody, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    headers: {
+      'Cache-Control': 'no-store, private',
+      'Content-Type': 'application/json; charset=utf-8',
+      'X-Content-Type-Options': 'nosniff',
+    },
+    status,
   });
-
-  if (retryAfter) {
-    headers.set('Retry-After', retryAfter);
-  }
-
-  return new Response(JSON.stringify(body), { headers, status });
 }
 
 function hasRuntimeConfiguration(env: Environment): env is RuntimeEnvironment {
-  return Boolean(
-    env.CONTACT_EMAIL && env.CONTACT_REVEAL_RATE_LIMIT && env.TURNSTILE_SECRET_KEY && env.TURNSTILE_SITE_KEY
-  );
-}
-
-async function hashIpAddress(ipAddress: string): Promise<string> {
-  const bytes = new TextEncoder().encode(ipAddress);
-  const digest = new Uint8Array(await crypto.subtle.digest('SHA-256', bytes));
-
-  return Array.from(digest, (byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-async function consumeRateLimit(store: RateLimitStore, hostname: string, ipAddress: string): Promise<boolean> {
-  const windowId = Math.floor(Date.now() / RATE_LIMIT_WINDOW_MS);
-  const ipHash = await hashIpAddress(ipAddress);
-  const key = `contact-email:${hostname}:${windowId}:${ipHash}`;
-  const storedValue = await store.get(key);
-  const parsedCount = Number.parseInt(storedValue ?? '0', 10);
-  const count = Number.isFinite(parsedCount) && parsedCount >= 0 ? parsedCount : 0;
-
-  if (count >= RATE_LIMIT_MAX_REQUESTS) {
-    return false;
-  }
-
-  await store.put(key, String(count + 1), { expirationTtl: RATE_LIMIT_TTL_SECONDS });
-
-  return true;
+  return Boolean(env.CONTACT_EMAIL && env.TURNSTILE_SECRET_KEY && env.TURNSTILE_SITE_KEY);
 }
 
 async function verifyTurnstile(
@@ -165,18 +123,6 @@ export async function onRequestPost(context: FunctionContext): Promise<Response>
 
   if (!remoteIp) {
     return json({ error: 'invalid_request' }, 400);
-  }
-
-  let allowed: boolean;
-
-  try {
-    allowed = await consumeRateLimit(env.CONTACT_REVEAL_RATE_LIMIT, requestUrl.hostname, remoteIp);
-  } catch {
-    return json({ error: 'unavailable' }, 503);
-  }
-
-  if (!allowed) {
-    return json({ error: 'rate_limited' }, 429, '60');
   }
 
   let token: string;

@@ -4,6 +4,8 @@ const TURNSTILE_ACTION = 'contact_email_reveal';
 
 const TURNSTILE_SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
+const compactTurnstile = window.matchMedia('(max-width: 38rem)');
+
 interface TurnstileApi {
   remove(widgetId: string): void;
   render(container: HTMLElement, options: TurnstileOptions): string;
@@ -16,6 +18,7 @@ interface TurnstileOptions {
   'error-callback'(): void;
   'expired-callback'(): void;
   sitekey: string;
+  size: 'compact' | 'normal';
   theme: 'auto';
 }
 
@@ -44,7 +47,7 @@ function loadTurnstile(): Promise<TurnstileApi> {
     return turnstilePromise;
   }
 
-  turnstilePromise = new Promise<TurnstileApi>((resolve, reject) => {
+  const loading = new Promise<TurnstileApi>((resolve, reject) => {
     const resolveTurnstile = () => {
       if (window.turnstile) {
         resolve(window.turnstile);
@@ -70,6 +73,13 @@ function loadTurnstile(): Promise<TurnstileApi> {
     script.addEventListener('load', resolveTurnstile, { once: true });
     script.addEventListener('error', () => reject(new Error('Unable to load Turnstile.')), { once: true });
     document.head.append(script);
+  });
+
+  turnstilePromise = loading.catch(() => {
+    turnstilePromise = null;
+    document.querySelector<HTMLScriptElement>('script[data-turnstile-script]')?.remove();
+
+    throw new Error('Unable to load Turnstile.');
   });
 
   return turnstilePromise;
@@ -105,7 +115,7 @@ async function fetchEmail(token: string): Promise<ContactEmailResponse> {
   });
 
   if (response.status === 429) {
-    throw new Error('Too many attempts. Please try again in a minute.');
+    throw new Error('Too many attempts. Please try again shortly.');
   }
 
   if (response.status === 403) {
@@ -210,6 +220,7 @@ export default function initializeContactEmail(): void {
           showRetryableError('Verification expired. Please try again.');
         },
         sitekey: configuration.siteKey,
+        size: compactTurnstile.matches ? 'compact' : 'normal',
         theme: 'auto',
       });
     } catch {

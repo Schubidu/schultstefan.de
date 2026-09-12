@@ -1,11 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { onRequestGet, onRequestPost } from './contact-email';
-
-interface RateLimitStore {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string, options: { expirationTtl: number }): Promise<void>;
-}
+import { onRequestGet, onRequestPost } from '../functions/api/contact-email';
 
 interface TurnstileTestResult {
   action: string;
@@ -13,21 +8,8 @@ interface TurnstileTestResult {
   success: boolean;
 }
 
-class MemoryRateLimitStore implements RateLimitStore {
-  readonly values = new Map<string, string>();
-
-  async get(key: string): Promise<string | null> {
-    return this.values.get(key) ?? null;
-  }
-
-  async put(key: string, value: string): Promise<void> {
-    this.values.set(key, value);
-  }
-}
-
 const baseEnvironment = {
   CONTACT_EMAIL: 'person@example.test',
-  CONTACT_REVEAL_RATE_LIMIT: new MemoryRateLimitStore(),
   TURNSTILE_SECRET_KEY: 'test-secret',
   TURNSTILE_SITE_KEY: 'test-site-key',
 };
@@ -44,11 +26,11 @@ function createPostRequest(token = 'valid-token'): Request {
   });
 }
 
-function mockTurnstile(result: TurnstileTestResult): ReturnType<typeof vi.fn> {
+function mockTurnstile(result: TurnstileTestResult, status = 200): ReturnType<typeof vi.fn> {
   const fetchMock = vi.fn().mockResolvedValue(
     new Response(JSON.stringify(result), {
       headers: { 'Content-Type': 'application/json' },
-      status: 200,
+      status,
     })
   );
 
@@ -84,31 +66,43 @@ describe('contact email reveal function', () => {
   it('rejects cross-origin reveal requests before validation', async () => {
     const request = createPostRequest();
     request.headers.set('Origin', 'https://example.test');
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
 
     const response = await onRequestPost({ env: baseEnvironment, request });
 
     expect(response.status).toBe(403);
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 
-  it('rate limits before calling Turnstile', async () => {
-    const store: RateLimitStore = {
-      get: async () => '5',
-      put: async () => undefined,
-    };
+  it('rejects requests without the Cloudflare connecting IP before validation', async () => {
+    const request = createPostRequest();
+    request.headers.delete('CF-Connecting-IP');
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
 
-    const fetchMock = mockTurnstile({
-      action: 'contact_email_reveal',
-      hostname: 'schultstefan.de',
-      success: true,
+    const response = await onRequestPost({ env: baseEnvironment, request });
+
+    expect(response.status).toBe(400);
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it('rejects malformed JSON before validation', async () => {
+    const request = new Request('https://schultstefan.de/api/contact-email', {
+      body: '{',
+      headers: {
+        'CF-Connecting-IP': '203.0.113.10',
+        'Content-Type': 'application/json',
+        Origin: 'https://schultstefan.de',
+      },
+      method: 'POST',
     });
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
 
-    const response = await onRequestPost({
-      env: { ...baseEnvironment, CONTACT_REVEAL_RATE_LIMIT: store },
-      request: createPostRequest(),
-    });
+    const response = await onRequestPost({ env: baseEnvironment, request });
 
-    expect(response.status).toBe(429);
-    expect(response.headers.get('Retry-After')).toBe('60');
+    expect(response.status).toBe(400);
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
@@ -120,7 +114,7 @@ describe('contact email reveal function', () => {
     });
 
     const response = await onRequestPost({
-      env: { ...baseEnvironment, CONTACT_REVEAL_RATE_LIMIT: new MemoryRateLimitStore() },
+      env: baseEnvironment,
       request: createPostRequest(),
     });
 
@@ -135,11 +129,29 @@ describe('contact email reveal function', () => {
     });
 
     const response = await onRequestPost({
-      env: { ...baseEnvironment, CONTACT_REVEAL_RATE_LIMIT: new MemoryRateLimitStore() },
+      env: baseEnvironment,
       request: createPostRequest(),
     });
 
     expect(response.status).toBe(403);
+  });
+
+  it('fails closed when Turnstile validation is unavailable', async () => {
+    mockTurnstile(
+      {
+        action: 'contact_email_reveal',
+        hostname: 'schultstefan.de',
+        success: false,
+      },
+      503
+    );
+
+    const response = await onRequestPost({
+      env: baseEnvironment,
+      request: createPostRequest(),
+    });
+
+    expect(response.status).toBe(503);
   });
 
   it('returns the configured email only after successful validation', async () => {
@@ -150,7 +162,7 @@ describe('contact email reveal function', () => {
     });
 
     const response = await onRequestPost({
-      env: { ...baseEnvironment, CONTACT_REVEAL_RATE_LIMIT: new MemoryRateLimitStore() },
+      env: baseEnvironment,
       request: createPostRequest(),
     });
 

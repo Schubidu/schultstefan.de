@@ -29,12 +29,22 @@ The Cloudflare Pages project requires these runtime values for both production a
 
 - `CONTACT_EMAIL` as a secret;
 - `TURNSTILE_SECRET_KEY` as a secret;
-- `TURNSTILE_SITE_KEY` as an environment variable;
-- a Workers KV namespace bound as `CONTACT_REVEAL_RATE_LIMIT`.
+- `TURNSTILE_SITE_KEY` as an environment variable.
 
 Create the Turnstile widget with `schultstefan.de` and `schultstefan-de.pages.dev` as allowed hostnames. The latter also covers Pages preview subdomains. The endpoint validates the Turnstile action and the exact request hostname before returning the configured address.
 
-The KV binding provides a small fixed-window abuse limit before Turnstile validation. Rate-limit keys contain only a short-lived SHA-256 hash of the connecting IP and expire automatically.
+### Rate limiting
+
+Protect the production endpoint with a Cloudflare zone-level WAF rate limiting rule instead of implementing a counter in application storage. This keeps rate limiting in Cloudflare's request layer and avoids relying on eventually consistent KV reads and writes as a lock.
+
+For a Free-plan baseline, create one rate limiting rule with:
+
+- path equal to `/api/contact-email`;
+- counting characteristic: IP;
+- 10 requests per 10 seconds;
+- Block for 10 seconds.
+
+Free-plan rate limiting expressions expose the request path but not the HTTP method, so both the configuration GET and reveal POST count toward the same budget. This is intentional. Preview deployments on `*.pages.dev` are still protected by Turnstile, while the zone rule protects the production custom domain.
 
 ## Photos
 
