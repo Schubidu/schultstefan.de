@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#111318" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Stefan Schult" />
+    <meta name="description" content="Contact Stefan Schult via GitHub, LinkedIn and Bluesky." />
+
+    <title>Stefan Schult · Contact Card</title>
+    <link rel="canonical" href="https://schultstefan.de/card" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/src/styles/index.css" />
+    <link rel="stylesheet" href="/src/styles/photo-transition.css" />
+    <link rel="stylesheet" href="/src/styles/utility.css" />
+    <link rel="stylesheet" href="/src/styles/card.css" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Stefan Schult · Contact Card" />
+    <meta property="og:description" content="Contact Stefan Schult via GitHub, LinkedIn and Bluesky." />
+    <meta property="og:url" content="https://schultstefan.de/card" />
+    <meta property="og:image" content="https://schultstefan.de/assets/socialsharing-hafencity.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Stefan Schult · Senior Software Engineer" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Stefan Schult · Contact Card" />
+    <meta name="twitter:description" content="Contact Stefan Schult via GitHub, LinkedIn and Bluesky." />
+    <meta name="twitter:image" content="https://schultstefan.de/assets/socialsharing-hafencity.png" />
+    <meta name="twitter:image:alt" content="Stefan Schult · Senior Software Engineer" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Stefan Schult",
+        "url": "https://schultstefan.de/",
+        "jobTitle": "Senior Software Engineer",
+        "sameAs": [
+          "https://github.com/Schubidu",
+          "https://www.linkedin.com/in/stefan-schult-9185261a1",
+          "https://bsky.app/profile/schultstefan.de"
+        ]
+      }
+    </script>
+  </head>
+  <body class="card-page">
+    <div id="photo-background" class="photo-background" aria-hidden="true">
+      <div id="photo-layer-base" class="photo-layer photo-layer-base"></div>
+      <div id="photo-layer-overlay" class="photo-layer photo-layer-overlay"></div>
+    </div>
+
+    <main class="profile-card contact-card">
+      <div class="crystal-surface" aria-hidden="true">
+        <span class="crystal-facet crystal-facet-a"></span>
+        <span class="crystal-facet crystal-facet-b"></span>
+        <span class="crystal-facet crystal-facet-c"></span>
+        <span class="crystal-facet crystal-facet-d"></span>
+        <span class="crystal-facet crystal-facet-e"></span>
+      </div>
+
+      <a class="card-home" href="/">schultstefan.de</a>
+
+      <div class="card-layout">
+        <section class="card-details" aria-labelledby="card-name">
+          <p class="kicker">Contact card</p>
+          <h1 id="card-name">Stefan Schult</h1>
+          <p class="role">Senior Software Engineer <span aria-hidden="true">·</span> Identity, Developer Tooling &amp; Web</p>
+
+          <nav class="card-profiles" aria-label="Public profiles">
+            <a class="card-profile" href="https://github.com/Schubidu" rel="me">
+              <strong>GitHub</strong>
+              <span class="card-profile-address">github.com/Schubidu</span>
+            </a>
+            <a class="card-profile" href="https://www.linkedin.com/in/stefan-schult-9185261a1" rel="me">
+              <strong>LinkedIn</strong>
+              <span class="card-profile-address">linkedin.com/in/stefan-schult-9185261a1</span>
+            </a>
+            <a class="card-profile" href="https://bsky.app/profile/schultstefan.de" rel="me">
+              <strong>Bluesky</strong>
+              <span class="card-profile-address">@schultstefan.de</span>
+            </a>
+          </nav>
+        </section>
+
+        <aside class="card-qr" aria-label="QR code for this contact card">
+          <img src="/src/assets/card-qr.svg" alt="QR code to open schultstefan.de/card" width="180" height="180" />
+          <p>Scan to open this card</p>
+        </aside>
+      </div>
+    </main>
+
+    <button id="shuffle-photo" class="shuffle-photo" type="button" aria-label="Show another background photo" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path
+          d="M16.5 3h4.75v4.75h-1.9V6.21l-3.73 3.72a3.75 3.75 0 0 1-2.65 1.1h-1.22v-1.9h1.22c.49 0 .96-.2 1.31-.54l3.69-3.69H16.5V3ZM2.75 6.1h3.28c1 0 1.96.4 2.66 1.1l8.93 8.92c.35.35.82.55 1.31.55h.42v-1.54h1.9v4.75H16.5v-1.9h1.47l-10.62-10.6a1.86 1.86 0 0 0-1.32-.55H2.75V6.1Zm0 10.57h3.28c.5 0 .97-.2 1.32-.55l1.76-1.76 1.34 1.35-1.76 1.75a3.75 3.75 0 0 1-2.66 1.1H2.75v-1.89Z"
+        />
+      </svg>
+    </button>
+
+    <aside id="photo-credit" class="photo-credit" hidden></aside>
+
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>
