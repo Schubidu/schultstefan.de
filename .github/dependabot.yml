@@ -7,8 +7,6 @@ updates:
       day: friday
       time: '04:00'
     open-pull-requests-limit: 10
-    labels:
-      - automerge
     cooldown:
       semver-major-days: 14
       semver-minor-days: 7
