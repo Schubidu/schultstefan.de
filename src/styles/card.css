@@ -1,11 +1,63 @@
 .card-page {
+  --card-surface: color-mix(in srgb, var(--page-background) 26%, var(--panel-background));
+  --card-highlight: color-mix(in srgb, var(--page-background) 16%, rgba(255, 255, 255, 0.34));
+  --card-shadow: color-mix(in srgb, var(--page-background) 30%, rgba(0, 0, 0, 0.24));
   overflow: auto;
+  background-color: var(--page-background);
 }
 
 .contact-card {
   width: min(46rem, calc(100% - 2rem));
   padding: clamp(1.7rem, 5vw, 2.8rem);
   text-align: left;
+  background: var(--card-surface);
+  backdrop-filter: blur(0.8px) saturate(1.12) contrast(1.06);
+  -webkit-backdrop-filter: blur(0.8px) saturate(1.12) contrast(1.06);
+}
+
+.contact-card .crystal-surface::before {
+  background:
+    linear-gradient(132deg, transparent 0 31.8%, rgba(255, 255, 255, 0.18) 32% 32.35%, transparent 32.55%),
+    linear-gradient(43deg, transparent 0 55.8%, rgba(0, 0, 0, 0.14) 56% 56.35%, transparent 56.55%),
+    radial-gradient(ellipse at 7% 14%, rgba(255, 255, 255, 0.28), transparent 17%),
+    radial-gradient(ellipse at 92% 80%, var(--prism-violet), transparent 18%),
+    radial-gradient(ellipse at 23% 91%, var(--prism-cyan), transparent 15%);
+  opacity: 0.74;
+}
+
+.contact-card .crystal-facet-a {
+  background: linear-gradient(138deg, var(--card-highlight), rgba(255, 255, 255, 0.025) 72%);
+  backdrop-filter: blur(0.15px) brightness(1.08) saturate(1.04);
+  -webkit-backdrop-filter: blur(0.15px) brightness(1.08) saturate(1.04);
+  clip-path: polygon(0 0, 44% 0, 34% 33%, 0 47%);
+}
+
+.contact-card .crystal-facet-b {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.09), var(--card-shadow));
+  backdrop-filter: blur(0.7px) brightness(0.97) contrast(1.1);
+  -webkit-backdrop-filter: blur(0.7px) brightness(0.97) contrast(1.1);
+  clip-path: polygon(44% 0, 72% 0, 64% 42%, 34% 33%);
+}
+
+.contact-card .crystal-facet-c {
+  background: linear-gradient(220deg, var(--card-highlight), rgba(255, 255, 255, 0.018) 54%, var(--card-shadow));
+  backdrop-filter: blur(0.25px) brightness(1.03) saturate(0.96);
+  -webkit-backdrop-filter: blur(0.25px) brightness(1.03) saturate(0.96);
+  clip-path: polygon(72% 0, 100% 0, 100% 58%, 64% 42%);
+}
+
+.contact-card .crystal-facet-d {
+  background: linear-gradient(28deg, rgba(255, 255, 255, 0.2), transparent 58%, var(--prism-cyan));
+  backdrop-filter: blur(0.65px) brightness(1.05) saturate(1.12);
+  -webkit-backdrop-filter: blur(0.65px) brightness(1.05) saturate(1.12);
+  clip-path: polygon(0 47%, 34% 33%, 48% 100%, 0 100%);
+}
+
+.contact-card .crystal-facet-e {
+  background: linear-gradient(326deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.018) 48%, var(--card-shadow));
+  backdrop-filter: blur(0.35px) brightness(0.99) contrast(1.11);
+  -webkit-backdrop-filter: blur(0.35px) brightness(0.99) contrast(1.11);
+  clip-path: polygon(34% 33%, 64% 42%, 100% 58%, 100% 100%, 48% 100%);
 }
 
 .card-home {
@@ -27,8 +79,8 @@
 
 .card-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(8rem, 10rem);
-  gap: clamp(1.5rem, 5vw, 2.6rem);
+  grid-template-columns: minmax(0, 1fr) minmax(6.5rem, 7.5rem);
+  gap: clamp(1.4rem, 4vw, 2.2rem);
   align-items: center;
 }
 
@@ -92,28 +144,37 @@
 }
 
 .card-qr {
+  width: 7.5rem;
+  justify-self: end;
   align-self: center;
   margin: 0;
-  padding: 0.68rem;
-  color: #15171d;
+  padding: 0.45rem;
+  color: inherit;
   text-align: center;
-  background: rgba(255, 255, 255, 0.88);
-  border: 1px solid rgba(255, 255, 255, 0.78);
-  border-radius: 1rem;
-  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.18);
+  background: color-mix(in srgb, var(--page-background) 18%, var(--link-background));
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 0.72rem;
+  box-shadow:
+    inset 1px 1px rgba(255, 255, 255, 0.2),
+    inset -1px -1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.2px) saturate(1.08);
+  -webkit-backdrop-filter: blur(1.2px) saturate(1.08);
 }
 
 .card-qr img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 0.5rem;
+  background: #fff;
+  border-radius: 0.42rem;
 }
 
 .card-qr p {
-  margin: 0.55rem 0 0;
-  font-size: 0.7rem;
+  margin: 0.35rem 0 0;
+  font-size: 0.62rem;
   font-weight: 650;
+  line-height: 1.2;
+  opacity: 0.7;
 }
 
 @media (max-width: 38rem) {
@@ -135,7 +196,7 @@
   }
 
   .card-qr {
-    width: min(9rem, 42vw);
+    width: min(7rem, 32vw);
     justify-self: center;
   }
 }
@@ -239,10 +300,13 @@
   .card-qr {
     width: 22mm;
     padding: 0;
+    color: #000;
     background: #fff;
     border: 0;
     border-radius: 0;
     box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .card-qr img {
@@ -253,5 +317,6 @@
     margin-top: 0.8mm;
     font-size: 5.2pt;
     line-height: 1.15;
+    opacity: 1;
   }
 }
