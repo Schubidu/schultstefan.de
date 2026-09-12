@@ -15,13 +15,13 @@
   }
 }
 
-html {
+html,
+body {
   background-color: var(--page-background);
 }
 
 body {
   padding: 0;
-  background: transparent;
 }
 
 .photo-background {
