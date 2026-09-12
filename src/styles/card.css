@@ -224,15 +224,15 @@
   .contact-card {
     display: grid;
     grid-template-rows: auto 1fr;
-    row-gap: 2.6mm;
+    row-gap: 1.8mm;
     box-sizing: border-box;
     width: 85mm;
     height: 55mm;
     margin: 0;
-    padding: 4.5mm 4.8mm 4.4mm;
+    padding: 4.4mm 4.8mm 4.2mm;
     overflow: hidden;
     color: #171a1f;
-    text-align: left;
+    text-align: center;
     background: #fff;
     border: 0;
     border-radius: 0;
@@ -298,12 +298,14 @@
 
   .card-home {
     display: block;
+    justify-self: center;
     margin: 0;
     color: #565d67;
-    font-size: 4.8pt;
+    font-size: 4.6pt;
     font-weight: 750;
     line-height: 1;
-    letter-spacing: 0.17em;
+    letter-spacing: 0.18em;
+    text-align: center;
     text-decoration: none;
     text-transform: uppercase;
     opacity: 1;
@@ -311,17 +313,16 @@
 
   .card-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 20.5mm;
-    gap: 3.8mm;
+    grid-template-columns: minmax(0, 1fr) 16mm;
+    grid-template-rows: auto auto 1fr;
+    column-gap: 3.2mm;
+    row-gap: 0.8mm;
     min-height: 0;
-    align-items: stretch;
+    align-items: start;
   }
 
   .card-details {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    min-height: 0;
+    display: contents;
   }
 
   .contact-card .kicker {
@@ -329,41 +330,50 @@
   }
 
   .contact-card h1 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
     margin: 0;
     color: #0d0f12;
-    font-size: 17.5pt;
+    font-size: 18.5pt;
     font-weight: 720;
-    line-height: 0.94;
+    line-height: 0.96;
     letter-spacing: -0.045em;
-    text-align: left;
+    text-align: center;
     text-shadow: none;
   }
 
   .contact-card .role {
-    max-width: 47mm;
-    margin: 1.5mm 0 0;
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+    max-width: 59mm;
+    margin: 0.8mm 0 0;
     color: #343a43;
-    font-size: 6.5pt;
+    font-size: 6.3pt;
     font-weight: 500;
-    line-height: 1.27;
+    line-height: 1.25;
     letter-spacing: -0.01em;
-    text-align: left;
+    text-align: center;
     text-shadow: none;
-    text-wrap: pretty;
+    text-wrap: balance;
   }
 
   .card-profiles {
+    grid-column: 1;
+    grid-row: 3;
+    align-self: end;
     display: grid;
-    gap: 0.8mm;
-    margin: auto 0 0;
-    padding-top: 2mm;
+    gap: 0.75mm;
+    margin: 0;
+    padding-top: 1.5mm;
     border-top: 0.2mm solid #bfc4ca;
   }
 
   .card-profile {
     display: grid;
-    grid-template-columns: 10.8mm minmax(0, 1fr);
-    gap: 1.2mm;
+    grid-template-columns: 10.5mm minmax(0, 1fr);
+    gap: 1.15mm;
     align-items: baseline;
     min-width: 0;
     padding: 0;
@@ -380,7 +390,7 @@
 
   .card-profile strong {
     color: #15181d;
-    font-size: 4.25pt;
+    font-size: 4.15pt;
     font-weight: 750;
     line-height: 1.15;
     letter-spacing: 0.055em;
@@ -391,7 +401,7 @@
     min-width: 0;
     overflow: hidden;
     color: #3f4650;
-    font-size: 5.25pt;
+    font-size: 5.1pt;
     font-weight: 450;
     line-height: 1.15;
     letter-spacing: -0.005em;
@@ -400,22 +410,24 @@
   }
 
   .card-qr {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: end;
+    justify-self: stretch;
     display: flex;
     width: auto;
-    height: 100%;
-    justify-self: stretch;
-    align-self: stretch;
+    height: auto;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 1.35mm;
+    justify-content: flex-end;
+    gap: 0.55mm;
     margin: 0;
-    padding: 0 0 0 3.2mm;
+    padding: 1.5mm 0 0;
     color: #252a31;
     text-align: center;
     background: none;
     border: 0;
-    border-left: 0.2mm solid #c8cdd3;
+    border-top: 0.2mm solid #c8cdd3;
     border-radius: 0;
     box-shadow: none;
     backdrop-filter: none;
@@ -423,8 +435,8 @@
   }
 
   .card-qr img {
-    width: 18.5mm;
-    height: 18.5mm;
+    width: 11.5mm;
+    height: 11.5mm;
     background: #fff;
     border: 0;
     border-radius: 0;
@@ -436,11 +448,11 @@
 
   .card-qr::after {
     content: "schultstefan.de/card";
-    color: #3f4650;
-    font-size: 4.15pt;
+    color: #4a515b;
+    font-size: 3.45pt;
     font-weight: 650;
-    line-height: 1.15;
-    letter-spacing: 0.015em;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
     white-space: nowrap;
   }
 }
