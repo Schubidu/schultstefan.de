@@ -1,0 +1,469 @@
+.card-page {
+  --card-surface: color-mix(in srgb, var(--page-background) 26%, var(--panel-background));
+  --card-highlight: color-mix(in srgb, var(--page-background) 16%, rgba(255, 255, 255, 0.34));
+  --card-shadow: color-mix(in srgb, var(--page-background) 30%, rgba(0, 0, 0, 0.24));
+  overflow: auto;
+  background-color: var(--page-background);
+}
+
+.contact-card {
+  width: min(46rem, calc(100% - 2rem));
+  padding: clamp(1.7rem, 5vw, 2.8rem);
+  text-align: left;
+  background: var(--card-surface);
+  backdrop-filter: blur(0.8px) saturate(1.12) contrast(1.06);
+  -webkit-backdrop-filter: blur(0.8px) saturate(1.12) contrast(1.06);
+}
+
+.contact-card .crystal-surface::before {
+  background:
+    linear-gradient(132deg, transparent 0 31.8%, rgba(255, 255, 255, 0.18) 32% 32.35%, transparent 32.55%),
+    linear-gradient(43deg, transparent 0 55.8%, rgba(0, 0, 0, 0.14) 56% 56.35%, transparent 56.55%),
+    radial-gradient(ellipse at 7% 14%, rgba(255, 255, 255, 0.28), transparent 17%),
+    radial-gradient(ellipse at 92% 80%, var(--prism-violet), transparent 18%),
+    radial-gradient(ellipse at 23% 91%, var(--prism-cyan), transparent 15%);
+  opacity: 0.74;
+}
+
+.contact-card .crystal-facet-a {
+  background: linear-gradient(138deg, var(--card-highlight), rgba(255, 255, 255, 0.025) 72%);
+  backdrop-filter: blur(0.15px) brightness(1.08) saturate(1.04);
+  -webkit-backdrop-filter: blur(0.15px) brightness(1.08) saturate(1.04);
+  clip-path: polygon(0 0, 44% 0, 34% 33%, 0 47%);
+}
+
+.contact-card .crystal-facet-b {
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.09), var(--card-shadow));
+  backdrop-filter: blur(0.7px) brightness(0.97) contrast(1.1);
+  -webkit-backdrop-filter: blur(0.7px) brightness(0.97) contrast(1.1);
+  clip-path: polygon(44% 0, 72% 0, 64% 42%, 34% 33%);
+}
+
+.contact-card .crystal-facet-c {
+  background: linear-gradient(220deg, var(--card-highlight), rgba(255, 255, 255, 0.018) 54%, var(--card-shadow));
+  backdrop-filter: blur(0.25px) brightness(1.03) saturate(0.96);
+  -webkit-backdrop-filter: blur(0.25px) brightness(1.03) saturate(0.96);
+  clip-path: polygon(72% 0, 100% 0, 100% 58%, 64% 42%);
+}
+
+.contact-card .crystal-facet-d {
+  background: linear-gradient(28deg, rgba(255, 255, 255, 0.2), transparent 58%, var(--prism-cyan));
+  backdrop-filter: blur(0.65px) brightness(1.05) saturate(1.12);
+  -webkit-backdrop-filter: blur(0.65px) brightness(1.05) saturate(1.12);
+  clip-path: polygon(0 47%, 34% 33%, 48% 100%, 0 100%);
+}
+
+.contact-card .crystal-facet-e {
+  background: linear-gradient(326deg, rgba(255, 255, 255, 0.17), rgba(255, 255, 255, 0.018) 48%, var(--card-shadow));
+  backdrop-filter: blur(0.35px) brightness(0.99) contrast(1.11);
+  -webkit-backdrop-filter: blur(0.35px) brightness(0.99) contrast(1.11);
+  clip-path: polygon(34% 33%, 64% 42%, 100% 58%, 100% 100%, 48% 100%);
+}
+
+.card-home {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: inherit;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.card-home:hover,
+.card-home:focus-visible {
+  opacity: 1;
+}
+
+.card-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(6.5rem, 7.5rem);
+  gap: clamp(1.4rem, 4vw, 2.2rem);
+  align-items: center;
+}
+
+.contact-card h1 {
+  font-size: clamp(2.4rem, 8vw, 4.25rem);
+}
+
+.contact-card .role {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.card-profiles {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.45rem;
+}
+
+.card-profile {
+  display: grid;
+  grid-template-columns: 5.1rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.62rem 0.76rem;
+  color: inherit;
+  text-decoration: none;
+  background: var(--link-background);
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 0.65rem;
+  box-shadow:
+    inset 1px 1px rgba(255, 255, 255, 0.22),
+    inset -1px -1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px) saturate(1.1);
+  -webkit-backdrop-filter: blur(2px) saturate(1.1);
+  transition:
+    background-color 140ms ease,
+    transform 140ms ease;
+}
+
+.card-profile:hover,
+.card-profile:focus-visible {
+  background: var(--link-background-hover);
+  transform: translateY(-1px);
+}
+
+.card-profile:focus-visible,
+.card-home:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.card-profile strong {
+  font-size: 0.84rem;
+}
+
+.card-profile-address {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.76rem;
+  opacity: 0.78;
+}
+
+.card-qr {
+  width: 7.5rem;
+  justify-self: end;
+  align-self: center;
+  margin: 0;
+  padding: 0.45rem;
+  color: inherit;
+  text-align: center;
+  background: color-mix(in srgb, var(--page-background) 18%, var(--link-background));
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 0.72rem;
+  box-shadow:
+    inset 1px 1px rgba(255, 255, 255, 0.2),
+    inset -1px -1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.2px) saturate(1.08);
+  -webkit-backdrop-filter: blur(1.2px) saturate(1.08);
+}
+
+.card-qr img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 0.42rem;
+}
+
+.card-qr p {
+  margin: 0.35rem 0 0;
+  font-size: 0.62rem;
+  font-weight: 650;
+  line-height: 1.2;
+  opacity: 0.7;
+}
+
+@media (max-width: 38rem) {
+  .contact-card {
+    text-align: center;
+  }
+
+  .card-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card .role {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .card-profile {
+    text-align: left;
+  }
+
+  .card-qr {
+    width: min(7rem, 32vw);
+    justify-self: center;
+  }
+}
+
+@media print {
+  @page {
+    margin: 10mm;
+  }
+
+  .card-page {
+    display: block;
+    min-height: auto;
+    padding: 0;
+    overflow: visible;
+    color: #171a1f;
+    background: #fff;
+  }
+
+  .card-page .photo-background,
+  .card-page .shuffle-photo,
+  .card-page .photo-credit {
+    display: none !important;
+  }
+
+  .contact-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    row-gap: 2.2mm;
+    box-sizing: border-box;
+    width: 85mm;
+    height: 55mm;
+    margin: 0;
+    padding: 6.2mm 4.8mm 4.2mm;
+    overflow: hidden;
+    color: #171a1f;
+    text-align: center;
+    background: #fff;
+    border: 0;
+    border-radius: 0;
+    outline: 0.2mm solid #d7dbe0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    clip-path: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .contact-card::before,
+  .contact-card::after {
+    display: none;
+  }
+
+  .contact-card .crystal-surface {
+    display: block;
+    opacity: 1;
+  }
+
+  .contact-card .crystal-surface::before {
+    background:
+      linear-gradient(132deg, transparent 0 35%, rgba(35, 42, 52, 0.045) 35.2% 35.7%, transparent 35.9%),
+      linear-gradient(42deg, transparent 0 63%, rgba(35, 42, 52, 0.035) 63.2% 63.65%, transparent 63.85%);
+    opacity: 1;
+  }
+
+  .contact-card .crystal-surface::after {
+    display: none;
+  }
+
+  .contact-card .crystal-facet {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .contact-card .crystal-facet-a {
+    background: rgba(42, 49, 59, 0.024);
+    clip-path: polygon(0 0, 42% 0, 31% 42%, 0 57%);
+  }
+
+  .contact-card .crystal-facet-b {
+    background: rgba(42, 49, 59, 0.014);
+    clip-path: polygon(42% 0, 72% 0, 62% 49%, 31% 42%);
+  }
+
+  .contact-card .crystal-facet-c {
+    background: rgba(42, 49, 59, 0.032);
+    clip-path: polygon(72% 0, 100% 0, 100% 63%, 62% 49%);
+  }
+
+  .contact-card .crystal-facet-d {
+    background: rgba(42, 49, 59, 0.018);
+    clip-path: polygon(0 57%, 31% 42%, 49% 100%, 0 100%);
+  }
+
+  .contact-card .crystal-facet-e {
+    background: rgba(42, 49, 59, 0.026);
+    clip-path: polygon(31% 42%, 62% 49%, 100% 63%, 100% 100%, 49% 100%);
+  }
+
+  .card-home {
+    display: block;
+    justify-self: center;
+    margin: 0;
+    color: #565d67;
+    font-size: 4.6pt;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: 0.18em;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+
+  .card-layout {
+    display: grid;
+    position: relative;
+    grid-template-columns: minmax(0, 1fr) 16mm;
+    grid-template-rows: auto auto 1fr 0.2mm auto;
+    column-gap: 3.2mm;
+    row-gap: 0;
+    min-height: 0;
+    padding-top: 1.4mm;
+    align-items: start;
+  }
+
+  .card-layout::before {
+    content: "";
+    grid-column: 1 / -1;
+    grid-row: 4;
+    align-self: stretch;
+    width: 100%;
+    height: 0.2mm;
+    background: #c3c8ce;
+  }
+
+  .card-details {
+    display: contents;
+  }
+
+  .contact-card .kicker {
+    display: none;
+  }
+
+  .contact-card h1 {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    justify-self: center;
+    margin: 0;
+    color: #0d0f12;
+    font-size: 18.5pt;
+    font-weight: 720;
+    line-height: 0.96;
+    letter-spacing: -0.045em;
+    text-align: center;
+    text-shadow: none;
+  }
+
+  .contact-card .role {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: center;
+    max-width: 59mm;
+    margin: 1mm 0 0;
+    color: #343a43;
+    font-size: 6.3pt;
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    text-align: center;
+    text-shadow: none;
+    text-wrap: balance;
+  }
+
+  .card-profiles {
+    grid-column: 1;
+    grid-row: 5;
+    align-self: end;
+    display: grid;
+    gap: 0.75mm;
+    margin: 0;
+    padding-top: 1.6mm;
+    border: 0;
+  }
+
+  .card-profile {
+    display: grid;
+    grid-template-columns: 10.5mm minmax(0, 1fr);
+    gap: 1.15mm;
+    align-items: baseline;
+    min-width: 0;
+    padding: 0;
+    color: #252a31;
+    text-align: left;
+    white-space: nowrap;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .card-profile strong {
+    color: #15181d;
+    font-size: 4.15pt;
+    font-weight: 750;
+    line-height: 1.15;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  .card-profile-address {
+    min-width: 0;
+    overflow: hidden;
+    color: #3f4650;
+    font-size: 5.1pt;
+    font-weight: 450;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    text-overflow: clip;
+    overflow-wrap: normal;
+  }
+
+  .card-qr {
+    grid-column: 2;
+    grid-row: 5;
+    align-self: end;
+    justify-self: stretch;
+    display: flex;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.55mm;
+    margin: 0;
+    padding: 1.6mm 0 0;
+    color: #252a31;
+    text-align: center;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .card-qr img {
+    width: 11.5mm;
+    height: 11.5mm;
+    background: #fff;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .card-qr p {
+    display: none;
+  }
+
+  .card-qr::after {
+    content: "schultstefan.de/card";
+    color: #4a515b;
+    font-size: 3.45pt;
+    font-weight: 650;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+}

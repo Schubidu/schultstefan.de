@@ -1,4 +1,5 @@
 :root {
+  --page-background: var(--photo-color, var(--fallback-background));
   --utility-background: rgba(245, 247, 250, 0.62);
   --utility-background-hover: rgba(245, 247, 250, 0.76);
   --utility-border: rgba(255, 255, 255, 0.58);
@@ -14,18 +15,18 @@
   }
 }
 
-html {
-  background-color: var(--photo-color, var(--fallback-background));
+html,
+body {
+  background-color: var(--page-background);
 }
 
 body {
   padding: 0;
-  background: transparent;
 }
 
 .photo-background {
   z-index: 0;
-  background-color: var(--photo-color, var(--fallback-background));
+  background-color: var(--page-background);
 }
 
 .profile-card,
@@ -81,7 +82,16 @@ body {
 }
 
 @media print {
+  html,
+  body {
+    background-color: #fff;
+  }
+
   body {
     padding: 2rem;
+  }
+
+  .contact-card .crystal-surface {
+    display: block !important;
   }
 }
