@@ -1,5 +1,7 @@
 const CONTACT_EMAIL_ENDPOINT = '/api/contact-email';
+
 const TURNSTILE_ACTION = 'contact_email_reveal';
+
 const TURNSTILE_SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
 interface TurnstileApi {
@@ -56,6 +58,7 @@ function loadTurnstile(): Promise<TurnstileApi> {
     if (existingScript) {
       existingScript.addEventListener('load', resolveTurnstile, { once: true });
       existingScript.addEventListener('error', () => reject(new Error('Unable to load Turnstile.')), { once: true });
+
       return;
     }
 
