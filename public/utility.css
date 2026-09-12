@@ -24,7 +24,14 @@ body {
 }
 
 .photo-background {
+  z-index: 0;
   background-color: var(--photo-color, var(--fallback-background));
+}
+
+.profile-card,
+.shuffle-photo,
+.photo-credit {
+  z-index: 1;
 }
 
 .profile-card {
