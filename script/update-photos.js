@@ -44,7 +44,7 @@ function reducePhoto(data) {
 }
 
 async function formatTypeScript(content) {
-  const options = await resolveConfig(root);
+  const options = await resolveConfig(path.join(photosDir, 'index.ts'));
 
   return format(content, { ...options, parser: 'typescript' });
 }
