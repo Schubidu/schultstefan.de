@@ -157,7 +157,7 @@ jobs:
 
       - name: Commit image
         run: |
-          if git diff --quiet -- public/assets/socialsharing-hafencity.png; then
+          if [ -z "$(git status --porcelain -- public/assets/socialsharing-hafencity.png)" ]; then
             echo "OpenGraph image is already up to date."
             exit 0
           fi
