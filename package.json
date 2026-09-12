@@ -21,8 +21,8 @@
     "photos:update": "node script/update-photos.js",
     "test": "vitest run src",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,js}\" \"script/**/*.js\" \"index.html\" \"public/**/*.css\" \"vite.config.ts\" \"oxlint.config.ts\"",
-    "format:check": "prettier --check \"src/**/*.{ts,js}\" \"script/**/*.js\" \"index.html\" \"public/**/*.css\" \"vite.config.ts\" \"oxlint.config.ts\"",
+    "format": "prettier --write \"src/**/*.{ts,js,css}\" \"script/**/*.js\" \"index.html\" \"vite.config.ts\" \"oxlint.config.ts\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,css}\" \"script/**/*.js\" \"index.html\" \"vite.config.ts\" \"oxlint.config.ts\"",
     "lint": "oxlint -c oxlint.config.ts src",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build"
   },
