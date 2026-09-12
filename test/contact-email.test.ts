@@ -66,6 +66,7 @@ describe('contact email reveal function', () => {
   it('rejects cross-origin reveal requests before validation', async () => {
     const request = createPostRequest();
     request.headers.set('Origin', 'https://example.test');
+
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
 
@@ -78,6 +79,7 @@ describe('contact email reveal function', () => {
   it('rejects requests without the Cloudflare connecting IP before validation', async () => {
     const request = createPostRequest();
     request.headers.delete('CF-Connecting-IP');
+
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
 
@@ -97,6 +99,7 @@ describe('contact email reveal function', () => {
       },
       method: 'POST',
     });
+
     const fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
 
