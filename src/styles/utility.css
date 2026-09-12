@@ -1,4 +1,5 @@
 :root {
+  --page-background: var(--photo-color, var(--fallback-background));
   --utility-background: rgba(245, 247, 250, 0.62);
   --utility-background-hover: rgba(245, 247, 250, 0.76);
   --utility-border: rgba(255, 255, 255, 0.58);
@@ -15,7 +16,7 @@
 }
 
 html {
-  background-color: var(--photo-color, var(--fallback-background));
+  background-color: var(--page-background);
 }
 
 body {
@@ -25,7 +26,7 @@ body {
 
 .photo-background {
   z-index: 0;
-  background-color: var(--photo-color, var(--fallback-background));
+  background-color: var(--page-background);
 }
 
 .profile-card,
