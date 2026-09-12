@@ -1,0 +1,80 @@
+:root {
+  --utility-background: rgba(245, 247, 250, 0.62);
+  --utility-background-hover: rgba(245, 247, 250, 0.76);
+  --utility-border: rgba(255, 255, 255, 0.58);
+  --utility-shadow: rgba(8, 11, 17, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --utility-background: rgba(14, 17, 23, 0.58);
+    --utility-background-hover: rgba(14, 17, 23, 0.72);
+    --utility-border: rgba(255, 255, 255, 0.2);
+    --utility-shadow: rgba(0, 0, 0, 0.34);
+  }
+}
+
+html {
+  background-color: var(--photo-color, var(--fallback-background));
+}
+
+body {
+  padding: 0;
+  background: transparent;
+}
+
+.photo-background {
+  background-color: var(--photo-color, var(--fallback-background));
+}
+
+.profile-card {
+  width: min(36rem, calc(100% - 2rem));
+}
+
+.shuffle-photo,
+.photo-credit {
+  color: var(--page-foreground);
+  background: var(--utility-background);
+  border: 1px solid var(--utility-border);
+  box-shadow: 0 0.45rem 1.4rem var(--utility-shadow);
+  backdrop-filter: blur(12px) saturate(1.04);
+  -webkit-backdrop-filter: blur(12px) saturate(1.04);
+  clip-path: none;
+}
+
+.shuffle-photo {
+  isolation: auto;
+  top: max(0.75rem, env(safe-area-inset-top));
+  right: max(0.75rem, env(safe-area-inset-right));
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0.66rem;
+  overflow: visible;
+  border-radius: 0.8rem;
+  transition:
+    background-color 140ms ease,
+    opacity 140ms ease;
+}
+
+.shuffle-photo:hover:not(:disabled),
+.shuffle-photo:focus-visible {
+  background: var(--utility-background-hover);
+  filter: none;
+  transform: none;
+}
+
+.photo-credit {
+  right: max(0.5rem, env(safe-area-inset-right));
+  bottom: max(0.5rem, env(safe-area-inset-bottom));
+  left: max(0.5rem, env(safe-area-inset-left));
+  max-width: calc(100% - 1rem);
+  padding: 0.34rem 0.62rem;
+  font-size: 0.7rem;
+  border-radius: 0.45rem;
+}
+
+@media print {
+  body {
+    padding: 2rem;
+  }
+}

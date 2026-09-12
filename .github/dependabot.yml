@@ -1,15 +1,13 @@
 version: 2
 updates:
-- package-ecosystem: npm
-  directory: "/"
-  schedule:
-    interval: weekly 
-    day: friday
-    time: "04:00"
-  open-pull-requests-limit: 10
-  labels:
-  - automerge
-  ignore:
-  - dependency-name: snowpack
-    versions:
-    - 3.3.3
+  - package-ecosystem: npm
+    directory: '/'
+    schedule:
+      interval: weekly
+      day: friday
+      time: '04:00'
+    open-pull-requests-limit: 10
+    cooldown:
+      semver-major-days: 14
+      semver-minor-days: 7
+      semver-patch-days: 7

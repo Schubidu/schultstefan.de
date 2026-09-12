@@ -1,5 +1,4 @@
 {
-  "parser": "typescript",
   "printWidth": 120,
   "singleQuote": true,
   "trailingComma": "es5",
@@ -7,10 +6,6 @@
     {
       "files": "*.css",
       "options": { "singleQuote": false }
-    },
-    {
-      "files": ".eslintrc.json",
-      "options": { "parser": "json" }
     },
     {
       "files": ".prettierrc",

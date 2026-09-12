@@ -1,25 +1,36 @@
-# My homepage
+# schultstefan.de
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+Minimal personal homepage and contact card for Stefan Schult.
 
-## Available Scripts
+The site intentionally stays small: static HTML/CSS, vanilla TypeScript, Vite, randomly selected photography and a few playful visual details.
 
-### npm start
+## Development
 
-Runs the app in the development mode.
-Open <http://localhost:8080> to view it in the browser.
+Use the Node.js version from `.nvmrc` and install dependencies with npm.
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+```sh
+npm ci
+npm run dev
+```
 
-### npm run build
+The canonical local quality gate is:
 
-Builds a static copy of your site to the `dist/` folder (see `buildOptions.out` in `snowpack.config.js`).
+```sh
+npm run check
+```
 
-Your app is ready to be deployed!
+It runs formatting checks, Oxlint with the vendored anti-slop rules, TypeScript checks, Vitest and the production build.
 
-**For the best production performance:** Add a build bundler plugin like [@snowpack/plugin-webpack](https://github.com/snowpackjs/snowpack/tree/main/plugins/plugin-webpack) or [snowpack-plugin-rollup-bundle](https://github.com/ParamagicDev/snowpack-plugin-rollup-bundle) to your `snowpack.config.json` config file.
+## Photos
 
-### Q: What about Eject?
+The current Unsplash photo registry is committed under `src/unsplash-images`, so normal development and production builds do not depend on the Unsplash API.
 
-No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+Run the manual `Update photos` GitHub Actions workflow to refresh the registry. The workflow asks for an Unsplash collection ID and defaults to the current architectural collection (`827751`), so switching collections does not require a code change.
+
+## Dependency policy
+
+The repository keeps automated Dependabot updates, but normal dependency resolution uses a seven-day minimum release age. Urgent security fixes may use an explicit, reviewed exception rather than silently weakening the default policy.
+
+## Anti-slop
+
+The anti-slop Oxlint plugin is vendored under `tools/oxlint/anti-slop` from a pinned upstream commit. Rules start enabled. Permanent rule disables are project decisions and should be documented centrally rather than added merely to make CI green.
