@@ -1,0 +1,251 @@
+.card-page {
+  overflow: auto;
+}
+
+.contact-card {
+  width: min(46rem, calc(100% - 2rem));
+  padding: clamp(1.7rem, 5vw, 2.8rem);
+  text-align: left;
+}
+
+.card-home {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  color: inherit;
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.card-home:hover,
+.card-home:focus-visible {
+  opacity: 1;
+}
+
+.card-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 10rem);
+  gap: clamp(1.5rem, 5vw, 2.6rem);
+  align-items: center;
+}
+
+.contact-card h1 {
+  font-size: clamp(2.4rem, 8vw, 4.25rem);
+}
+
+.contact-card .role {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.card-profiles {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1.45rem;
+}
+
+.card-profile {
+  display: grid;
+  grid-template-columns: 5.1rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.62rem 0.76rem;
+  color: inherit;
+  text-decoration: none;
+  background: var(--link-background);
+  border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  border-radius: 0.65rem;
+  box-shadow:
+    inset 1px 1px rgba(255, 255, 255, 0.22),
+    inset -1px -1px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px) saturate(1.1);
+  -webkit-backdrop-filter: blur(2px) saturate(1.1);
+  transition:
+    background-color 140ms ease,
+    transform 140ms ease;
+}
+
+.card-profile:hover,
+.card-profile:focus-visible {
+  background: var(--link-background-hover);
+  transform: translateY(-1px);
+}
+
+.card-profile:focus-visible,
+.card-home:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.card-profile strong {
+  font-size: 0.84rem;
+}
+
+.card-profile-address {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.76rem;
+  opacity: 0.78;
+}
+
+.card-qr {
+  align-self: center;
+  margin: 0;
+  padding: 0.68rem;
+  color: #15171d;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 1rem;
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.18);
+}
+
+.card-qr img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+}
+
+.card-qr p {
+  margin: 0.55rem 0 0;
+  font-size: 0.7rem;
+  font-weight: 650;
+}
+
+@media (max-width: 38rem) {
+  .contact-card {
+    text-align: center;
+  }
+
+  .card-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card .role {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .card-profile {
+    text-align: left;
+  }
+
+  .card-qr {
+    width: min(9rem, 42vw);
+    justify-self: center;
+  }
+}
+
+@media print {
+  @page {
+    margin: 10mm;
+  }
+
+  .card-page {
+    display: block;
+    min-height: auto;
+    padding: 0;
+    overflow: visible;
+    color: #000;
+    background: #fff;
+  }
+
+  .card-page .photo-background,
+  .card-page .shuffle-photo,
+  .card-page .photo-credit {
+    display: none !important;
+  }
+
+  .contact-card {
+    width: 85mm;
+    min-height: 55mm;
+    margin: 0;
+    padding: 6mm;
+    color: #000;
+    background: #fff;
+    border: 0.3mm solid #333;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    clip-path: none;
+  }
+
+  .contact-card::before,
+  .contact-card::after,
+  .contact-card .crystal-surface {
+    display: none;
+  }
+
+  .card-home {
+    margin-bottom: 3mm;
+    font-size: 7pt;
+    opacity: 1;
+  }
+
+  .card-layout {
+    grid-template-columns: minmax(0, 1fr) 25mm;
+    gap: 4mm;
+    align-items: start;
+  }
+
+  .contact-card .kicker {
+    margin-bottom: 1mm;
+    font-size: 7pt;
+  }
+
+  .contact-card h1 {
+    font-size: 20pt;
+    text-shadow: none;
+  }
+
+  .contact-card .role {
+    margin-top: 2mm;
+    font-size: 8pt;
+    text-shadow: none;
+  }
+
+  .card-profiles {
+    gap: 0.8mm;
+    margin-top: 3mm;
+  }
+
+  .card-profile {
+    grid-template-columns: 17mm minmax(0, 1fr);
+    gap: 1.5mm;
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .card-profile strong,
+  .card-profile-address {
+    font-size: 6.7pt;
+  }
+
+  .card-qr {
+    width: 25mm;
+    padding: 0;
+    background: #fff;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .card-qr img {
+    border-radius: 0;
+  }
+
+  .card-qr p {
+    margin-top: 1mm;
+    font-size: 5.8pt;
+  }
+}
