@@ -84,7 +84,13 @@ async function main() {
     throw new Error('UNSPLASH_APP_SECRET is required to refresh the photo registry.');
   }
 
-  const photos = (await getCollection(secret, collectionId)).map(reducePhoto);
+  const collection = await getCollection(secret, collectionId);
+
+  if (!Array.isArray(collection) || collection.length === 0) {
+    throw new Error(`Unsplash collection ${collectionId} returned no photos.`);
+  }
+
+  const photos = collection.map(reducePhoto);
 
   await writeRegistry(photos);
   console.log(`Updated photo registry with ${photos.length} photos from collection ${collectionId}.`);
