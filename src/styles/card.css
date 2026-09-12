@@ -211,7 +211,7 @@
     min-height: auto;
     padding: 0;
     overflow: visible;
-    color: #000;
+    color: #171a1f;
     background: #fff;
   }
 
@@ -222,62 +222,153 @@
   }
 
   .contact-card {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    row-gap: 2.6mm;
+    box-sizing: border-box;
     width: 85mm;
     height: 55mm;
     margin: 0;
-    padding: 4mm;
+    padding: 4.5mm 4.8mm 4.4mm;
     overflow: hidden;
-    color: #000;
+    color: #171a1f;
+    text-align: left;
     background: #fff;
-    border: 0.3mm solid #333;
+    border: 0;
     border-radius: 0;
+    outline: 0.2mm solid #d7dbe0;
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     clip-path: none;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 
   .contact-card::before,
-  .contact-card::after,
-  .contact-card .crystal-surface,
-  .card-home {
+  .contact-card::after {
     display: none;
   }
 
+  .contact-card .crystal-surface {
+    display: block;
+    opacity: 1;
+  }
+
+  .contact-card .crystal-surface::before {
+    background:
+      linear-gradient(132deg, transparent 0 35%, rgba(35, 42, 52, 0.045) 35.2% 35.7%, transparent 35.9%),
+      linear-gradient(42deg, transparent 0 63%, rgba(35, 42, 52, 0.035) 63.2% 63.65%, transparent 63.85%);
+    opacity: 1;
+  }
+
+  .contact-card .crystal-surface::after {
+    display: none;
+  }
+
+  .contact-card .crystal-facet {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .contact-card .crystal-facet-a {
+    background: rgba(42, 49, 59, 0.024);
+    clip-path: polygon(0 0, 42% 0, 31% 42%, 0 57%);
+  }
+
+  .contact-card .crystal-facet-b {
+    background: rgba(42, 49, 59, 0.014);
+    clip-path: polygon(42% 0, 72% 0, 62% 49%, 31% 42%);
+  }
+
+  .contact-card .crystal-facet-c {
+    background: rgba(42, 49, 59, 0.032);
+    clip-path: polygon(72% 0, 100% 0, 100% 63%, 62% 49%);
+  }
+
+  .contact-card .crystal-facet-d {
+    background: rgba(42, 49, 59, 0.018);
+    clip-path: polygon(0 57%, 31% 42%, 49% 100%, 0 100%);
+  }
+
+  .contact-card .crystal-facet-e {
+    background: rgba(42, 49, 59, 0.026);
+    clip-path: polygon(31% 42%, 62% 49%, 100% 63%, 100% 100%, 49% 100%);
+  }
+
+  .card-home {
+    display: block;
+    margin: 0;
+    color: #565d67;
+    font-size: 4.8pt;
+    font-weight: 750;
+    line-height: 1;
+    letter-spacing: 0.17em;
+    text-decoration: none;
+    text-transform: uppercase;
+    opacity: 1;
+  }
+
   .card-layout {
-    grid-template-columns: minmax(0, 1fr) 22mm;
-    gap: 3mm;
-    align-items: start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 20.5mm;
+    gap: 3.8mm;
+    min-height: 0;
+    align-items: stretch;
+  }
+
+  .card-details {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
   }
 
   .contact-card .kicker {
-    margin-bottom: 0.6mm;
-    font-size: 5.5pt;
+    display: none;
   }
 
   .contact-card h1 {
-    font-size: 17pt;
-    line-height: 1;
+    margin: 0;
+    color: #0d0f12;
+    font-size: 17.5pt;
+    font-weight: 720;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    text-align: left;
     text-shadow: none;
   }
 
   .contact-card .role {
-    margin-top: 1.2mm;
-    font-size: 6.6pt;
-    line-height: 1.2;
+    max-width: 47mm;
+    margin: 1.5mm 0 0;
+    color: #343a43;
+    font-size: 6.5pt;
+    font-weight: 500;
+    line-height: 1.27;
+    letter-spacing: -0.01em;
+    text-align: left;
     text-shadow: none;
+    text-wrap: pretty;
   }
 
   .card-profiles {
+    display: grid;
     gap: 0.8mm;
-    margin-top: 2mm;
+    margin: auto 0 0;
+    padding-top: 2mm;
+    border-top: 0.2mm solid #bfc4ca;
   }
 
   .card-profile {
-    display: flex;
-    gap: 1mm;
+    display: grid;
+    grid-template-columns: 10.8mm minmax(0, 1fr);
+    gap: 1.2mm;
     align-items: baseline;
+    min-width: 0;
     padding: 0;
+    color: #252a31;
+    text-align: left;
     white-space: nowrap;
     background: none;
     border: 0;
@@ -287,22 +378,44 @@
     -webkit-backdrop-filter: none;
   }
 
-  .card-profile strong,
-  .card-profile-address {
-    font-size: 5.5pt;
+  .card-profile strong {
+    color: #15181d;
+    font-size: 4.25pt;
+    font-weight: 750;
     line-height: 1.15;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
   }
 
   .card-profile-address {
+    min-width: 0;
+    overflow: hidden;
+    color: #3f4650;
+    font-size: 5.25pt;
+    font-weight: 450;
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    text-overflow: clip;
     overflow-wrap: normal;
   }
 
   .card-qr {
-    width: 22mm;
-    padding: 0;
-    color: #000;
-    background: #fff;
+    display: flex;
+    width: auto;
+    height: 100%;
+    justify-self: stretch;
+    align-self: stretch;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.35mm;
+    margin: 0;
+    padding: 0 0 0 3.2mm;
+    color: #252a31;
+    text-align: center;
+    background: none;
     border: 0;
+    border-left: 0.2mm solid #c8cdd3;
     border-radius: 0;
     box-shadow: none;
     backdrop-filter: none;
@@ -310,13 +423,24 @@
   }
 
   .card-qr img {
+    width: 18.5mm;
+    height: 18.5mm;
+    background: #fff;
+    border: 0;
     border-radius: 0;
   }
 
   .card-qr p {
-    margin-top: 0.8mm;
-    font-size: 5.2pt;
+    display: none;
+  }
+
+  .card-qr::after {
+    content: "schultstefan.de/card";
+    color: #3f4650;
+    font-size: 4.15pt;
+    font-weight: 650;
     line-height: 1.15;
-    opacity: 1;
+    letter-spacing: 0.015em;
+    white-space: nowrap;
   }
 }
