@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { onRequestGet, onRequestPost } from '../functions/api/contact-email';
+import { onRequestGet, onRequestPost } from '../../functions/api/contact-email';
 
 interface TurnstileTestResult {
   action: string;

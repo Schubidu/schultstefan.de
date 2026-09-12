@@ -1,5 +1,5 @@
 {
-  "include": ["src", "functions", "test", "types", "vite.config.ts"],
+  "include": ["src", "functions", "types", "vite.config.ts"],
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
