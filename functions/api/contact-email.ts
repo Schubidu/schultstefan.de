@@ -1,7 +1,11 @@
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
 const TURNSTILE_ACTION = 'contact_email_reveal';
+
 const RATE_LIMIT_MAX_REQUESTS = 5;
+
 const RATE_LIMIT_WINDOW_MS = 60_000;
+
 const RATE_LIMIT_TTL_SECONDS = 120;
 
 interface RateLimitStore {
@@ -39,6 +43,7 @@ interface TokenPayload {
 }
 
 type JsonResponseBody = { email: string } | { error: string } | { siteKey: string };
+
 type VerificationResult = 'failed' | 'unavailable' | 'verified';
 
 function json(body: JsonResponseBody, status = 200, retryAfter?: string): Response {
