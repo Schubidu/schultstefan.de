@@ -8,11 +8,6 @@ on:
         required: true
         default: '827751'
         type: string
-  push:
-    branches:
-      - modernize/689-foundation
-    paths:
-      - .github/workflows/update-photos.yml
 
 permissions:
   contents: write
@@ -37,14 +32,14 @@ jobs:
         run: npm run photos:update
         env:
           UNSPLASH_APP_SECRET: ${{ secrets.UNSPLASH_APP_SECRET }}
-          UNSPLASH_COLLECTION_ID: ${{ inputs.collection_id || '827751' }}
+          UNSPLASH_COLLECTION_ID: ${{ inputs.collection_id }}
 
       - name: Check
         run: npm run check
 
       - name: Commit registry changes
         env:
-          COLLECTION_ID: ${{ inputs.collection_id || '827751' }}
+          COLLECTION_ID: ${{ inputs.collection_id }}
         run: |
           if git diff --quiet -- src/unsplash-images; then
             echo "Photo registry is already up to date."
@@ -56,5 +51,3 @@ jobs:
           git add src/unsplash-images
           git commit -m "chore: refresh background photos from collection ${COLLECTION_ID}"
           git push
-
-# Temporary PR-only push trigger above is removed after the registry is seeded.
