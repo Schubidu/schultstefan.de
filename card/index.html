@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Stefan Schult" />
-    <meta name="description" content="Contact Stefan Schult via GitHub, LinkedIn and Bluesky." />
+    <meta name="description" content="Contact Stefan Schult via GitHub, LinkedIn, Bluesky or email." />
 
     <title>Stefan Schult · Contact Card</title>
     <link rel="canonical" href="https://schultstefan.de/card" />
@@ -22,7 +22,7 @@
 
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="Stefan Schult · Contact Card" />
-    <meta property="og:description" content="Contact Stefan Schult via GitHub, LinkedIn and Bluesky." />
+    <meta property="og:description" content="Contact Stefan Schult via GitHub, LinkedIn, Bluesky or email." />
     <meta property="og:url" content="https://schultstefan.de/card" />
     <meta property="og:image" content="https://schultstefan.de/assets/socialsharing-hafencity.png" />
     <meta property="og:image:type" content="image/png" />
@@ -32,7 +32,7 @@
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Stefan Schult · Contact Card" />
-    <meta name="twitter:description" content="Contact Stefan Schult via GitHub, LinkedIn and Bluesky." />
+    <meta name="twitter:description" content="Contact Stefan Schult via GitHub, LinkedIn, Bluesky or email." />
     <meta name="twitter:image" content="https://schultstefan.de/assets/socialsharing-hafencity.png" />
     <meta name="twitter:image:alt" content="Stefan Schult · Senior Software Engineer" />
 
@@ -90,6 +90,16 @@
               <span class="card-profile-address">@schultstefan.de</span>
             </a>
           </nav>
+
+          <section id="card-email" class="card-email" aria-labelledby="card-email-label">
+            <button id="email-reveal" class="card-profile card-email-button" type="button">
+              <strong id="card-email-label">Email</strong>
+              <span class="card-profile-address">Show protected address</span>
+            </button>
+            <div id="email-challenge" class="card-email-challenge" hidden></div>
+            <p id="email-status" class="card-email-status" aria-live="polite"></p>
+            <div id="email-result" class="card-email-result" hidden></div>
+          </section>
         </section>
 
         <aside class="card-qr" aria-label="QR code for this contact card">
@@ -109,6 +119,6 @@
 
     <aside id="photo-credit" class="photo-credit" hidden></aside>
 
-    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/src/card.ts"></script>
   </body>
 </html>

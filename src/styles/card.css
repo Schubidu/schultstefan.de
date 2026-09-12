@@ -127,7 +127,8 @@
 }
 
 .card-profile:focus-visible,
-.card-home:focus-visible {
+.card-home:focus-visible,
+.card-email-button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 3px;
 }
@@ -141,6 +142,47 @@
   overflow-wrap: anywhere;
   font-size: 0.76rem;
   opacity: 0.78;
+}
+
+.card-email {
+  margin-top: 0.55rem;
+}
+
+.card-email-button {
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card-email-button:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.card-email-challenge {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.65rem;
+}
+
+.card-email-status {
+  margin: 0.45rem 0.2rem 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  opacity: 0.82;
+}
+
+.card-email-status:empty {
+  display: none;
+}
+
+.card-email-result {
+  margin-top: 0.55rem;
+}
+
+.card-email-link {
+  width: 100%;
 }
 
 .card-qr {
@@ -191,8 +233,13 @@
     margin-left: auto;
   }
 
-  .card-profile {
+  .card-profile,
+  .card-email-button {
     text-align: left;
+  }
+
+  .card-email-challenge {
+    justify-content: center;
   }
 
   .card-qr {
@@ -369,6 +416,45 @@
     text-align: center;
     text-shadow: none;
     text-wrap: balance;
+  }
+
+  .card-email {
+    display: none;
+  }
+
+  .card-email.is-revealed {
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-self: center;
+    justify-self: center;
+    max-width: 59mm;
+    margin: 0;
+  }
+
+  .card-email-button,
+  .card-email-challenge,
+  .card-email-status {
+    display: none !important;
+  }
+
+  .card-email-result {
+    margin: 0;
+  }
+
+  .card-email-result .card-profile {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1mm;
+    justify-content: center;
+    padding: 0;
+    white-space: normal;
+  }
+
+  .card-email-result .card-profile-address {
+    overflow: visible;
+    font-size: 4.8pt;
+    overflow-wrap: anywhere;
   }
 
   .card-profiles {

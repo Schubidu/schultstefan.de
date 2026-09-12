@@ -21,6 +21,21 @@ npm run check
 
 It runs formatting checks, Oxlint with the vendored anti-slop rules, TypeScript checks, Vitest and the production build.
 
+## Protected email reveal
+
+`/card` reveals the contact email only after server-side Cloudflare Turnstile validation. The address is never committed to the repository or embedded in static client output.
+
+The Cloudflare Pages project requires these runtime values for both production and preview deployments:
+
+- `CONTACT_EMAIL` as a secret;
+- `TURNSTILE_SECRET_KEY` as a secret;
+- `TURNSTILE_SITE_KEY` as an environment variable;
+- a Workers KV namespace bound as `CONTACT_REVEAL_RATE_LIMIT`.
+
+Create the Turnstile widget with `schultstefan.de` and `schultstefan-de.pages.dev` as allowed hostnames. The latter also covers Pages preview subdomains. The endpoint validates the Turnstile action and the exact request hostname before returning the configured address.
+
+The KV binding provides a small fixed-window abuse limit before Turnstile validation. Rate-limit keys contain only a short-lived SHA-256 hash of the connecting IP and expire automatically.
+
 ## Photos
 
 The current Unsplash photo registry is committed under `src/unsplash-images`, so normal development and production builds do not depend on the Unsplash API.
