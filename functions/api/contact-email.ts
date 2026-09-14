@@ -8,7 +8,7 @@ interface Environment {
   TURNSTILE_SITE_KEY?: string;
 }
 
-interface RuntimeEnvironment extends Environment {
+interface RuntimeEnvironment {
   CONTACT_EMAIL: string;
   TURNSTILE_SECRET_KEY: string;
   TURNSTILE_SITE_KEY: string;
@@ -44,8 +44,20 @@ function json(body: JsonResponseBody, status = 200): Response {
   });
 }
 
-function hasRuntimeConfiguration(env: Environment): env is RuntimeEnvironment {
-  return Boolean(env.CONTACT_EMAIL && env.TURNSTILE_SECRET_KEY && env.TURNSTILE_SITE_KEY);
+function getRuntimeConfiguration(env: Environment): RuntimeEnvironment | null {
+  const contactEmail = env.CONTACT_EMAIL?.trim() ?? '';
+  const turnstileSecretKey = env.TURNSTILE_SECRET_KEY?.trim() ?? '';
+  const turnstileSiteKey = env.TURNSTILE_SITE_KEY?.trim() ?? '';
+
+  if (contactEmail.length === 0 || turnstileSecretKey.length === 0 || turnstileSiteKey.length === 0) {
+    return null;
+  }
+
+  return {
+    CONTACT_EMAIL: contactEmail,
+    TURNSTILE_SECRET_KEY: turnstileSecretKey,
+    TURNSTILE_SITE_KEY: turnstileSiteKey,
+  };
 }
 
 async function verifyTurnstile(
@@ -74,11 +86,15 @@ async function verifyTurnstile(
     return 'unavailable';
   }
 
-  let result: TurnstileResult;
+  let result: TurnstileResult | null;
 
   try {
     result = await response.json();
   } catch {
+    return 'unavailable';
+  }
+
+  if (result === null) {
     return 'unavailable';
   }
 
@@ -90,19 +106,20 @@ async function verifyTurnstile(
 }
 
 export async function onRequestGet(context: FunctionContext): Promise<Response> {
-  const { env } = context;
+  const configuration = getRuntimeConfiguration(context.env);
 
-  if (!hasRuntimeConfiguration(env)) {
+  if (!configuration) {
     return json({ error: 'unavailable' }, 503);
   }
 
-  return json({ siteKey: env.TURNSTILE_SITE_KEY });
+  return json({ siteKey: configuration.TURNSTILE_SITE_KEY });
 }
 
 export async function onRequestPost(context: FunctionContext): Promise<Response> {
-  const { env, request } = context;
+  const { request } = context;
+  const configuration = getRuntimeConfiguration(context.env);
 
-  if (!hasRuntimeConfiguration(env)) {
+  if (!configuration) {
     return json({ error: 'unavailable' }, 503);
   }
 
@@ -138,7 +155,12 @@ export async function onRequestPost(context: FunctionContext): Promise<Response>
     return json({ error: 'invalid_request' }, 400);
   }
 
-  const verification = await verifyTurnstile(token, env.TURNSTILE_SECRET_KEY, remoteIp, requestUrl.hostname);
+  const verification = await verifyTurnstile(
+    token,
+    configuration.TURNSTILE_SECRET_KEY,
+    remoteIp,
+    requestUrl.hostname
+  );
 
   if (verification === 'unavailable') {
     return json({ error: 'unavailable' }, 503);
@@ -148,5 +170,5 @@ export async function onRequestPost(context: FunctionContext): Promise<Response>
     return json({ error: 'verification_failed' }, 403);
   }
 
-  return json({ email: env.CONTACT_EMAIL });
+  return json({ email: configuration.CONTACT_EMAIL });
 }
