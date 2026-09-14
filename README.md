@@ -31,6 +31,8 @@ The Cloudflare Pages project requires these runtime values for both production a
 - `TURNSTILE_SECRET_KEY` as a secret;
 - `TURNSTILE_SITE_KEY` as an environment variable.
 
+After changing these runtime values, trigger a fresh Pages deployment so the Function instances receive the updated environment.
+
 Create the Turnstile widget with `schultstefan.de` and `schultstefan-de.pages.dev` as allowed hostnames. The latter also covers Pages preview subdomains. The endpoint validates the Turnstile action and the exact request hostname before returning the configured address.
 
 ### Rate limiting
