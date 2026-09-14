@@ -89,6 +89,7 @@ async function fetchConfiguration(): Promise<ContactEmailConfig> {
   const response = await fetch(CONTACT_EMAIL_ENDPOINT, {
     cache: 'no-store',
     headers: { Accept: 'application/json' },
+    redirect: 'error',
   });
 
   if (response.status === 404) {
@@ -120,6 +121,7 @@ async function fetchEmail(token: string): Promise<ContactEmailResponse> {
       'Content-Type': 'application/json',
     },
     method: 'POST',
+    redirect: 'error',
   });
 
   if (response.status === 429) {
