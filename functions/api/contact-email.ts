@@ -49,11 +49,7 @@ function getRuntimeConfiguration(env: Environment): RuntimeEnvironment | null {
   const turnstileSecretKey = env.TURNSTILE_SECRET_KEY?.trim() ?? '';
   const turnstileSiteKey = env.TURNSTILE_SITE_KEY?.trim() ?? '';
 
-  if (
-    contactEmail.length === 0 ||
-    turnstileSecretKey.length === 0 ||
-    turnstileSiteKey.length === 0
-  ) {
+  if (contactEmail.length === 0 || turnstileSecretKey.length === 0 || turnstileSiteKey.length === 0) {
     return null;
   }
 
@@ -102,11 +98,7 @@ async function verifyTurnstile(
     return 'unavailable';
   }
 
-  if (
-    result.success !== true ||
-    result.action !== TURNSTILE_ACTION ||
-    result.hostname !== expectedHostname
-  ) {
+  if (result.success !== true || result.action !== TURNSTILE_ACTION || result.hostname !== expectedHostname) {
     return 'failed';
   }
 
@@ -163,12 +155,7 @@ export async function onRequestPost(context: FunctionContext): Promise<Response>
     return json({ error: 'invalid_request' }, 400);
   }
 
-  const verification = await verifyTurnstile(
-    token,
-    configuration.TURNSTILE_SECRET_KEY,
-    remoteIp,
-    requestUrl.hostname
-  );
+  const verification = await verifyTurnstile(token, configuration.TURNSTILE_SECRET_KEY, remoteIp, requestUrl.hostname);
 
   if (verification === 'unavailable') {
     return json({ error: 'unavailable' }, 503);
