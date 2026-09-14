@@ -2,6 +2,7 @@ const CONTACT_EMAIL_ENDPOINT = '/api/contact-email';
 
 const TURNSTILE_ACTION = 'contact_email_reveal';
 
+// Keep Turnstile lazy so visitors who never reveal the email do not load the challenge script.
 const TURNSTILE_SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
 const compactTurnstile = window.matchMedia('(max-width: 38rem)');
