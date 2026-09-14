@@ -2,7 +2,6 @@ const CONTACT_EMAIL_ENDPOINT = '/api/contact-email';
 
 const TURNSTILE_ACTION = 'contact_email_reveal';
 
-// Keep Turnstile lazy so visitors who never reveal the email do not load the challenge script.
 const TURNSTILE_SCRIPT_URL = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
 const compactTurnstile = window.matchMedia('(max-width: 38rem)');
@@ -92,6 +91,14 @@ async function fetchConfiguration(): Promise<ContactEmailConfig> {
     headers: { Accept: 'application/json' },
   });
 
+  if (response.status === 404) {
+    throw new Error('Email reveal endpoint is unavailable on this deployment.');
+  }
+
+  if (response.status === 503) {
+    throw new Error('Email reveal is not configured for this deployment.');
+  }
+
   if (!response.ok) {
     throw new Error('Email reveal is unavailable.');
   }
@@ -121,6 +128,10 @@ async function fetchEmail(token: string): Promise<ContactEmailResponse> {
 
   if (response.status === 403) {
     throw new Error('Verification failed. Please try again.');
+  }
+
+  if (response.status === 503) {
+    throw new Error('Verification service is temporarily unavailable.');
   }
 
   if (!response.ok) {
@@ -154,6 +165,11 @@ export default function initializeContactEmail(): void {
     status.textContent = message;
   };
 
+  const clearChallenge = () => {
+    challenge.replaceChildren();
+    challenge.hidden = true;
+  };
+
   const showRetryableError = (message: string) => {
     setStatus(message);
 
@@ -181,12 +197,14 @@ export default function initializeContactEmail(): void {
       result.hidden = false;
       section.classList.add('is-revealed');
       setStatus('');
-      challenge.hidden = true;
+      clearChallenge();
 
       if (turnstile && widgetId) {
         turnstile.remove(widgetId);
         widgetId = null;
       }
+
+      link.focus();
     } catch (error) {
       showRetryableError(error instanceof Error ? error.message : 'Verification failed. Please try again.');
     }
@@ -208,7 +226,7 @@ export default function initializeContactEmail(): void {
         },
         'error-callback': () => {
           setStatus('Verification could not be loaded. Please try again.');
-          challenge.hidden = true;
+          clearChallenge();
           button.hidden = false;
           button.disabled = false;
 
@@ -224,8 +242,9 @@ export default function initializeContactEmail(): void {
         size: compactTurnstile.matches ? 'compact' : 'normal',
         theme: 'auto',
       });
-    } catch {
-      setStatus('Email reveal is temporarily unavailable.');
+    } catch (error) {
+      clearChallenge();
+      setStatus(error instanceof Error ? error.message : 'Email reveal is temporarily unavailable.');
       button.hidden = false;
       button.disabled = false;
     }
