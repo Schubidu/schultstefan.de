@@ -26,7 +26,7 @@ function createPostRequest(token = 'valid-token'): Request {
   });
 }
 
-function mockTurnstile(result: TurnstileTestResult, status = 200): ReturnType<typeof vi.fn> {
+function mockTurnstile(result: TurnstileTestResult | null, status = 200): ReturnType<typeof vi.fn> {
   const fetchMock = vi.fn().mockResolvedValue(
     new Response(JSON.stringify(result), {
       headers: { 'Content-Type': 'application/json' },
@@ -54,9 +54,36 @@ describe('contact email reveal function', () => {
     expect(await response.json()).toEqual({ siteKey: 'test-site-key' });
   });
 
+  it('trims runtime configuration before use', async () => {
+    const response = await onRequestGet({
+      env: {
+        CONTACT_EMAIL: ' person@example.test ',
+        TURNSTILE_SECRET_KEY: ' test-secret ',
+        TURNSTILE_SITE_KEY: ' test-site-key ',
+      },
+      request: new Request('https://schultstefan.de/api/contact-email'),
+    });
+
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ siteKey: 'test-site-key' });
+  });
+
   it('fails closed when required runtime configuration is missing', async () => {
     const response = await onRequestGet({
       env: { TURNSTILE_SITE_KEY: 'test-site-key' },
+      request: new Request('https://schultstefan.de/api/contact-email'),
+    });
+
+    expect(response.status).toBe(503);
+  });
+
+  it('fails closed when runtime configuration is whitespace only', async () => {
+    const response = await onRequestGet({
+      env: {
+        CONTACT_EMAIL: ' ',
+        TURNSTILE_SECRET_KEY: 'test-secret',
+        TURNSTILE_SITE_KEY: 'test-site-key',
+      },
       request: new Request('https://schultstefan.de/api/contact-email'),
     });
 
@@ -148,6 +175,17 @@ describe('contact email reveal function', () => {
       },
       503
     );
+
+    const response = await onRequestPost({
+      env: baseEnvironment,
+      request: createPostRequest(),
+    });
+
+    expect(response.status).toBe(503);
+  });
+
+  it('fails closed when Turnstile returns null JSON', async () => {
+    mockTurnstile(null);
 
     const response = await onRequestPost({
       env: baseEnvironment,
