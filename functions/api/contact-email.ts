@@ -49,7 +49,11 @@ function getRuntimeConfiguration(env: Environment): RuntimeEnvironment | null {
   const turnstileSecretKey = env.TURNSTILE_SECRET_KEY?.trim() ?? '';
   const turnstileSiteKey = env.TURNSTILE_SITE_KEY?.trim() ?? '';
 
-  if (contactEmail.length === 0 || turnstileSecretKey.length === 0 || turnstileSiteKey.length === 0) {
+  if (
+    contactEmail.length === 0 ||
+    turnstileSecretKey.length === 0 ||
+    turnstileSiteKey.length === 0
+  ) {
     return null;
   }
 
@@ -98,7 +102,11 @@ async function verifyTurnstile(
     return 'unavailable';
   }
 
-  if (result.success !== true || result.action !== TURNSTILE_ACTION || result.hostname !== expectedHostname) {
+  if (
+    result.success !== true ||
+    result.action !== TURNSTILE_ACTION ||
+    result.hostname !== expectedHostname
+  ) {
     return 'failed';
   }
 
