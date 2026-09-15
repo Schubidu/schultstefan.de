@@ -21,9 +21,9 @@
     "photos:update": "node script/update-photos.js",
     "test": "vitest run src",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --write \"src/**/*.{ts,js,css}\" \"script/**/*.js\" \"index.html\" \"card/**/*.html\" \"vite.config.ts\" \"oxlint.config.ts\"",
-    "format:check": "prettier --check \"src/**/*.{ts,js,css}\" \"script/**/*.js\" \"index.html\" \"card/**/*.html\" \"vite.config.ts\" \"oxlint.config.ts\"",
-    "lint": "oxlint -c oxlint.config.ts src",
+    "format": "prettier --write \"src/**/*.{ts,js,css}\" \"functions/**/*.{ts,js}\" \"script/**/*.js\" \"index.html\" \"card/**/*.html\" \"public/_routes.json\" \"vite.config.ts\" \"oxlint.config.ts\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,css}\" \"functions/**/*.{ts,js}\" \"script/**/*.js\" \"index.html\" \"card/**/*.html\" \"public/_routes.json\" \"vite.config.ts\" \"oxlint.config.ts\"",
+    "lint": "oxlint -c oxlint.config.ts src functions",
     "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
