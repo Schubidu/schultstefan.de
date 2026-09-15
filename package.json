@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "blurhash": "^2.0.5",
-    "canvas-confetti": "^1.9.3"
+    "canvas-confetti": "^1.9.4"
   },
   "devDependencies": {
     "@oxlint/plugins": "1.81.0",
