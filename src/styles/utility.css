@@ -25,6 +25,11 @@ body {
 }
 
 .photo-background {
+  inset:
+    calc(0px - env(safe-area-inset-top))
+    calc(0px - env(safe-area-inset-right))
+    calc(0px - env(safe-area-inset-bottom))
+    calc(0px - env(safe-area-inset-left));
   z-index: 0;
   background-color: var(--page-background);
 }
