@@ -160,6 +160,10 @@
   opacity: 0.72;
 }
 
+.card-email.is-revealed .card-email-button {
+  display: none;
+}
+
 .card-email-challenge {
   display: flex;
   justify-content: flex-start;
