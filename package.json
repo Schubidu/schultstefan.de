@@ -38,7 +38,7 @@
     "oxlint": "1.89.0",
     "prettier": "^3.9.10",
     "typescript": "^6.0.3",
-    "vercel": "^63.1.0",
+    "vercel": "^64.3.1",
     "vite": "8.3.5",
     "vitest": "^5.0.5"
   }
