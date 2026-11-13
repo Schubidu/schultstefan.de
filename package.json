@@ -35,7 +35,7 @@
     "@types/canvas-confetti": "^1.9.0",
     "dotenv": "^18.0.9",
     "node-fetch": "^3.3.2",
-    "oxlint": "1.90.0",
+    "oxlint": "1.91.0",
     "prettier": "^3.9.10",
     "typescript": "^6.0.3",
     "vercel": "^65.2.0",
