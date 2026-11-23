@@ -1,0 +1,141 @@
+@font-face {
+  font-family: "Allo";
+  src: url("/assets/fonts/AlloVariable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@property --signature-weight {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 500;
+}
+
+@property --signature-round {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 50;
+}
+
+@property --signature-optical {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 14;
+}
+
+.animated-name {
+  font-family:
+    "Allo",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-weight: 400;
+  font-optical-sizing: none;
+  font-synthesis: none;
+}
+
+.animated-name__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.animated-name__word i {
+  display: inline-block;
+  font-style: normal;
+  font-variation-settings:
+    "wght" var(--signature-weight, 500),
+    "ROND" var(--signature-round, 50),
+    "opsz" var(--signature-optical, 14);
+  animation-name: signature-weight, signature-round, signature-optical;
+  animation-duration: 7s, 11s, 13s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.animated-name__word i:nth-child(1) {
+  animation-duration: 6.3s, 11.7s, 14.1s;
+  animation-delay:
+    -2s,
+    -6s,
+    -9s;
+}
+
+.animated-name__word i:nth-child(2) {
+  animation-duration: 8.1s, 9.4s, 12.6s;
+  animation-delay:
+    -5s,
+    -2s,
+    -7s;
+}
+
+.animated-name__word i:nth-child(3) {
+  animation-duration: 7.4s, 13.2s, 10.8s;
+  animation-delay:
+    -3s,
+    -8s,
+    -1s;
+}
+
+.animated-name__word i:nth-child(4) {
+  animation-duration: 9.2s, 10.6s, 15.3s;
+  animation-delay:
+    -7s,
+    -4s,
+    -11s;
+}
+
+.animated-name__word i:nth-child(5) {
+  animation-duration: 5.8s, 12.4s, 13.7s;
+  animation-delay:
+    -1s,
+    -9s,
+    -5s;
+}
+
+.animated-name__word i:nth-child(6) {
+  animation-duration: 10.1s, 14.8s, 11.9s;
+  animation-delay:
+    -6s,
+    -10s,
+    -4s;
+}
+
+.animated-name__word:last-child i {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes signature-weight {
+  from {
+    --signature-weight: 320;
+  }
+  to {
+    --signature-weight: 820;
+  }
+}
+
+@keyframes signature-round {
+  from {
+    --signature-round: 5;
+  }
+  to {
+    --signature-round: 100;
+  }
+}
+
+@keyframes signature-optical {
+  from {
+    --signature-optical: 9;
+  }
+  to {
+    --signature-optical: 32;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-name__word i {
+    animation: none;
+  }
+}
