@@ -25,7 +25,12 @@
 }
 
 .animated-name {
-  font-family: "Allo", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    "Allo",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-weight: 400;
   font-optical-sizing: none;
   font-synthesis: none;
@@ -52,32 +57,50 @@
 
 .animated-name__word i:nth-child(1) {
   animation-duration: 6.3s, 11.7s, 14.1s;
-  animation-delay: -2s, -6s, -9s;
+  animation-delay:
+    -2s,
+    -6s,
+    -9s;
 }
 
 .animated-name__word i:nth-child(2) {
   animation-duration: 8.1s, 9.4s, 12.6s;
-  animation-delay: -5s, -2s, -7s;
+  animation-delay:
+    -5s,
+    -2s,
+    -7s;
 }
 
 .animated-name__word i:nth-child(3) {
   animation-duration: 7.4s, 13.2s, 10.8s;
-  animation-delay: -3s, -8s, -1s;
+  animation-delay:
+    -3s,
+    -8s,
+    -1s;
 }
 
 .animated-name__word i:nth-child(4) {
   animation-duration: 9.2s, 10.6s, 15.3s;
-  animation-delay: -7s, -4s, -11s;
+  animation-delay:
+    -7s,
+    -4s,
+    -11s;
 }
 
 .animated-name__word i:nth-child(5) {
   animation-duration: 5.8s, 12.4s, 13.7s;
-  animation-delay: -1s, -9s, -5s;
+  animation-delay:
+    -1s,
+    -9s,
+    -5s;
 }
 
 .animated-name__word i:nth-child(6) {
   animation-duration: 10.1s, 14.8s, 11.9s;
-  animation-delay: -6s, -10s, -4s;
+  animation-delay:
+    -6s,
+    -10s,
+    -4s;
 }
 
 .animated-name__word:last-child i {
